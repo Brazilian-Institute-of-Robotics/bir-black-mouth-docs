@@ -1,0 +1,85 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[top=2.5cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[]{indentfirst}
+\usepackage{graphicx}
+\usepackage{subfiles}
+
+\graphicspath{ {./images/} }
+
+\title{TCC Senai Cimatec}
+\author{Felipe Mohr \\ felipe18mohr@gmail.com}
+\date{Dezembro de 2022}
+
+
+\renewcommand\maketitle{
+    \begin{figure}[t]
+        \centering
+        \includegraphics[width=8cm]{logo_cimatec.png}
+    \end{figure}
+
+    \begin{center}
+        \textbf{CENTRO UNIVERSITÁRIO SENAI CIMATEC}
+
+        Graduação em Engenharia Elétrica
+
+        \vspace{0.5cm}
+        
+        TÍTULO DO TRABALHO DE CONCLUSÃO DE CURSO
+    \end{center}
+
+    \begin{flushright}
+        Nome A. Sobrenome
+
+        Nome A. Sobrenome
+        
+        Nome A. Sobrenome
+        
+        Orientador: 
+    \end{flushright}
+
+    \begin{flushleft}
+        Instituição/Empresa xxx, E-mail: yyy;
+        
+        Instituição/Empresa xxx, E-mail: yyy;
+
+        Instituição/Empresa xxx, E-mail: yyy;
+    \end{flushleft}
+
+    \vspace{0.5cm}
+
+    \noindent\textbf{Resumo:} O resumo deve ser digitado em fonte Times New Roman / Arial tamanho 12,  itálico, e dentro desta área. O texto deve ser justificado. O resumo deve conter o objetivo  e  justificativa  do  trabalho,  sua  importância  e  as  principais  conclusões.  Não  deve  ultrapassar 250 palavras. Vide NBR 6028
+
+    \noindent\textbf{Palavras-Chaves:} deve  ter  no  mínimo  3  palavras  chaves  e  no  máximo  5  palavras  separadas por ponto e vírgula;
+
+    \vspace{1.0cm}
+    
+    \noindent\textbf{Abstract:} O resumo deve ser digitado em fonte Times New Roman / Arial tamanho 12,  itálico, e dentro desta área. O texto deve ser justificado. O resumo deve conter o objetivo  e  justificativa  do  trabalho,  sua  importância  e  as  principais  conclusões.  Não  deve  ultrapassar 250 palavras. Vide NBR 6028
+
+    \noindent\textbf{Keywords:} deve  ter  no  mínimo  3  palavras  chaves  e  no  máximo  5  palavras  separadas por ponto e vírgula;
+
+}
+
+\begin{document}
+
+    \maketitle
+    \newpage
+
+
+    \section{INTRODUÇÃO}
+    \subfile{sections/introduction.tex}
+
+    \section{METODOLOGIA} 
+    \subfile{sections/methodology.tex}
+
+    \section{RESULTADOS E DISCUSSÃO}
+    \subfile{sections/results.tex}
+
+    \section{CONCLUSÃO}
+    \subfile{sections/conclusion.tex}
+
+    
+    \bibliographystyle{plain}
+    \bibliography{refs.bib}
+
+\end{document}
