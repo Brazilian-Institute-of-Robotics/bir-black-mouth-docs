@@ -5,31 +5,35 @@
 \usepackage{graphicx}
 \usepackage{subfiles}
 \usepackage[brazilian]{babel}
+\usepackage{times}
+\usepackage{sectsty}
+\usepackage[abnt-emphasize=bf, num]{abntex2cite}
 
 \graphicspath{ {./images/} }
 
-\setlength{\parskip}{0.5\baselineskip}
-% \setlength{\parindent}{0pt}
+\pagenumbering{gobble}
+\setlength{\parskip}{0.2cm}
+\setlength{\parindent}{1.3cm}
+\sectionfont{\fontsize{12}{15}\selectfont}
 
 
 \begin{document}
 
     \subfile{sections/cover.tex}
 
-    \section{INTRODUÇÃO}
+    \section{\MakeUppercase{Introdução}}
     \subfile{sections/introduction.tex}
 
-    \section{METODOLOGIA} 
+    \section{\MakeUppercase{Metodologia}} 
     \subfile{sections/methodology.tex}
 
-    \section{RESULTADOS E DISCUSSÃO}
+    \section{\MakeUppercase{Resultados e Discussão}}
     \subfile{sections/results.tex}
 
-    \section{CONCLUSÃO}
+    \section{\MakeUppercase{Conclusão}}
     \subfile{sections/conclusion.tex}
 
     
-    \bibliographystyle{plain}
     \bibliography{refs.bib}
 
 \end{document}
