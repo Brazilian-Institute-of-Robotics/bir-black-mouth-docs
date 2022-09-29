@@ -8,10 +8,33 @@
 
   Cada  figura  deverá  ter  um  título  numerado  em  algarismos  arábicos.  Os  títulos deverão ser escritos em fonte Times New Roman / Arial 11, itálico e devem  ser centralizados na parte inferior da figura. 
 
-  \textbf{ADICIONAR FIGURA AQUI}
+  \begin{figure}[h]
+    \centering
+    \caption{Titulo da Figura}
+    \includegraphics[width=0.5\textwidth]{logo_cimatec.png}
+    
+    Fonte: Proprio autor
+    \label{fig:fig1}
+  \end{figure}
 
   As tabelas deverão ser justificadas (usando toda a área entre as  margens).  As  tabelas  poderão  ser  coloridas  ou  em  preto  e  branco.  O  título  da  tabela  deve  ser  alinhado  à  margem  esquerda  e  digitado  em  fonte  Times  New  Roman  /  Arial  11.  As  unidades  de  medida  correspondentes  a  todos  os  termos  deverão ser claramente indicadas, usando o sistema internacional (S.I.). 
 
-  \textbf{ADICIONAR TABELA AQUI}
+  \begin{table}
+    \caption{Titulo da Tabela}
+    \centering
+    \begin{tabular}{ |c|c|c|c| } 
+      \hline
+      col1 & col2 & col3 \\
+      \hline
+      \multirow{3}{4em}{Multiple row} & cell2 & cell3 \\ 
+      & cell5 & cell6 \\ 
+      & cell8 & cell9 \\ 
+      \hline
+      \end{tabular}
+    
+      Fonte: Proprio autor
+    \label{tab:table-name}
+  \end{table}
+
 
 \end{document}
