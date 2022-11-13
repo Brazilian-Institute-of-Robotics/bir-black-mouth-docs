@@ -2,39 +2,37 @@
 \graphicspath{{\subfix{../images/}}}
 \begin{document}
 
-  Os artigos deverão ser enviados em formato digitalizado (Word) com texto  completo.  O  idioma  para  artigos  submetidos  é  o  Português.  Nenhuma  revisão  dos  textos  será  feita,  sendo  os  mesmos  de  inteira  responsabilidade  de  seus  autores.
-      
-  O limite de páginas para o artigo está fixado entre 6 (seis) e 15 (quinze)  para defesa junto a banca acadêmica, considerando-se texto, tabelas, figuras e  fotos.  Estas  páginas  deverão  estar  configuradas  para  formato  A4  (210  x  297  mm), com margens laterais e superior de 25mm e inferior de 30mm. Não deverá  haver nelas nenhum texto nas áreas de cabeçalho e rodapé. As figuras poderão  ser  coloridas  e  deverão  ser  inseridas  no  corpo  do  trabalho,  próximas  as  suas  citações no texto. As figuras deverão ser centralizadas, sem exceder o tamanho  limitado pelas margens da página.
-
-  Cada  figura  deverá  ter  um  título  numerado  em  algarismos  arábicos.  Os  títulos deverão ser escritos em fonte Times New Roman / Arial 11, itálico e devem  ser centralizados na parte inferior da figura. 
+  Para o desenvolvimento do projeto, foi criada uma metodologia própria a ser seguida, composta por quatro fases sequenciais, conforme ilustrado na figura \ref{fig:metodologia} e detalhado a seguir. \textbf{\textcolor{red}{Colocar como apêndice?}}
 
   \begin{figure}[h]
     \centering
-    \caption{Titulo da Figura}
-    \includegraphics[width=0.5\textwidth]{logo_cimatec.png}
-    
+    \caption{Metodologia}
+    \includegraphics[width=0.48\textwidth]{metodologia.png}
+
     Fonte: Proprio autor
-    \label{fig:fig1}
+    \label{fig:metodologia}
   \end{figure}
 
-  As tabelas deverão ser justificadas (usando toda a área entre as  margens).  As  tabelas  poderão  ser  coloridas  ou  em  preto  e  branco.  O  título  da  tabela  deve  ser  alinhado  à  margem  esquerda  e  digitado  em  fonte  Times  New  Roman  /  Arial  11.  As  unidades  de  medida  correspondentes  a  todos  os  termos  deverão ser claramente indicadas, usando o sistema internacional (S.I.). 
+  \subsection{Fundamentação}
+  A primeira fase da metodologia tem como objetivo buscar referências que possam embasar o estudo e servir de padrão para o design e desenvolvimento do projeto.
 
-  \begin{table}
-    \caption{Titulo da Tabela}
-    \centering
-    \begin{tabular}{ |c|c|c|c| } 
-      \hline
-      col1 & col2 & col3 \\
-      \hline
-      \multirow{3}{4em}{Multiple row} & cell2 & cell3 \\ 
-      & cell5 & cell6 \\ 
-      & cell8 & cell9 \\ 
-      \hline
-      \end{tabular}
-    
-      Fonte: Proprio autor
-    \label{tab:table-name}
-  \end{table}
+  Durante essa fase de Fundamentação, o primeiro a ser feito são pesquisas bibliográficas, com o intuito de selecionar artigos úteis e correlatos ao projeto. \textcolor{red}{Para isso, foi utilizado o \textit{Método Bili}.}
 
+  A partir dessas pesquisas, é possível realizar um Estudo do Estado da Arte, selecionando, a partir de um \textcolor{red}{Benchmarking} realizado com robôs quadrúpedes, projetos que possam servir de referência para o desenvolvimento, definindo os \textcolor{red}{conceitos, funcionalidades e design} que o projeto deverá ter.
+
+  \subsection{Desenvolvimento}
+  Durante esta etapa da metodologia, ocorre o desenvolvimento do robô propriamente dito. Inicialmente, duas etapas ocorrem de forma parelela, sendo elas a implementação e simulação dos algoritmos (em ambiente computacional) e a definição e prototipação do design do robô.
+
+  Durante a implementação de algoritmos e simulação, são inicialmente elaborados o diagrama de blocos do sistema e a arquitetura de software do controlador, de forma a padronizar e documentar o desenvolvimento do projeto. A partir disso, os algoritmos de cinemática e controle podem ser implementados e testados em simulação. Para auxiliar e possibilitar o desenvolvimento do projeto, algumas ferramentas e \textit{Softwares} serão utilizados. O ROS - Robot Operating System é um conjunto de bibliotecas e ferramentas de \textit{software Open Source} que auxiliam no desenvolvimento de aplicações robóticas. O ROS Humble, nativo para Ubuntu 22.04, será utilizado, por possuir boa documentação e comunidade ativa, além de possuir pacotes muito úteis para o desenvolvimento do robô. 
+
+  Em paralelo com o desenvolvimento de software, a prototipação e construção do robô é realizada, através da elaboração dos desenhos mecânicos e projetos eletro-eletrônicos. Esta etapa inclui também a impressão 3D das partes mecânicas projetadas, teste dos atuadores e sensores e configuração e comunicação entre o processador e os servo-motores Dynamixel \textcolor{red}{modelo?} que serão utilizados, culminando na montagem física do protótipo funcional. Os Softwares OnShape e XXXX serão utilizados para o desenvolvimento do CAD do robô e para seu projeto elétrico, respectivamente.
+
+  Após essas etapas, é possível realizar a integração dos algoritmos no protótipo físico, de forma a validar o desenvolvimento realizado em ambiente computacional em um robô no mundo real.
+
+  \subsection{Resultados e Análises}
+  A etapa de resultados e análises tem como objetivo inicial realizar testes a fim de coletar dados para a análise de performance dos algoritmos implementados no robô. Durante essa etapa, será feita também uma analise comparativa entre os resultados obtidos em ambiente de simulação e no mundo real. \textcolor{red}{Detalhamento de quais testes serão feitos?}
+
+  \subsection{Defesa}
+  Esta é a última etapa da metodologia, que consiste na finalização e revisão do artigo e na apresentação de defesa do trabalho perante a banca avaliadora. 
 
 \end{document}
