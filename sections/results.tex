@@ -2,32 +2,36 @@
 \graphicspath{{\subfix{../images/}}}
 \begin{document}
 
-  As equações deverão ser escritas em itálico com numeração consecutiva entre parênteses, rente à margem direita. Equações com mais de uma linha deverão ser numeradas na última linha, entre parênteses e rente à margem direita.
+  A etapa de resultados e análises tem como objetivo realizar testes e coletar dados para a análise de performance dos algoritmos implementados no robô. Durante essa etapa, será analisada a performance do robô no mundo real de forma estatistica, por meio de três testes. O primeiro consiste em observar a capacidade do protótipo em mover o pé por uma dada trajetória. No segundo teste é analisado se o robô atende a uma velocidade solicitada, utilizando dois terrenos diferentes e observando a oscilação de estabilidade do corpo ao longo da trajetória. Por fim, foi analisado a perfomance do Caramelo caminhando por terrenos inclinados e sua capacidade de ultrapassar pequenos obstáculos.
 
-  \begin{equation}
-    PV = \eta RT
-  \end{equation}
+  \subsection{Análise de trajetória}
+  Durante este teste, o corpo do protótipo está estático e suspenso por um suporte e então é solicitado que o pé do robô percorra duas trajetórias curvilíneas calculadas pelo algoritimo proposto, até os pontos x1,y1 e x2,y2, detalhados na tabela X.
 
-  Caso necessário, a lista de notações e símbolos utilizados, assim como  suas unidades de medida, deverá ser relacionada antes das referências  bibliográficas por ordem alfabética. Vide NBRs 15287 e 14724.
+  APRESENTAR TABELA E CONSIDERAÇÕES
 
+  \subsection{Controle de velocidade}
 
-  As tabelas deverão ser justificadas (usando toda a área entre as  margens).  As  tabelas  poderão  ser  coloridas  ou  em  preto  e  branco.  O  título  da  tabela  deve  ser  alinhado  à  margem  esquerda  e  digitado  em  fonte  Times  New  Roman  /  Arial  11.  As  unidades  de  medida  correspondentes  a  todos  os  termos  deverão ser claramente indicadas, usando o sistema internacional (S.I.). 
+  Para o teste do controle de velocidade, foi enviado um comando de velocidade linear, na direção x, e medido o tempo que o robô levou para alcançar 1,5 m, dessa forma, obteve-se a velocidade média do robô. Neste experimento parte dos testes aconteceram utilizando o controle de estabilidade proposto e a outra parte sem, a fim de analisar a contribuição deste metódo no equilibrio do robô ao desempenhar uma trajetória. Os testes ocorreram com os mesmos paramêtros de passo do teste anterior, e em dois terrenos distintos, um terreno regular, feito de concreto e outro irregular, composto por pequenas pedras, como demonstra a imagem W.
 
-  \begin{table}
-    \caption{Titulo da Tabela}
-    \centering
-    \begin{tabular}{ |c|c|c|c| } 
-      \hline
-      col1 & col2 & col3 \\
-      \hline
-      \multirow{3}{4em}{Multiple row} & cell2 & cell3 \\ 
-      & cell5 & cell6 \\ 
-      & cell8 & cell9 \\ 
-      \hline
-      \end{tabular}
+  APRESENTAR TABELA E CONSIDERAÇÕES
+  
+  \subsection{Teste 3}
+
+  % \begin{table}
+  %   \caption{Titulo da Tabela}
+  %   \centering
+  %   \begin{tabular}{ |c|c|c|c| } 
+  %     \hline
+  %     col1 & col2 & col3 \\
+  %     \hline
+  %     \multirow{3}{4em}{Multiple row} & cell2 & cell3 \\ 
+  %     & cell5 & cell6 \\ 
+  %     & cell8 & cell9 \\ 
+  %     \hline
+  %     \end{tabular}
     
-      Fonte: Proprio autor
-    \label{tab:table-name}
-  \end{table}
+  %     Fonte: Proprio autor
+  %   \label{tab:table-name}
+  % \end{table}
 
 \end{document}
