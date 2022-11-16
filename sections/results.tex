@@ -114,6 +114,21 @@
     \end{bmatrix})
   \end{equation}
 
+  \subsection{Controle de Rotação}
+
+  Para realizar o controle de rotação do corpo, foram utilizados dois controladores PID, sendo um responsável por controlar a rotação em $X$ do robô ($roll$, figura \ref{fig:pid}) e o outro a rotação em $Y$ ($pitch$), idêntico ao primeiro. Os controladores atuam de forma paralela e independente, de forma que é possível controlar simultaneamente a rotação do corpo em ambos os eixos.
+
+  \begin{figure}[h]
+    \centering
+    \caption{Titulo da Figura}
+    \includegraphics[width=0.48\textwidth]{PID.drawio.png}
+    
+    Fonte: XXX
+    \label{fig:pid}
+  \end{figure}
+
+  O Sensor IMU é responsável por realizar as medições de rotação do robô, realimentando o sistema. A saída dos controles são enviadas para a cinemática do corpo, e o limitador existe para evitar que sejam enviados valores que extrapolam os limites do robô.
+
   \subsection{Análise de trajetória}
   Durante este teste, o corpo do protótipo está estático e suspenso por um suporte e então é solicitado que o pé do robô percorra duas trajetórias curvilíneas calculadas pelo algoritimo proposto, até os pontos x1,y1 e x2,y2, detalhados na tabela X.
 
