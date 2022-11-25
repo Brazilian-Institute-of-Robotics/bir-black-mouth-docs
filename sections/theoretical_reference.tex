@@ -70,7 +70,129 @@
   O modo como cada perna se comporta durante as etapas de \textit{stance} e \textit{swing} pode variar em diversos aspectos, mais ainda é possível elencar semelhanças gerais. No início da etapa de \textit{swing}, calcula-se o local do próximo ponto de apoio dos pés com base na velocidade desejada para o robô e uma trajetória de passo até esse ponto. Essa trajetória pode ter o formato de uma curva senoidal \cite{X.118}, triangular \cite{StanfordPupper}, de Bezier \cite{HackadayQuadruped}, cicloidal \cite{Shi2021} \cite{X.58}, entre outras. Uma consideração comum é a de que as trajetórias das pernas em cada etapa são independentes, ou seja, assumem que as outras pernas e o corpo se comportam de forma ideal. Sendo assim, é necessário controlar a força com que o pé toca o solo, pois este é um ponto chave para a estabilidade do robô \cite{X.118}. Nesse sentido, a trajetória cicloidal ganha destaque por conta de sua primeira derivada nula no momento em que toca o solo. Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio além de deslocar o corpo na direção desejada de locomoção. Para isso, alguns autores utilizam trajetórias para os pés com um formato pré-determinado, assim como na fase de \textit{swing}, não necessariamente repetindo o mesmo formato de curva \cite{X.118} \cite{X.58}. Além disso, controladores de equilíbrio também podem ser implementados. Esses controladores visam estabilizar os ângulos de \textit{pitch} e \textit{roll} do robô \cite{Shi2021} \cite{HackadayQuadruped} \cite{StanfordPupper} \cite{Notspot} ou até ainda outros graus de liberdade \cite{Chen2020140736} \cite{X.134} \cite{Zhang2016284}. Esses controladores podem controlar diretamente a angulação do corpo do robô (com o auxílio de um sensor inercial) e/ou a força de contato com o solo em cada perna, por exemplo.
 
   \subsection{Projeto do robô}
+  \subsubsection{Cinemática Inversa}
+  A obtenção da Cinemática Inversa foi feita de forma analítica, e é descrita no Memorial de Cálculo. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô, calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B}, a partir da posição $(x, y, z)$ desejável para sua pata e dos comprimentos $L_1$, $L_2$ e $L_3$.
+  \begin{equation}
+    \label{eq:theta1}
+    \theta_1 = \arctan{(\frac{x}{y})} - \arctan{(\frac{L_1}{a})}
+  \end{equation}
+  \begin{equation}
+    \label{eq:theta2}
+    \theta_2 = \frac{\pi}{2} - \arctan{(\frac{a}{z}}) - \arctan{(\frac{\sqrt{1-A^2}}{A})}
+  \end{equation}
+  \begin{equation}
+    \label{eq:theta3}
+    \theta_3 = \arctan(\frac{\sqrt{1-B^2}}{B})
+  \end{equation}
+  \begin{equation}
+    \label{eq:a}
+    a = \sqrt{x^2+y^2-L_1^2}
+  \end{equation}
+  \begin{equation}
+    \label{eq:A}
+    A =\frac{a^2+z^2+L_2^2-L_3^2}{2L_2\sqrt{a^2+z^2}}
+  \end{equation}
+  \begin{equation}
+    \label{eq:B}
+    B = \frac{a^2+z^2-L_2^2-L_3^2}{2L_2L_3}
+  \end{equation}
 
-  
+  Essas equações são úteis para o cálculo da posição de uma única perna, mas são insuficientes para realizar a cinemática do corpo do robô. Para isso, o \textit{base\_link} é utilizado como referência, e uma matriz $T_m$ (eq. \ref{eq:Tm}) é utilizada para realizar a cinemática do corpo, a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas, sendo possível controlar cada um dos 6 graus de liberdade. Para isso, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros em relação ao \textit{base\_link} são necessárias.
+
+  \begin{equation}
+    \label{eq:Tm}
+    T_m = 
+    \begin{bmatrix}
+    & & & x_c \\
+    & R_{xyz} & & y_c \\
+    & & & z_c \\
+    0 & 0 & 0 & 1 
+    \end{bmatrix}
+  \end{equation}
+  \begin{equation}
+    \label{eq:Rxyz}
+    \begin{split}
+    R_{xyz} = 
+    \begin{bmatrix}
+    1 & 0 & 0\\
+    0 & \cos\alpha & -\sin\alpha \\
+    0 & \sin\alpha & \cos\alpha
+    \end{bmatrix}
+    \\.
+    \begin{bmatrix}
+    \cos\beta & 0 & \sin\beta \\
+    0 & 1 & 0 \\
+    -\sin\beta & 0 & \cos\beta
+    \end{bmatrix}
+    \\.
+    \begin{bmatrix}
+    \cos\gamma & -\sin\gamma & 0 \\
+    \sin\gamma & \cos\gamma & 0 \\
+    0 & 0 & 1
+    \end{bmatrix}
+    \end{split}
+  \end{equation}
+
+  O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{ik}, y_{ik}, z_{ik})$ resultantes de cada uma das transformações, conforme a equação \ref{eq:xyzik}. O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$.
+
+  \begin{equation}
+    \label{eq:xyzik}
+    \begin{bmatrix}
+    x_{ik} \\
+    y_{ik} \\
+    z_{ik} \\
+    1
+    \end{bmatrix}= (T_m.T_{FR})^{-1}. 
+    \begin{bmatrix}
+    x \\
+    y \\
+    z \\
+    1
+    \end{bmatrix}
+  \end{equation}
+
+  Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu link quando o robô está em seu estado de repouso (figura \ref{fig:joints_ik}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
+
+  \begin{figure}[h]
+    \centering
+    \caption{Titulo da Figura}
+    \includegraphics[width=0.48\textwidth]{joints_ik.png}
+    
+    Fonte: XXX
+    \label{fig:joints_ik}
+  \end{figure}
+
+
+  \begin{equation}
+    \label{eq:xyzik_foot}
+    \begin{bmatrix}
+    x_{ik} \\
+    y_{ik} \\
+    z_{ik} \\
+    1
+    \end{bmatrix}= (T_m.T_{FR})^{-1}.
+    (F_{FR}.
+    \begin{bmatrix}
+    x \\
+    y \\
+    z \\
+    1
+    \end{bmatrix})
+  \end{equation}
+
+  \subsubsection{Controle de Rotação}
+
+  Para realizar o controle de rotação do corpo, foram utilizados dois controladores PID, sendo um responsável por controlar a rotação em $X$ do robô ($roll$, figura \ref{fig:pid}) e o outro a rotação em $Y$ ($pitch$), idêntico ao primeiro. Os controladores atuam de forma paralela e independente, de forma que é possível controlar simultaneamente a rotação do corpo em ambos os eixos.
+
+  \begin{figure}[h]
+    \centering
+    \caption{Titulo da Figura}
+    \includegraphics[width=0.48\textwidth]{PID.drawio.png}
+    
+    Fonte: XXX
+    \label{fig:pid}
+  \end{figure}
+
+  O Sensor IMU é responsável por realizar as medições de rotação do robô, realimentando o sistema. As saídas dos controles são enviadas para a cinemática do corpo, e o limitador existe para evitar que sejam enviados valores que extrapolam os limites do robô.  
   
 \end{document}
