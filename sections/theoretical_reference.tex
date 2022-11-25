@@ -1,200 +1,235 @@
 \documentclass[../main.tex]{subfiles}
 \graphicspath{{\subfix{../images/}}}
 \begin{document}
- 
-  Nesta seção, será apresentado o conceito geral de um robô quadrúpede, comparando-o a outros tipos de robôs móveis com e sem pernas. Além disso, serão abordados aspectos estruturais, de locomoção e controle dos robôs quadrúpedes. Por fim, o projeto Caramelo será apresentado junto com todos os aspectos do desenvolvimento relacionados com os conceitos apresentados nos itens anteriores.
 
-  \subsection{Apresentação e conceito geral}
-  O robô quadrúpede é um sistema robótico móvel que se locomove com a ajuda de pernas. Robôs móveis podem ser divididos em três grupos, relacionados aos seus sistemas de locomoção: robôs com rodas, com esteiras e com pernas. Quando comparado aos dois primeiros, o último grupo apresenta diversas particularidades que o confere muitas vantagens quanto a mobilidade, robustez a diferentes terrenos e superação de obstáculos \cite{Biswal2021}. Robôs com rodas e esteiras apresentam boa performance em terrenos planos e conseguem navegar de forma autônoma pelo espaço desde que haja um caminho contínuo entre os pontos de origem e destino. Robôs com pernas, por outro lado, são capazes de escolher os melhores pontos de suporte no terreno para apoiar seus pés, o que permite uma navegação em caminhos discretos (com obstáculos de grande inclinação e variação de altura) \cite{Yao2021}. Essa capacidade de se adaptar a terrenos desnivelados favorece sua aplicação em diversos setores: industriais, militares, missões de inspeção, resgate, entre várias outras. Por outro lado, essas vantagens vêm às custas de uma menor estabilidade de locomoção e, por consequência, maior complexidade de controle.
+Nesta seção, será apresentado o conceito geral de um robô quadrúpede, comparando-o a outros tipos de robôs móveis com e sem pernas. Além disso, serão abordados aspectos estruturais, de locomoção e controle dos robôs quadrúpedes. Por fim, o projeto Caramelo será apresentado junto com todos os aspectos do desenvolvimento relacionados com os conceitos apresentados nos itens anteriores.
 
-  Robôs com pernas também apresentam diversas diferenças entre si, majoritariamente ligadas à quantidade de pernas que possuem. A quantidade de pernas de um robô está diretamente relacionada a sua estabilidade, capacidade de locomoção e eficiência. Os bípedes possuem baixa estabilidade, visto que se apoiam em apenas uma perna para poder andar. Os com múltiplas pernas (mais de quatro) possuem maior estabilidade, afinal conseguem manter pelo menos três (muitas vezes até quatro) pontos de apoio no solo enquanto realizam um passo. No entanto, cada perna representa um conjunto adicional de juntas e atuadores, diminuindo a eficiência do sistema como um todo. Os quadrúpedes conseguem unir vantagens desses dois tipos ao apresentar um balanço entre estabilidade e eficiência. Eles possuem uma estabilidade passiva quando estáticos, pois se apoiam em quatro pontos. Além disso, também são capazes de navegar de forma estável em baixas velocidade, movendo uma perna por vez enquanto as outras três permanecem no solo. Isso elimina a redundância presente nos robôs com múltiplas pernas, aumentando sua eficiência \cite{Yao2021}.
+\subsection{Apresentação e conceito geral}
+O robô quadrúpede é um sistema robótico móvel que se locomove com a ajuda de pernas. Robôs móveis podem ser divididos em três grupos, relacionados aos seus sistemas de locomoção: robôs com rodas, com esteiras e com pernas. Quando comparado aos dois primeiros, o último grupo apresenta diversas particularidades que o confere muitas vantagens quanto a mobilidade, robustez a diferentes terrenos e superação de obstáculos \cite{Biswal2021}. Robôs com rodas e esteiras apresentam boa performance em terrenos planos e conseguem navegar de forma autônoma pelo espaço desde que haja um caminho contínuo entre os pontos de origem e destino. Robôs com pernas, por outro lado, são capazes de escolher os melhores pontos de suporte no terreno para apoiar seus pés, o que permite uma navegação em caminhos discretos (com obstáculos de grande inclinação e variação de altura) \cite{Yao2021}. Essa capacidade de se adaptar a terrenos desnivelados favorece sua aplicação em diversos setores: industriais, militares, missões de inspeção, resgate, entre várias outras. Por outro lado, essas vantagens vêm às custas de uma menor estabilidade de locomoção e, por consequência, maior complexidade de controle.
 
-  \subsection{Estrutura e design}
-  Pelo fato de robôs quadrúpedes terem se tornado um grande foco de pesquisa nos últimos anos, diferentes \textit{designs} já foram pesquisados, variando, por exemplo, estrutura, configuração de pernas e o número de graus de liberdade (GDL) por perna. 
-  
-  Um dos tipos de estrutura que existem é a de tipo mamífero. Dois exemplos de robôs que utilizam essa estrutura estão ilustrados na Figura \ref{fig:structure_design}. 
+Robôs com pernas também apresentam diversas diferenças entre si, majoritariamente ligadas à quantidade de pernas que possuem. A quantidade de pernas de um robô está diretamente relacionada a sua estabilidade, capacidade de locomoção e eficiência. Os bípedes possuem baixa estabilidade, visto que se apoiam em apenas uma perna para poder andar. Os com múltiplas pernas (mais de quatro) possuem maior estabilidade, afinal conseguem manter pelo menos três (muitas vezes até quatro) pontos de apoio no solo enquanto realizam um passo. No entanto, cada perna representa um conjunto adicional de juntas e atuadores, diminuindo a eficiência do sistema como um todo. Os quadrúpedes conseguem unir vantagens desses dois tipos ao apresentar um balanço entre estabilidade e eficiência. Eles possuem uma estabilidade passiva quando estáticos, pois se apoiam em quatro pontos. Além disso, também são capazes de navegar de forma estável em baixas velocidade, movendo uma perna por vez enquanto as outras três permanecem no solo. Isso elimina a redundância presente nos robôs com múltiplas pernas, aumentando sua eficiência \cite{Yao2021}.
 
-  %TODO adicionar figura dos planos frontal, sagital
-  \begin{figure}
-    \includegraphics[width=0.48\textwidth]{structure_design.png}
-    SCOUT-II / SPOT / TITAN-XIII
-    \label{fig:structure_design}
-  \end{figure}
+\subsection{Estrutura e design}
+Pelo fato de robôs quadrúpedes terem se tornado um grande foco de pesquisa nos últimos anos, diferentes \textit{designs} já foram pesquisados, variando, por exemplo, estrutura, configuração de pernas e o número de graus de liberdade (GDL) por perna.
 
-  A estrutura tipo mamífero tem esse nome por conta da sua semelhança com a postura de mamíferos quadrúpedes como cachorros e cavalos. Kitano et al., em \cite{Kitano2016}, analisa dois tipos diferentes de estruturas de robôs quadrúpedes: a do tipo \textit{sprawling} e a do tipo mamífero. Segundo sua análise, a última permite alcançar maiores velocidades por possuir duas juntas no plano sagital. Além disso, ela também é mais eficiente, pois os atuadores requerem menos torque para sustentar o robô: sua estrutura mais compacta diminui o braço de alavanca sobre o qual a força peso do robô atua. Essa estrutura também favorece a navegação em ambientes estreitos, onde um robô do tipo \textit{sprawling}, por exemplo, teria dificuldades de acessar.
+Um dos tipos de estrutura que existem é a de tipo mamífero. Exemplos de robôs que utilizam essa estrutura estão ilustrados nas Figuras \ref{fig:robots_structures_a} e \ref{fig:robots_structures_b}.
 
-  Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto à configuração das pernas. Os quatro tipos de configuração podem ser vistos na Figura \ref{fig:joint_configurations}.
-  
-  \begin{figure}[h]
+%TODO adicionar figura dos planos frontal, sagital
+\begin{figure*}[h]
+  \centering
+  \caption{Exemplos de robôs com estruturas do tipo mamífero e \textit{sprawling}.}
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=1.0\textwidth]{Anymal.png}
+    \caption{ANYmal}
+    \label{fig:robots_structures_a}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=1.0\textwidth]{Spot.png}
+    \caption{Spot}
+    \label{fig:robots_structures_b}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\textwidth}
+    \includegraphics[width=1.0\textwidth]{Titan.png}
+    \caption{TITAN-XIII}
+    \label{fig:robots_structures_c}
+  \end{subfigure}
+  Fonte: Adaptado de \cite{AnymalImg1} \cite{SpotImg1} \cite{Kitano2016}.
+  \label{fig:robots_structures}
+\end{figure*}
+
+A estrutura tipo mamífero tem esse nome por conta da sua semelhança com a postura de mamíferos quadrúpedes como cachorros e cavalos. Kitano et al., em \cite{Kitano2016}, analisa dois tipos diferentes de estruturas de robôs quadrúpedes: a do tipo \textit{sprawling} (ver Figura \ref{fig:robots_structures_c}) e a do tipo mamífero. Segundo sua análise, a última permite alcançar maiores velocidades por possuir duas juntas no plano sagital. Além disso, ela também é mais eficiente, pois os atuadores requerem menos torque para sustentar o robô: sua estrutura mais compacta diminui o braço de alavanca sobre o qual a força peso do robô atua. Essa estrutura também favorece a navegação em ambientes estreitos, onde um robô do tipo \textit{sprawling}, por exemplo, teria dificuldades de acessar.
+
+Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto à configuração das pernas. Os quatro tipos de configuração podem ser vistos na Figura \ref{fig:joint_configurations}.
+
+\begin{figure}[h]
+  \centering
+  \caption{Tipos de configuração de pernas para robôs com estrutura tipo mamífero.}
+  \begin{subfigure}[t]{0.24\textwidth}
     \centering
-    \caption{Titulo da Figura}
-    \includegraphics[width=0.48\textwidth]{joint_configurations.png}
-    
-    Fonte: XXX
-    \label{fig:joint_configurations}
-  \end{figure}
+    \includegraphics[width=1.0\textwidth]{full_elbow.png}
+    \caption{\textit{full-elbow}}
+    \label{fig:joint_configurations_a}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.24\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{full_knee.png}
+    \caption{\textit{full-knee}}
+    \label{fig:joint_configurations_b}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.24\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{knee_elbow.png}
+    \caption{\textit{knee-elbow}}
+    \label{fig:joint_configurations_c}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.24\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{elbow_knee.png}
+    \caption{\textit{elbow-knee}}
+    \label{fig:joint_configurations_d}
+  \end{subfigure}
 
-  Entre elas destacam-se a \textit{full-elbow} e o \textit{elbow-knee}. Robôs como o Spot, MIT Cheetah e Stanford Pupper utilizam a configuração \textit{full-elbow}, enquanto outros como o ANYmal, StarlETH e BigDog adotam a configuração  \textit{elbow-knee}. Yao \textit{et al.}, em \cite{Yao2021}, acreditam que a configuração \textit{elbow-knee} possibilita maior estabilidade, mas as características de movimento da configuração \textit{full-elbow} podem ser superiores.
+  Fonte: \cite{Yao2021}
+  \label{fig:joint_configurations}
+\end{figure}
 
-  O número de juntas nas pernas, que coincide com a quantidade de GDL do robô, também é um dos aspectos estudados sobre os quadrúpedes. A maioria apresenta 3 GDL por perna, o que é suficiente para que o robô consiga mover seus pés em três dimensões e realize diversos tipos de marchas. A fim de simplificar a estrutura e consequentemente o controle, alguns robôs utilizam apenas 2 GDL por perna, eliminando a junta no corpo que movimenta a perna no plano frontal. Outros robôs buscam performances mais semelhantes ao andar de animais reais, o que demanda maior flexibilidade de movimento, justificando o acréscimo de uma quarta junta. No entanto, como já mencionado, esse acréscimo aumenta a complexidade do controle e prejudica a eficiência. Essa perda de eficiência se dá porque mais atuadores significa mais consumo de energia e também mais massa. 
-  
-  A massa do robô quadrúpede deve ser a menor possível. Quanto mais leve for o sistema, menos torque será demandado dos motores e maior sua eficiência. Além disso, a distribuição de massa do robô também é um aspecto muito importante. A massa deve ser localizada majoritariamente no corpo, enquanto as pernas devem possuir baixa inércia. Isso permite que elas se movam rapidamente sem alterar, de forma significativa, o centro de gravidade do robô, o que aumenta a estabilidade e requer menos complexidade de controle. Possuir baixa inércia significa possuir baixa massa. Por outro lado, as pernas devem ser resistentes o suficiente para suportar o peso do robô, além de distúrbios causados pelo impacto dos pés com o chão, o que pode demandar um aumento de massa nas pernas. Portanto, um equilíbrio entre massa e resistência deve ser buscado ao mesmo tempo em que deve-se buscar diminuir a massa total do sistema \cite{Zhong2019}.
+Entre elas destacam-se a \textit{full-elbow} e o \textit{elbow-knee}. Robôs como o Spot, MIT Cheetah e Stanford Pupper utilizam a configuração \textit{full-elbow}, enquanto outros como o ANYmal, StarlETH e BigDog adotam a configuração  \textit{elbow-knee}. Yao \textit{et al.}, em \cite{Yao2021}, acreditam que a configuração \textit{elbow-knee} possibilita maior estabilidade, mas as características de movimento da configuração \textit{full-elbow} podem ser superiores.
 
-  \subsection{Movimentação por marchas}
-  Robôs quadrúpedes se movimentam conforme uma sequência de movimentos coordenados de suas pernas que compõe uma marcha. Em uma descrição mais detalhada: 
+O número de juntas nas pernas, que coincide com a quantidade de GDL do robô, também é um dos aspectos estudados sobre os quadrúpedes. A maioria apresenta 3 GDL por perna, o que é suficiente para que o robô consiga mover seus pés em três dimensões e realize diversos tipos de marchas. A fim de simplificar a estrutura e consequentemente o controle, alguns robôs utilizam apenas 2 GDL por perna, eliminando a junta no corpo que movimenta a perna no plano frontal. Outros robôs buscam performances mais semelhantes ao andar de animais reais, o que demanda maior flexibilidade de movimento, justificando o acréscimo de uma quarta junta. No entanto, como já mencionado, esse acréscimo aumenta a complexidade do controle e prejudica a eficiência. Essa perda de eficiência se dá porque mais atuadores significa mais consumo de energia e também mais massa.
 
-  \begin{quote}
-    Uma marcha é definida pelo tempo e local de colocação e levantamento de cada pé, coordenado com o movimento do corpo em seus seis graus de liberdade, para mover o corpo de um lugar para outro. \hfill Song and Waldron (1989)
-  \end{quote}
+A massa do robô quadrúpede deve ser a menor possível. Quanto mais leve for o sistema, menos torque será demandado dos motores e maior sua eficiência. Além disso, a distribuição de massa do robô também é um aspecto muito importante. A massa deve ser localizada majoritariamente no corpo, enquanto as pernas devem possuir baixa inércia. Isso permite que elas se movam rapidamente sem alterar, de forma significativa, o centro de gravidade do robô, o que aumenta a estabilidade e requer menos complexidade de controle. Possuir baixa inércia significa possuir baixa massa. Por outro lado, as pernas devem ser resistentes o suficiente para suportar o peso do robô, além de distúrbios causados pelo impacto dos pés com o chão, o que pode demandar um aumento de massa nas pernas. Portanto, um equilíbrio entre massa e resistência deve ser buscado ao mesmo tempo em que deve-se buscar diminuir a massa total do sistema \cite{Zhong2019}.
 
-  A marcha é um aspecto fundamental para garantir que um robô com pernas caminhe de forma eficiente e estável, especialmente em terrenos irregulares \cite{X.129}. Para isso, é necessário levar em consideração suas etapas e, consequentemente, seu tipo.
-  
-  Marchas são divididas em duas etapas: \textit{stance} e \textit{swing}. Durante a fase \textit{stance}, as pernas estão no solo e impulsionam o robô para frente. Na etapa de \textit{swing}, as pernas são erguidas para deslocar o pé até o próximo ponto de apoio. É importante ressaltar que as fases de \textit{stance} e \textit{swing} não ocorrem em todas as pernas ao mesmo tempo. A depender do tipo de marcha, algumas pernas podem estar em \textit{swing} enquanto outras estarão em \textit{stance}.
+\subsection{Movimentação por marchas}
+Robôs quadrúpedes se movimentam conforme uma sequência de movimentos coordenados de suas pernas que compõe uma marcha. Uma marcha é definida pelo tempo e local de colocação e levantamento de cada pé, coordenado com o movimento do corpo em seus seis graus de liberdade, para mover o corpo de um lugar para outro. \textcolor{red}{Song and Waldron (1989)}
 
-  O \textit{trot} é um tipo de marcha muito utilizado por robôs quadrúpedes devido a sua simplicidade e eficiência. Este tipo de marcha é periódico e simétrico. Marchas periódicas são caracterizadas pelo fato de que os mesmos movimentos sempre se repetem no mesmo instante dentro de um ciclo de locomoção \cite{de2006quadrupedal}. Já a simetria é uma característica de marchas que movimentam um par de pernas em conjunto, saindo e voltando para o solo de forma sincronizada. No \textit{trot}, as pernas diagonais se movimentam em pares e quando um par está na etapa de \textit{swing} o outro está na etapa de \textit{stance}. Outra característica da marcha \textit{trot} é que ela pode ser contínua ou descontínua. Uma marcha contínua mantém o corpo do robô em movimento constante, enquanto a descontínua submete o corpo a um movimento intermitente \cite{de2006quadrupedal}. Portanto, quando a marcha \textit{trot} é contínua, as pernas em \textit{stance}, além de sustentar o robô, deslocam o corpo na direção do movimento, o que exige maior capacidade de controle. Em contrapartida, quando ela é descontínua o corpo fica estático esperando as pernas em \textit{swing} terminarem seu movimento para, então, ser deslocado quando as quatro pernas já estão no solo.
+A marcha é um aspecto fundamental para garantir que um robô com pernas caminhe de forma eficiente e estável, especialmente em terrenos irregulares \cite{X.129}. Para isso, é necessário levar em consideração suas etapas e, consequentemente, seu tipo.
 
-  \subsection{Controle de locomoção}
+Marchas são divididas em duas etapas: \textit{stance} e \textit{swing}. Durante a fase \textit{stance}, as pernas estão no solo e impulsionam o robô para frente. Na etapa de \textit{swing}, as pernas são erguidas para deslocar o pé até o próximo ponto de apoio. É importante ressaltar que as fases de \textit{stance} e \textit{swing} não ocorrem em todas as pernas ao mesmo tempo. A depender do tipo de marcha, algumas pernas podem estar em \textit{swing} enquanto outras estarão em \textit{stance}.
 
-  Todo o controle de locomoção do robô é realizado pelo planejador de marchas. Ele é o responsável por enviar os comandos para que as pernas se movam para os locais desejados no momento esperado. Logo, o planejador irá apenas ditar o ponto no espaço no qual cada pé do robô deve estar, em relação a um eixo de referência, cabendo ao sistema de controle executar o movimento. A seguir, serão discutidos dois itens fundamentais do sistema de controle de um robô quadrúpede: o modelo cinemático e as estratégias de controle.
+O \textit{trot} é um tipo de marcha muito utilizado por robôs quadrúpedes devido a sua simplicidade e eficiência. Este tipo de marcha é periódico e simétrico. Marchas periódicas são caracterizadas pelo fato de que os mesmos movimentos sempre se repetem no mesmo instante dentro de um ciclo de locomoção \cite{de2006quadrupedal}. Já a simetria é uma característica de marchas que movimentam um par de pernas em conjunto, saindo e voltando para o solo de forma sincronizada. No \textit{trot}, as pernas diagonais se movimentam em pares e quando um par está na etapa de \textit{swing} o outro está na etapa de \textit{stance}. Outra característica da marcha \textit{trot} é que ela pode ser contínua ou descontínua. Uma marcha contínua mantém o corpo do robô em movimento constante, enquanto a descontínua submete o corpo a um movimento intermitente \cite{de2006quadrupedal}. Portanto, quando a marcha \textit{trot} é contínua, as pernas em \textit{stance}, além de sustentar o robô, deslocam o corpo na direção do movimento, o que exige maior capacidade de controle. Em contrapartida, quando ela é descontínua o corpo fica estático esperando as pernas em \textit{swing} terminarem seu movimento para, então, ser deslocado quando as quatro pernas já estão no solo.
 
-  \subsubsection{Modelo cinemático}
-  O modelo cinemático de um robô quadrúpede descreve a relação entre a posição de um pé em três dimensões com a rotação de cada junta da sua respectiva perna. Como todas as pernas do robô são iguais, pode-se formular as relações de apenas uma perna e replicá-la quatro vezes, acrescentando as devidas translações e rotações, para se ter o modelo cinemático de todo o sistema. 
-  
-  O modelo cinemático pode ser usado par resolver dois problemas: a cinemática direta e a cinemática inversa. A cinemática direta fornece a posição de um pé em $(x, y, z)$ em função dos ângulos das juntas, enquanto que a cinemática inversa fornece o ângulo das juntas que correspondente a uma posição do pé do espaço tridimensional. Esses dois problemas são complementares, sendo a saída de um a entrada do outro e vice-versa. A partir da cinemática inversa, o robô consegue determinar quanto deve rotacionar seus atuadores para mover o pé alguma distância nas direções $(x, y e z)$. Com a cinemática direta, é possível saber se o pé de fato chegou na posição em que ele deveria estar. Portanto, ambos são muito importantes para o controle de locomoção do robô.
+\subsection{Controle de locomoção}
 
-  \subsubsection{Estratégias de controle}
-  A locomoção de robôs quadrúpede, em geral, segue uma sequência de passos. Raibert propôs em \cite{Raibert1986} um método de controle baseado em três etapas: controle de salto, controle de velocidade e controle de postura do corpo. Essa estratégia de controle foi utilizada para controlar robôs com uma, duas e quatro pernas (o motivo de se ter um controle de salto é que robôs com apenas uma perna só podem ser locomover saltando). Sua premissa básica era a de que apenas uma perna estaria em \textit{stance} ou em \textit{swing} por vez. A fim da satisfazer essa premissa para robôs com mais de duas pernas, foi proposto o conceito de pernas virtuais. Isto é, um conjunto de pernas deve realizar igual comportamento quando em \textit{swing} e \textit{stance} e as fases de \textit{swing} e \textit{stance} de cada conjunto devem ser alternadas. Esse conceito foi utilizado para embasar o uso de marchas simétricas e periódicas como o \textit{trot}.
+Todo o controle de locomoção do robô é realizado pelo planejador de marchas. Ele é o responsável por enviar os comandos para que as pernas se movam para os locais desejados no momento esperado. Logo, o planejador irá apenas ditar o ponto no espaço no qual cada pé do robô deve estar, em relação a um eixo de referência, cabendo ao sistema de controle executar o movimento. A seguir, serão discutidos dois itens fundamentais do sistema de controle de um robô quadrúpede: o modelo cinemático e as estratégias de controle.
 
-  Essa estratégia de controle em três etapas foi responsável por locomover robôs com pernas rígidas (apenas 2 GDL por perna, sendo uma junta rotativa e outra prismática) de maneira simples, porém esses robôs apenas operavam no terreno plano e controlado do laboratório. A fim de possibilitar a operação de robôs com pernas em terrenos desnivelados e de difícil mobilidade, Raibert \textit{et. al.} propôs um outro sistema de controle no seu trabalho sobre o BigDog \cite{RAIBERT200810822}. O BigDog é um robô quadrúpede com 4 GDL por perna movido por atuadores hidráulicos. Essa maior flexibilidade de movimentação das pernas permite controlar a locomoção do robô sem que este precise saltar, sendo possível, então, dividir o controle de locomoção em duas etapas principais: controle de \textit{stance} e controle de \textit{swing}. Como o nome sugere, o controlador de \textit{stance} é o responsável por controlar o comportamento das pernas na fase de \textit{stance}, enquanto o controlador de \textit{swing} é o responsável por controlar as pernas em \textit{swing}. Vale lembrar que durante a marcha, algumas pernas podem estar na etapa de \textit{swing} enquanto outras estão da etapa de \textit{stance}, o que significa que esses controladores ora assumem o comando de um par de pernas, ora do outro (essa troca não necessariamente se dá em pares, porém isso é válido para marchas simétricas como o \textit{trot}). Quem define o momento em que cada controlador assume o controle de uma determinada perna é o planejador de marchas.
+\subsubsection{Modelo cinemático}
+O modelo cinemático de um robô quadrúpede descreve a relação entre a posição de um pé em três dimensões com a rotação de cada junta da sua respectiva perna. Como todas as pernas do robô são iguais, pode-se formular as relações de apenas uma perna e replicá-la quatro vezes, acrescentando as devidas translações e rotações, para se ter o modelo cinemático de todo o sistema.
 
-  O modo como cada perna se comporta durante as etapas de \textit{stance} e \textit{swing} pode variar em diversos aspectos, mais ainda é possível elencar semelhanças gerais. No início da etapa de \textit{swing}, calcula-se o local do próximo ponto de apoio dos pés com base na velocidade desejada para o robô e uma trajetória de passo até esse ponto. Essa trajetória pode ter o formato de uma curva senoidal \cite{X.118}, triangular \cite{StanfordPupper}, de Bezier \cite{HackadayQuadruped}, cicloidal \cite{Shi2021} \cite{X.58}, entre outras. Uma consideração comum é a de que as trajetórias das pernas em cada etapa são independentes, ou seja, assumem que as outras pernas e o corpo se comportam de forma ideal. Sendo assim, é necessário controlar a força com que o pé toca o solo, pois este é um ponto chave para a estabilidade do quadrúpede \cite{X.118}. Nesse sentido, a trajetória cicloidal ganha destaque por conta de sua primeira derivada nula no momento em que se aproxima do seu ponto mínimo. 
-  
-  Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio, além de deslocar o corpo na direção desejada de locomoção. Para isso, alguns robôs utilizam trajetórias para os pés com um formato pré-determinado assim como na fase de \textit{swing}, não necessariamente repetindo o mesmo formato de curva desta \cite{X.118} \cite{X.58}. Além disso, controladores de equilíbrio também podem ser implementados nessa etapa. Esses controladores visam estabilizar os ângulos de \textit{pitch} e \textit{roll} do robô \cite{Shi2021} \cite{HackadayQuadruped} \cite{StanfordPupper} \cite{Notspot} ou até ainda outros graus de liberdade \cite{Chen2020140736} \cite{X.134} \cite{Zhang2016284}. Esses controladores podem controlar diretamente a angulação do corpo do robô (com o auxílio de um sensor inercial) e/ou a força de contato com o solo em cada perna, por exemplo.
+O modelo cinemático pode ser usado par resolver dois problemas: a cinemática direta e a cinemática inversa. A cinemática direta fornece a posição de um pé em $(x, y, z)$ em função dos ângulos das juntas, enquanto que a cinemática inversa fornece o ângulo das juntas que correspondente a uma posição do pé do espaço tridimensional. Esses dois problemas são complementares, sendo a saída de um a entrada do outro e vice-versa. A partir da cinemática inversa, o robô consegue determinar quanto deve rotacionar seus atuadores para mover o pé alguma distância nas direções $(x, y e z)$. Com a cinemática direta, é possível saber se o pé de fato chegou na posição em que ele deveria estar. Portanto, ambos são muito importantes para o controle de locomoção do robô.
 
-  \subsection{Projeto do robô}
-  \subsubsection{Cinemática Inversa}
-  A obtenção da Cinemática Inversa foi feita de forma analítica, e é descrita no Memorial de Cálculo. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô, calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B}, a partir da posição $(x, y, z)$ desejável para sua pata e dos comprimentos $L_1$, $L_2$ e $L_3$.
-  \begin{equation}
-    \label{eq:theta1}
-    \theta_1 = \arctan{(\frac{x}{y})} - \arctan{(\frac{L_1}{a})}
-  \end{equation}
-  \begin{equation}
-    \label{eq:theta2}
-    \theta_2 = \frac{\pi}{2} - \arctan{(\frac{a}{z}}) - \arctan{(\frac{\sqrt{1-A^2}}{A})}
-  \end{equation}
-  \begin{equation}
-    \label{eq:theta3}
-    \theta_3 = \arctan(\frac{\sqrt{1-B^2}}{B})
-  \end{equation}
-  \begin{equation}
-    \label{eq:a}
-    a = \sqrt{x^2+y^2-L_1^2}
-  \end{equation}
-  \begin{equation}
-    \label{eq:A}
-    A =\frac{a^2+z^2+L_2^2-L_3^2}{2L_2\sqrt{a^2+z^2}}
-  \end{equation}
-  \begin{equation}
-    \label{eq:B}
-    B = \frac{a^2+z^2-L_2^2-L_3^2}{2L_2L_3}
-  \end{equation}
+\subsubsection{Estratégias de controle}
+A locomoção de robôs quadrúpede, em geral, segue uma sequência de passos. Raibert propôs em \cite{Raibert1986} um método de controle baseado em três etapas: controle de salto, controle de velocidade e controle de postura do corpo. Essa estratégia de controle foi utilizada para controlar robôs com uma, duas e quatro pernas (o motivo de se ter um controle de salto é que robôs com apenas uma perna só podem ser locomover saltando). Sua premissa básica era a de que apenas uma perna estaria em \textit{stance} ou em \textit{swing} por vez. A fim da satisfazer essa premissa para robôs com mais de duas pernas, foi proposto o conceito de pernas virtuais. Isto é, um conjunto de pernas deve realizar igual comportamento quando em \textit{swing} e \textit{stance} e as fases de \textit{swing} e \textit{stance} de cada conjunto devem ser alternadas. Esse conceito foi utilizado para embasar o uso de marchas simétricas e periódicas como o \textit{trot}.
 
-  Essas equações são úteis para o cálculo da posição de uma única perna, mas são insuficientes para realizar a cinemática do corpo do robô. Para isso, o \textit{base\_link} é utilizado como referência, e uma matriz $T_m$ (eq. \ref{eq:Tm}) é utilizada para realizar a cinemática do corpo, a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas, sendo possível controlar cada um dos 6 graus de liberdade. Para isso, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros em relação ao \textit{base\_link} são necessárias.
+Essa estratégia de controle em três etapas foi responsável por locomover robôs com pernas rígidas (apenas 2 GDL por perna, sendo uma junta rotativa e outra prismática) de maneira simples, porém esses robôs apenas operavam no terreno plano e controlado do laboratório. A fim de possibilitar a operação de robôs com pernas em terrenos desnivelados e de difícil mobilidade, Raibert \textit{et. al.} propôs um outro sistema de controle no seu trabalho sobre o BigDog \cite{RAIBERT200810822}. O BigDog é um robô quadrúpede com 4 GDL por perna movido por atuadores hidráulicos. Essa maior flexibilidade de movimentação das pernas permite controlar a locomoção do robô sem que este precise saltar, sendo possível, então, dividir o controle de locomoção em duas etapas principais: controle de \textit{stance} e controle de \textit{swing}. Como o nome sugere, o controlador de \textit{stance} é o responsável por controlar o comportamento das pernas na fase de \textit{stance}, enquanto o controlador de \textit{swing} é o responsável por controlar as pernas em \textit{swing}. Vale lembrar que durante a marcha, algumas pernas podem estar na etapa de \textit{swing} enquanto outras estão da etapa de \textit{stance}, o que significa que esses controladores ora assumem o comando de um par de pernas, ora do outro (essa troca não necessariamente se dá em pares, porém isso é válido para marchas simétricas como o \textit{trot}). Quem define o momento em que cada controlador assume o controle de uma determinada perna é o planejador de marchas.
 
-  \begin{equation}
-    \label{eq:Tm}
-    T_m = 
+O modo como cada perna se comporta durante as etapas de \textit{stance} e \textit{swing} pode variar em diversos aspectos, mais ainda é possível elencar semelhanças gerais. No início da etapa de \textit{swing}, calcula-se o local do próximo ponto de apoio dos pés com base na velocidade desejada para o robô e uma trajetória de passo até esse ponto. Essa trajetória pode ter o formato de uma curva senoidal \cite{X.118}, triangular \cite{StanfordPupper}, de Bezier \cite{HackadayQuadruped}, cicloidal \cite{Shi2021} \cite{X.58}, entre outras. Uma consideração comum é a de que as trajetórias das pernas em cada etapa são independentes, ou seja, assumem que as outras pernas e o corpo se comportam de forma ideal. Sendo assim, é necessário controlar a força com que o pé toca o solo, pois este é um ponto chave para a estabilidade do quadrúpede \cite{X.118}. Nesse sentido, a trajetória cicloidal ganha destaque por conta de sua primeira derivada nula no momento em que se aproxima do seu ponto mínimo.
+
+Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio, além de deslocar o corpo na direção desejada de locomoção. Para isso, alguns robôs utilizam trajetórias para os pés com um formato pré-determinado assim como na fase de \textit{swing}, não necessariamente repetindo o mesmo formato de curva desta \cite{X.118} \cite{X.58}. Além disso, controladores de equilíbrio também podem ser implementados nessa etapa. Esses controladores visam estabilizar os ângulos de \textit{pitch} e \textit{roll} do robô \cite{Shi2021} \cite{HackadayQuadruped} \cite{StanfordPupper} \cite{Notspot} ou até ainda outros graus de liberdade \cite{Chen2020140736} \cite{X.134} \cite{Zhang2016284}. Esses controladores podem controlar diretamente a angulação do corpo do robô (com o auxílio de um sensor inercial) e/ou a força de contato com o solo em cada perna, por exemplo.
+
+\subsection{Projeto do robô}
+\subsubsection{Cinemática Inversa}
+A obtenção da Cinemática Inversa foi feita de forma analítica, e é descrita no Memorial de Cálculo. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô, calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B}, a partir da posição $(x, y, z)$ desejável para sua pata e dos comprimentos $L_1$, $L_2$ e $L_3$.
+\begin{equation}
+  \label{eq:theta1}
+  \theta_1 = \arctan{(\frac{x}{y})} - \arctan{(\frac{L_1}{a})}
+\end{equation}
+\begin{equation}
+  \label{eq:theta2}
+  \theta_2 = \frac{\pi}{2} - \arctan{(\frac{a}{z}}) - \arctan{(\frac{\sqrt{1-A^2}}{A})}
+\end{equation}
+\begin{equation}
+  \label{eq:theta3}
+  \theta_3 = \arctan(\frac{\sqrt{1-B^2}}{B})
+\end{equation}
+\begin{equation}
+  \label{eq:a}
+  a = \sqrt{x^2+y^2-L_1^2}
+\end{equation}
+\begin{equation}
+  \label{eq:A}
+  A =\frac{a^2+z^2+L_2^2-L_3^2}{2L_2\sqrt{a^2+z^2}}
+\end{equation}
+\begin{equation}
+  \label{eq:B}
+  B = \frac{a^2+z^2-L_2^2-L_3^2}{2L_2L_3}
+\end{equation}
+
+Essas equações são úteis para o cálculo da posição de uma única perna, mas são insuficientes para realizar a cinemática do corpo do robô. Para isso, o \textit{base\_link} é utilizado como referência, e uma matriz $T_m$ (eq. \ref{eq:Tm}) é utilizada para realizar a cinemática do corpo, a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas, sendo possível controlar cada um dos 6 graus de liberdade. Para isso, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros em relação ao \textit{base\_link} são necessárias.
+
+\begin{equation}
+  \label{eq:Tm}
+  T_m =
+  \begin{bmatrix}
+      &         &   & x_c \\
+      & R_{xyz} &   & y_c \\
+      &         &   & z_c \\
+    0 & 0       & 0 & 1
+  \end{bmatrix}
+\end{equation}
+\begin{equation}
+  \label{eq:Rxyz}
+  \begin{split}
+    R_{xyz} =
     \begin{bmatrix}
-    & & & x_c \\
-    & R_{xyz} & & y_c \\
-    & & & z_c \\
-    0 & 0 & 0 & 1 
-    \end{bmatrix}
-  \end{equation}
-  \begin{equation}
-    \label{eq:Rxyz}
-    \begin{split}
-    R_{xyz} = 
-    \begin{bmatrix}
-    1 & 0 & 0\\
-    0 & \cos\alpha & -\sin\alpha \\
-    0 & \sin\alpha & \cos\alpha
+      1 & 0          & 0           \\
+      0 & \cos\alpha & -\sin\alpha \\
+      0 & \sin\alpha & \cos\alpha
     \end{bmatrix}
     \\.
     \begin{bmatrix}
-    \cos\beta & 0 & \sin\beta \\
-    0 & 1 & 0 \\
-    -\sin\beta & 0 & \cos\beta
+      \cos\beta  & 0 & \sin\beta \\
+      0          & 1 & 0         \\
+      -\sin\beta & 0 & \cos\beta
     \end{bmatrix}
     \\.
     \begin{bmatrix}
-    \cos\gamma & -\sin\gamma & 0 \\
-    \sin\gamma & \cos\gamma & 0 \\
-    0 & 0 & 1
+      \cos\gamma & -\sin\gamma & 0 \\
+      \sin\gamma & \cos\gamma  & 0 \\
+      0          & 0           & 1
     \end{bmatrix}
-    \end{split}
-  \end{equation}
+  \end{split}
+\end{equation}
 
-  O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{ik}, y_{ik}, z_{ik})$ resultantes de cada uma das transformações, conforme a equação \ref{eq:xyzik}. O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$.
+O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{ik}, y_{ik}, z_{ik})$ resultantes de cada uma das transformações, conforme a equação \ref{eq:xyzik}. O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$.
 
-  \begin{equation}
-    \label{eq:xyzik}
-    \begin{bmatrix}
+\begin{equation}
+  \label{eq:xyzik}
+  \begin{bmatrix}
     x_{ik} \\
     y_{ik} \\
     z_{ik} \\
     1
-    \end{bmatrix}= (T_m.T_{FR})^{-1}. 
-    \begin{bmatrix}
+  \end{bmatrix}= (T_m.T_{FR})^{-1}.
+  \begin{bmatrix}
     x \\
     y \\
     z \\
     1
-    \end{bmatrix}
-  \end{equation}
+  \end{bmatrix}
+\end{equation}
 
-  Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu link quando o robô está em seu estado de repouso (figura \ref{fig:joints_ik}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
+Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu link quando o robô está em seu estado de repouso (figura \ref{fig:joints_ik}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
 
-  \begin{figure}[h]
-    \centering
-    \caption{Titulo da Figura}
-    \includegraphics[width=0.48\textwidth]{joints_ik.png}
-    
-    Fonte: XXX
-    \label{fig:joints_ik}
-  \end{figure}
+\begin{figure}[h]
+  \centering
+  \caption{Titulo da Figura}
+  \includegraphics[width=0.48\textwidth]{joints_ik.png}
+
+  Fonte: XXX
+  \label{fig:joints_ik}
+\end{figure}
 
 
-  \begin{equation}
-    \label{eq:xyzik_foot}
-    \begin{bmatrix}
+\begin{equation}
+  \label{eq:xyzik_foot}
+  \begin{bmatrix}
     x_{ik} \\
     y_{ik} \\
     z_{ik} \\
     1
-    \end{bmatrix}= (T_m.T_{FR})^{-1}.
-    (F_{FR}.
-    \begin{bmatrix}
+  \end{bmatrix}= (T_m.T_{FR})^{-1}.
+  (F_{FR}.
+  \begin{bmatrix}
     x \\
     y \\
     z \\
     1
-    \end{bmatrix})
-  \end{equation}
+  \end{bmatrix})
+\end{equation}
 
-  \subsubsection{Controle de Rotação}
+\subsubsection{Controle de Rotação}
 
-  Para realizar o controle de rotação do corpo, foram utilizados dois controladores PID, sendo um responsável por controlar a rotação em $X$ do robô ($roll$, figura \ref{fig:pid}) e o outro a rotação em $Y$ ($pitch$), idêntico ao primeiro. Os controladores atuam de forma paralela e independente, de forma que é possível controlar simultaneamente a rotação do corpo em ambos os eixos.
+Para realizar o controle de rotação do corpo, foram utilizados dois controladores PID, sendo um responsável por controlar a rotação em $X$ do robô ($roll$, figura \ref{fig:pid}) e o outro a rotação em $Y$ ($pitch$), idêntico ao primeiro. Os controladores atuam de forma paralela e independente, de forma que é possível controlar simultaneamente a rotação do corpo em ambos os eixos.
 
-  \begin{figure}[h]
-    \centering
-    \caption{Titulo da Figura}
-    \includegraphics[width=0.48\textwidth]{PID.drawio.png}
-    
-    Fonte: XXX
-    \label{fig:pid}
-  \end{figure}
+\begin{figure}[h]
+  \centering
+  \caption{Titulo da Figura}
+  \includegraphics[width=0.48\textwidth]{PID.drawio.png}
 
-  O Sensor IMU é responsável por realizar as medições de rotação do robô, realimentando o sistema. As saídas dos controles são enviadas para a cinemática do corpo, e o limitador existe para evitar que sejam enviados valores que extrapolam os limites do robô.  
-  
+  Fonte: XXX
+  \label{fig:pid}
+\end{figure}
+
+O Sensor IMU é responsável por realizar as medições de rotação do robô, realimentando o sistema. As saídas dos controles são enviadas para a cinemática do corpo, e o limitador existe para evitar que sejam enviados valores que extrapolam os limites do robô.
+
 \end{document}
