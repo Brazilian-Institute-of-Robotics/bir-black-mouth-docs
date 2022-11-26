@@ -108,7 +108,7 @@ Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio, a
 
 \subsection{Projeto do robô}
 %TODO add FOTO e refs para as fotos
-Baseado nos conceitos apresentados, foi projetado, simulado e desenvolvido um robô quadrúpede nomeado de Caramelo. Caremelo é um robô quadrúpede de pequeno porte voltado para pesquisa e educação. Seu \textit{hardware} foi modelado inteiramente pela equipe e impresso com impressora 3D no material ABS. Os atuadores do robô são servomotores do modelo Dynamixel MX-28 e sua central de processamento é composta por uma RaspberryPi 4. Além disso, ele conta com um sensor inercial modelo MPU6050, que está instalado no corpo do robô. Este sensor contém um giroscópio e um acelerômetro, o que permite obter a aceleração linear, a velocidade angular e a orientação do corpo do robô.
+Baseado nos conceitos apresentados, foi projetado, simulado e desenvolvido um robô quadrúpede nomeado de Caramelo. Caramelo é um robô quadrúpede de pequeno porte voltado para pesquisa e educação. Seu \textit{hardware} foi modelado inteiramente pela equipe e impresso com impressora 3D no material ABS. Os atuadores do robô são servomotores do modelo \textit{dynamixel} MX-28 e sua central de processamento é composta por uma RaspberryPi 4. Além disso, ele conta com um sensor inercial modelo MPU6050, que está instalado no corpo do robô. Este sensor contém um giroscópio e um acelerômetro, o que permite obter a aceleração linear, a velocidade angular e a orientação do corpo do robô. Todo o \textit{software} foi desenvolvido com o ROS2 Humble (\textit{Robot Operation System 2}) \cite{ROS2Humble}, que é um \textit{framework} de robótica \textit{open source} com vários recursos disponíveis para facilitar o desenvolvimento de sistemas robóticos.  
 
 A estrutura do caramelo é do tipo mamífero e a configuração das pernas é a \textit{full-elbow}. Além disso, possui 3 GDL por perna, o que permite uma grande liberdade de movimentação para os pés. Seu \textit{design} foi pensado para favorecer o balanço de massas entre o corpo e as pernas do robô, ou seja, a maior parte da massa se encontra no corpo ou próxima a ele. Os componentes eletrônicos internos, que abrangem sensores, unidades de processamento e a interface de comunicação com os atuadores, foram dispostos de forma simétrica, a fim de manter o centro de massa o mais próximo do centro do corpo. Os motores (componentes que contribuem com a maior massa para o sistema) foram dispostos o mais próximo possível do corpo. Um destaque para o motor que atua na junta da tíbia, que foi instalado na parte de cima do fêmur com o objetivo de diminuir o momento de inércia da perna. Essa escolha demandou a adição de um sistema de transmissão entre o eixo do motor e a tíbia, formado por uma haste rígida de metal com duas juntas esfera nas extremidades.
 
@@ -120,9 +120,11 @@ O planejador de marchas é o responsável por controlar cada pé do robô e, por
 
 A seguir, serão apresentados o desenvolvimento do modelo cinemático, dos controladores de angulação e da trajetória que cada pé realiza na etapa de \textit{swing}. 
 
-\subsubsection{Cinemática Inversa}
+\subsubsection{Modelo cinemático}
 \label{sec:detail_inv_kinematics}
-A obtenção da Cinemática Inversa foi feita de forma analítica, e é descrita no Memorial de Cálculo. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô, calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B}, a partir da posição $(x, y, z)$ desejável para sua pata e dos comprimentos $L_1$, $L_2$ e $L_3$.
+
+Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinemática inversa e a cinemática direta do robô. Para resolver a cinemática direta, foi utilizado o pacote \textit{tf2}, um recurso disponível no ROS2 que facilita o gerenciamento de transformações entre eixos de coordenadas. A cinemática inversa, por outro lado, foi feita com base em uma análise geométrica. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô e são calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B} em função da posição $(x, y, z)$ desejada para a pata e dos comprimentos $L_1$, $L_2$ e $L_3$.
+
 \begin{equation}
   \label{eq:theta1}
   \theta_1 = \arctan{(\frac{x}{y})} - \arctan{(\frac{L_1}{a})}
@@ -231,9 +233,9 @@ Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta
   \end{bmatrix})
 \end{equation}
 
-\subsubsection{Controle de Rotação}
+\subsubsection{Controle de angulação}
 
-Para realizar o controle de rotação do corpo, foram utilizados dois controladores PID, sendo um responsável por controlar a rotação em $X$ do robô ($roll$, figura \ref{fig:pid}) e o outro a rotação em $Y$ ($pitch$), idêntico ao primeiro. Os controladores atuam de forma paralela e independente, de forma que é possível controlar simultaneamente a rotação do corpo em ambos os eixos.
+Os controladores de angulação são dois controladores PID em paralelo responsáveis por controlar a rotação de \textit{roll} e \textit{pitch} do corpo do robô. Eles atuam de forma independente, controlando a rotação do corpo em ambos os eixos simultaneamente. Ambos os controladores são iguais e foram implementados seguindo o modelo apresentado no diagrama de blocos da figura \ref{fig:pid}.
 
 \begin{figure}[h]
   \centering
@@ -244,6 +246,64 @@ Para realizar o controle de rotação do corpo, foram utilizados dois controlado
   \label{fig:pid}
 \end{figure}
 
-O Sensor IMU é responsável por realizar as medições de rotação do robô, realimentando o sistema. As saídas dos controles são enviadas para a cinemática do corpo, e o limitador existe para evitar que sejam enviados valores que extrapolam os limites do robô.
+O IMU é o sensor responsável por medir a rotação do corpo do robô, possibilitando a realimentação das saídas do sistema. O limitador foi adicionado para evitar que sejam enviados valores que extrapolam os limites de rotação das juntas do robô. Os esforços de controle são enviados o planejador de marchas que, por sua vez, envia envia os comandos de movimentação para os controladores das juntas. 
+
+\subsubsection{Planejador de trajetória}
+
+O planejador de trajetória é responsável por calcular a trajetória que cada pé deve realizar, tanto na fase de \textit{stance} quanto na fase de \textit{swing}. Para o caramelo, a trajetória é uma curva cicloidal em ambas as etapas. Como apresentado em \cite{Shi2021}, uma curva cicloidal pode ser definida no espaço tridimensional entre os pontos $(x_o, y_o, z_o)$ e $(x_f, y_f, z_f)$ em função do tempo $t$ pelas equações (\ref{eq:traj_x}) a (\ref{eq:traj_k}), sendo $H$ a altura do passo e $T$ o período.
+
+\begin{equation}
+  x = (x_f - x_o) \frac{K - \sin{(K)}}{2 \pi} + x_o
+  \label{eq:traj_x}
+\end{equation}
+\begin{equation}
+  y = (y_f - y_o) \frac{K - \sin{(K)}}{2 \pi} + y_o
+  \label{eq:traj_y}
+\end{equation}
+\begin{equation}
+  z = H \frac{1 - \cos{(K)}}{2} + z_o
+  \label{eq:traj_z}
+\end{equation}
+\begin{equation}
+  K = \frac{2 \pi t}{T}
+  \label{eq:traj_k}
+\end{equation}
+
+O gráfico de uma curva cicloidal no espaço 3D pode ser vista na Figura \ref{fig:traj_space}. A mesma trajetória é ilustrada na Figura \ref{fig:traj_fig:traj_time} em função do tempo. É possível perceber que a curva possui primeira derivada nula no momento em que o pé toca o solo, o que é favorável ao controle de malha aberta já que quanto mais suave for a aterrissagem, menos distúrbios são causados no sistema. 
+
+\begin{figure*}[h]
+  \centering
+  \caption{Trajetórias cicloidais para o passo de robô.}
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{Cycloid_space.png}
+    \caption{Curva no espaço 3D.}
+    \label{fig:traj_space}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{Cycloid_time.png}
+    \caption{Curva no tempo.}
+    \label{fig:traj_time}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{Cycloid_modified.png}
+    \caption{Curva com disposição de pontos modificada.}
+    \label{fig:traj_time_modified}
+  \end{subfigure}
+  \vfill
+  Fonte: autores.
+  \label{fig:traj_curve}
+\end{figure*}
+
+Além da altura, distâncias em $x$ e $y$ e período, o planejador de trajetória do Caramelo também conta com dois parâmetros que têm como objetivo melhorar ainda mais o controle da força com que o pé toca o chão. Como os atuadores do robô são servomotores controlados por posição, o torque é proporcional ao deslocamento que este deve realizar entre os pontos da trajetória. Ou seja, quanto maior a resolução da trajetória, mais suave será o movimento. No entanto, a resolução da trajetória $N$ é fixa, data em função do período do passo e da frequência de controle do planejador de marchas (50 Hz) $N = 50T$. Logo, a estratégia adotada é a de espaçar a mesma quantidade de pontos de forma desigual ao longo do período do passo, de forma que haja mais pontos próximos ao momento em que o pé aterrissa no solo e menos pontos próximos ao momento em que ele é erguido. O parâmetro $P_T$ é uma fração do período total do passo e o parâmetro $P_N$ a fração do número total de pontos do passo que deve se encontrar entre o tempo $0$ e $P_T \cdot T$. Em outras palavras, se $P_T = 0.66$ e $P_N = 0.33$, $33\%$ de $N$ estará nos primeiro dois terços do período, enquanto os $67\%$ restantes estarão no um terço final. A trajetória considerando esses parâmetros está ilustrada na Figura \ref{fig:traj_time_modified}.
+
+
+\begin{figure}
+  
+\end{figure}
+
+
 
 \end{document}
