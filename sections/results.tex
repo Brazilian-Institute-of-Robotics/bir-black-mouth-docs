@@ -2,7 +2,8 @@
 \graphicspath{{\subfix{../images/}}}
 \begin{document}
 
-  A etapa de resultados e análises tem como objetivo realizar testes e coletar dados para a análise de performance dos algoritmos implementados no robô. Durante essa etapa, será analisada a performance do robô no mundo real de forma estatistica, por meio de três testes. O primeiro consiste em observar a capacidade do protótipo em mover o pé por uma dada trajetória. No segundo teste é analisado se o robô atende a uma velocidade solicitada, utilizando dois terrenos diferentes e observando a oscilação de estabilidade do corpo ao longo da trajetória. Por fim, foi analisado a perfomance do Caramelo caminhando por terrenos inclinados e sua capacidade de ultrapassar pequenos obstáculos.
+  % Precisamos agrupar melhor esses testes, dar uma logica e introduzir
+  Os testes seguiram a ordem e atenderam às especificações apresentadas na metodologia. Os resultados serão apresentados a seguir.
 
   \subsection{Cinemática Inversa}
 
@@ -64,11 +65,28 @@
   \end{figure}
 
   \subsection{Controle de velocidade}
+  Durante os testes de controle de velocidade, de maneira geral, foi observado uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos planos do que em terrenos irregulares. Por meio dos dados coletados, foram extraídos as informações, velocidade média da caminhada, oscilação máxima de rotação do corpo em roll e pitch e os respectivos desvios padões, e apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que a menor oscilação em roll e em pitch ocorreu no terreno plano utilizando o controle de estabilidade, enquanto que a maior ocorreu nas condições opostas (teste 3).  Por outro lado, o robô se aproximou mais vezes da velocidade solicitada no terreno plano combinado ao controle de estabilidade, enquanto que no irregular com controle de estabilidade foi apresentada uma velocidade média inferior e baixa consistência nos dados.
 
-  Para o teste do controle de velocidade, foi enviado um comando de velocidade linear, na direção x, e medido o tempo que o robô levou para alcançar 1,5 m, dessa forma, obteve-se a velocidade média do robô. Neste experimento parte dos testes aconteceram utilizando o controle de estabilidade proposto e a outra parte sem, a fim de analisar a contribuição deste metódo no equilibrio do robô ao desempenhar uma trajetória. Os testes ocorreram com os mesmos paramêtros de passo do teste anterior, e em dois terrenos distintos, um terreno regular, feito de concreto e outro irregular, composto por pequenas pedras, como demonstra a imagem W.
+  \begin{table}[]
+    \caption{Titulo da Figura}
+    \centering
+    \begin{tabular}{ccccc}
+    \hline
+     & 1 & 2 & 3 & 4 \\ \hline
+    Terreno & Reg. & Reg. & Irreg. & Irreg. \\ \hline
+    \begin{tabular}[c]{@{}c@{}}C. E.\end{tabular} & Não & Sim & Não & Sim \\ \hline
+    \begin{tabular}[c]{@{}c@{}}Vel. \\ (m/s)\end{tabular} & 0.0292 & 0.0333 & 0.0297 & 0.0277 \\ \hline
+    \sigma\textsubscript{V} & 0.00135 & 0.00079 & 0.00197 & 0.00241 \\ \hline
+    \begin{tabular}[c ]{@{}c@{}} \Delta\textsubscript{Roll}  \end{tabular} & 12.541 & 8.742 & 13.897 & 12.168 \\ \hline
+    \sigma\textsubscript{Roll}  & 2.416 & 2.145 & 1.802 & 3.270 \\ \hline
+    \begin{tabular}[c]{@{}c@{}}\Delta\textsubscript{Pitch} \end{tabular} & 11.458 & 8.295 & 15.189 & 13.182 \\ \hline
+    \sigma\textsubscript{Pitch}  & 1.826 & 2.386 & 1.441 & 2.944 \\ \hline
+    \end{tabular}
+    Fonte: Autoria própria
+    \label{tab:vel_stab}
+  \end{table}
 
-  APRESENTAR TABELA E CONSIDERAÇÕES
-  
+  A fim de avaliar se o controle de estabilidade aqui proposto contribuiu de fato na estabilidade da caminhada, utilizaremos o teste T-Student de uma amostra, com um nível de confiança de 99\%. Então, foi proposto que a hipotése nula é que a oscilação de rotação do corpo não foi melhorada com o uso do controle de estabilidade, considerando testes entre os mesmos terrenos. O resultado desta análise nos mostrou que a hipotése nula pode ser rejeitada, uma vez que os valores t-crítico  bi-caudal foram maiores que 0.01. Logo, pode-se afirmar que quando utilizado o controle de estabilidade é observado uma caminhada mais estável.
   \subsection{Teste 3}
   Além dos testes realizados em terreno plano e irregular, o protótipo também foi submetido a 
 
