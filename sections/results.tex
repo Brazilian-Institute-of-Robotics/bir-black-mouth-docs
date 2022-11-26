@@ -5,134 +5,63 @@
   A etapa de resultados e análises tem como objetivo realizar testes e coletar dados para a análise de performance dos algoritmos implementados no robô. Durante essa etapa, será analisada a performance do robô no mundo real de forma estatistica, por meio de três testes. O primeiro consiste em observar a capacidade do protótipo em mover o pé por uma dada trajetória. No segundo teste é analisado se o robô atende a uma velocidade solicitada, utilizando dois terrenos diferentes e observando a oscilação de estabilidade do corpo ao longo da trajetória. Por fim, foi analisado a perfomance do Caramelo caminhando por terrenos inclinados e sua capacidade de ultrapassar pequenos obstáculos.
 
   \subsection{Cinemática Inversa}
-  A obtenção da Cinemática Inversa foi feita de forma analítica, e é descrita no Memorial de Cálculo. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô, calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B}, a partir da posição $(x, y, z)$ desejável para sua pata e dos comprimentos $L_1$, $L_2$ e $L_3$.
-  \begin{equation}
-    \label{eq:theta1}
-    \theta_1 = \arctan{(\frac{x}{y})} - \arctan{(\frac{L_1}{a})}
-  \end{equation}
-  \begin{equation}
-    \label{eq:theta2}
-    \theta_2 = \frac{\pi}{2} - \arctan{(\frac{a}{z}}) - \arctan{(\frac{\sqrt{1-A^2}}{A})}
-  \end{equation}
-  \begin{equation}
-    \label{eq:theta3}
-    \theta_3 = \arctan(\frac{\sqrt{1-B^2}}{B})
-  \end{equation}
-  \begin{equation}
-    \label{eq:a}
-    a = \sqrt{x^2+y^2-L_1^2}
-  \end{equation}
-  \begin{equation}
-    \label{eq:A}
-    A =\frac{a^2+z^2+L_2^2-L_3^2}{2L_2\sqrt{a^2+z^2}}
-  \end{equation}
-  \begin{equation}
-    \label{eq:B}
-    B = \frac{a^2+z^2-L_2^2-L_3^2}{2L_2L_3}
-  \end{equation}
 
-  Essas equações são úteis para o cálculo da posição de uma única perna, mas são insuficientes para realizar a cinemática do corpo do robô. Para isso, o \textit{base\_link} é utilizado como referência, e uma matriz $T_m$ (eq. \ref{eq:Tm}) é utilizada para realizar a cinemática do corpo, a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas, sendo possível controlar cada um dos 6 graus de liberdade. Para isso, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros em relação ao \textit{base\_link} são necessárias.
-
-  \begin{equation}
-    \label{eq:Tm}
-    T_m = 
-    \begin{bmatrix}
-    & & & x_c \\
-    & R_{xyz} & & y_c \\
-    & & & z_c \\
-    0 & 0 & 0 & 1 
-    \end{bmatrix}
-  \end{equation}
-  \begin{equation}
-    \label{eq:Rxyz}
-    \begin{split}
-    R_{xyz} = 
-    \begin{bmatrix}
-    1 & 0 & 0\\
-    0 & \cos\alpha & -\sin\alpha \\
-    0 & \sin\alpha & \cos\alpha
-    \end{bmatrix}
-    \\.
-    \begin{bmatrix}
-    \cos\beta & 0 & \sin\beta \\
-    0 & 1 & 0 \\
-    -\sin\beta & 0 & \cos\beta
-    \end{bmatrix}
-    \\.
-    \begin{bmatrix}
-    \cos\gamma & -\sin\gamma & 0 \\
-    \sin\gamma & \cos\gamma & 0 \\
-    0 & 0 & 1
-    \end{bmatrix}
-    \end{split}
-  \end{equation}
-
-  O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{ik}, y_{ik}, z_{ik})$ resultantes de cada uma das transformações, conforme a equação \ref{eq:xyzik}. O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$.
-
-  \begin{equation}
-    \label{eq:xyzik}
-    \begin{bmatrix}
-    x_{ik} \\
-    y_{ik} \\
-    z_{ik} \\
-    1
-    \end{bmatrix}= (T_m.T_{FR})^{-1}. 
-    \begin{bmatrix}
-    x \\
-    y \\
-    z \\
-    1
-    \end{bmatrix}
-  \end{equation}
-
-  Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu link quando o robô está em seu estado de repouso (figura \ref{fig:joints_ik}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
+  A partir das equações obtidas para a Cinemática Inversa do robô, o sistema é capaz não só de realizar a cinemática de cada uma das pernas individualmente, como também do seu corpo em todos os 6 graus de liberdade (translações em $x, y, z$ e rotações em $roll, pitch, yaw$). A figura \ref{fig:moving_body} ilustra o movimento do corpo do robô em cada um desses graus de liberdade.
 
   \begin{figure}[h]
     \centering
     \caption{Titulo da Figura}
-    \includegraphics[width=0.48\textwidth]{joints_ik.png}
+    \includegraphics[width=0.48\textwidth]{moving_body.png}
     
     Fonte: XXX
-    \label{fig:joints_ik}
+    \label{fig:moving_body}
   \end{figure}
-
-
-  \begin{equation}
-    \label{eq:xyzik_foot}
-    \begin{bmatrix}
-    x_{ik} \\
-    y_{ik} \\
-    z_{ik} \\
-    1
-    \end{bmatrix}= (T_m.T_{FR})^{-1}.
-    (F_{FR}.
-    \begin{bmatrix}
-    x \\
-    y \\
-    z \\
-    1
-    \end{bmatrix})
-  \end{equation}
 
   \subsection{Controle de Rotação}
 
-  Para realizar o controle de rotação do corpo, foram utilizados dois controladores PID, sendo um responsável por controlar a rotação em $X$ do robô ($roll$, figura \ref{fig:pid}) e o outro a rotação em $Y$ ($pitch$), idêntico ao primeiro. Os controladores atuam de forma paralela e independente, de forma que é possível controlar simultaneamente a rotação do corpo em ambos os eixos.
+  Os gráficos da figura \ref{fig:grafico_controlling} ilustram o comportamento do sistema à variação dos \textit{setpoints} de orientação em $X$ (gráfico superior) e em $Y$ (gráfico inferior) para o corpo do robô, a partir da aplicação de diversos degraus (em azul). Nota-se que o protótipo é capaz de se adaptar rapidamente aos novos valores desejados de orientação, simultaneamente em ambos os eixos.
 
   \begin{figure}[h]
     \centering
     \caption{Titulo da Figura}
-    \includegraphics[width=0.48\textwidth]{PID.drawio.png}
+    \includegraphics[width=0.48\textwidth]{grafico_controlling_X.png}
+    \includegraphics[width=0.48\textwidth]{grafico_controlling_Y.png}
     
     Fonte: XXX
-    \label{fig:pid}
+    \label{fig:grafico_controlling}
   \end{figure}
 
-  O Sensor IMU é responsável por realizar as medições de rotação do robô, realimentando o sistema. As saídas dos controles são enviadas para a cinemática do corpo, e o limitador existe para evitar que sejam enviados valores que extrapolam os limites do robô.
-
   \subsection{Análise de trajetória}
-  Durante este teste, o corpo do protótipo está estático e suspenso por um suporte e então é solicitado que o pé do robô percorra duas trajetórias curvilíneas calculadas pelo algoritimo proposto, até os pontos x1,y1 e x2,y2, detalhados na tabela X.
+  Durante este experimento, o corpo do protótipo está estático e suspenso por um suporte, sendo solicitado que uma de suas patas realize duas trajetórias calculadas pelo algoritimo proposto. Para geração das trajetórias foi considerado um período de $0.5 s$, altura do passo de $0.05 m$ e resolução de 25 pontos com distribuição homogênea, com deslocamentos em $(x, y)$ de $(0.05, 0.03)$ e $(0.03, 0.05)$ respectivamente, sendo realizados 30 testes para cada caso. 
+  
+  O objetivo aqui é analisar o tempo real de execução da trajetória, as coordenadas finais $(x_f, y_f)$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores desejados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} traz as médias encontradas para cada um desses parâmetros durante a realização dos testes.
 
-  APRESENTAR TABELA E CONSIDERAÇÕES
+  \begin{table}[h]
+    \caption{Titulo da Tabela}
+    \centering
+      \begin{tabular}{lllll}
+             & $tempo (s)$ & $x_{final}(m)$ & $y_{final}(m)$ & $z_{max}(m)$ \\
+      Exp. 1 & 0.559457 & 0.050349 & 0.029247 & 0.047585 \\
+      Exp. 2 & 0.556770 & 0.030240 & 0.049132 & 0.046562      
+      \end{tabular}
+
+    Fonte: Autoria própria
+    \label{tab:trajetoria}
+  \end{table}
+
+  Inicialmente, foram realizados dois testes de T Student para amostras independentes, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2, e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores $(x, y)$ desejados. O resultado da análise de T Student traz um $t$ de aproximadamente $1.087$, em se tratando de tempo, e de $1.0658$ para a altura máxima alcançada durante o passo. Para uma confiabilidade de $95\%$ e um total de 58 graus de liberdade, o valor crítico $t_c$ encontrado é de $2.00$. Como ambos os valores encontrados estão dentro do intervalo de confiança ($-t_c < t < t_c$), isso mostra que não há uma diferença significativa entre as médias em cada experimento, o que significa que diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e altura máxima do passo.
+  
+  Os gráficos da figura \ref{fig:grafico_trajetoria_xyz} representam um dos testes realizados para o primeiro caso ($x=0.05m$, $y=0.03m$), sendo os gráficos superiores esquerdo e direito correspondentes à trajetória em $x$ e $y$ respectivamente, e o gráfico inferior correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0.0476m$).
+
+  \begin{figure}[h]
+    \centering
+    \caption{Titulo da Figura}
+    \includegraphics[width=0.48\textwidth]{grafico_trajetoria_xy.png}
+    \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
+    
+    Fonte: XXX
+    \label{fig:grafico_trajetoria_xyz}
+  \end{figure}
 
   \subsection{Controle de velocidade}
 
@@ -141,22 +70,6 @@
   APRESENTAR TABELA E CONSIDERAÇÕES
   
   \subsection{Teste 3}
-
-  % \begin{table}
-  %   \caption{Titulo da Tabela}
-  %   \centering
-  %   \begin{tabular}{ |c|c|c|c| } 
-  %     \hline
-  %     col1 & col2 & col3 \\
-  %     \hline
-  %     \multirow{3}{4em}{Multiple row} & cell2 & cell3 \\ 
-  %     & cell5 & cell6 \\ 
-  %     & cell8 & cell9 \\ 
-  %     \hline
-  %     \end{tabular}
-    
-  %     Fonte: Proprio autor
-  %   \label{tab:table-name}
-  % \end{table}
+  Além dos testes realizados em terreno plano e irregular, o protótipo também foi submetido a 
 
 \end{document}
