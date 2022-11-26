@@ -3,11 +3,7 @@
 \begin{document}
 
   % Precisamos agrupar melhor esses testes, dar uma logica e introduzir
-  Os testes seguiram a ordem e atenderam às especificações apresentadas na metodologia. Os resultados serão apresentados a seguir.
-
-  \subsection{Cinemática Inversa}
-
-  A partir das equações obtidas para a Cinemática Inversa do robô, o sistema é capaz não só de realizar a cinemática de cada uma das pernas individualmente, como também do seu corpo em todos os 6 graus de liberdade (translações em $x, y, z$ e rotações em $roll, pitch, yaw$). A figura \ref{fig:moving_body} ilustra o movimento do corpo do robô em cada um desses graus de liberdade.
+  As primeiras inferências se deram quanto aos resultados da cinemática inversa. Foi observado que o sistema é capaz não só de realizar a cinemática de cada uma das pernas individualmente, como também do seu corpo em todos os 6 graus de liberdade (translações em $x, y, z$ e rotações em $roll, pitch, yaw$). A figura \ref{fig:moving_body} ilustra o movimento do corpo do robô em cada um desses graus de liberdade.
 
   \begin{figure}[h]
     \centering
@@ -18,9 +14,7 @@
     \label{fig:moving_body}
   \end{figure}
 
-  \subsection{Controle de Rotação}
-
-  Os gráficos da figura \ref{fig:grafico_controlling} ilustram o comportamento do sistema à variação dos \textit{setpoints} de orientação em $X$ (gráfico superior) e em $Y$ (gráfico inferior) para o corpo do robô, a partir da aplicação de diversos degraus (em azul). Nota-se que o protótipo é capaz de se adaptar rapidamente aos novos valores desejados de orientação, simultaneamente em ambos os eixos.
+  Do mesmo modo, os gráficos da figura \ref{fig:grafico_controlling} ilustram o comportamento do sistema à variação dos \textit{setpoints} de orientação em $X$ (gráfico superior) e em $Y$ (gráfico inferior) para o corpo do robô, a partir da aplicação de diversos degraus (em azul). Nota-se que o protótipo é capaz de se adaptar rapidamente aos novos valores desejados de orientação, simultaneamente em ambos os eixos.
 
   \begin{figure}[h]
     \centering
@@ -32,7 +26,10 @@
     \label{fig:grafico_controlling}
   \end{figure}
 
-  \subsection{Análise de trajetória}
+  \subsection{Experimentos}
+  Em seguida, serão apresentados os resultados dos experimentos executados diante às especificações apresentadas na metodologia.
+
+  \subsubsection{Análise de trajetória}
   Durante este experimento, o corpo do protótipo está estático e suspenso por um suporte, sendo solicitado que uma de suas patas realize duas trajetórias calculadas pelo algoritimo proposto. Para geração das trajetórias foi considerado um período de $0.5 s$, altura do passo de $0.05 m$ e resolução de 25 pontos com distribuição homogênea, com deslocamentos em $(x, y)$ de $(0.05, 0.03)$ e $(0.03, 0.05)$ respectivamente, sendo realizados 30 testes para cada caso. 
   
   O objetivo aqui é analisar o tempo real de execução da trajetória, as coordenadas finais $(x_f, y_f)$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores desejados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} traz as médias encontradas para cada um desses parâmetros durante a realização dos testes.
@@ -64,7 +61,7 @@
     \label{fig:grafico_trajetoria_xyz}
   \end{figure}
 
-  \subsection{Controle de velocidade}
+  \subsubsection{Controle de velocidade}
   Durante os testes de controle de velocidade, de maneira geral, foi observado uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos planos do que em terrenos irregulares. Por meio dos dados coletados, foram extraídos as informações, velocidade média da caminhada, oscilação máxima de rotação do corpo em roll e pitch e os respectivos desvios padões, e apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que a menor oscilação em roll e em pitch ocorreu no terreno plano utilizando o controle de rotação, enquanto que a maior ocorreu nas condições opostas (teste 3).  Por outro lado, o robô se aproximou mais vezes da velocidade solicitada no terreno plano combinado ao controle de rotação, enquanto que no irregular com controle de rotação foi apresentada uma velocidade média inferior e baixa consistência nos dados.
 
   \begin{table}[]
@@ -90,10 +87,10 @@
   A fim de avaliar se o controle de rotação aqui proposto contribuiu de fato na estabilidade da caminhada, utilizaremos o teste T-Student de uma amostra, com um nível de confiança de 99\%. Então, foi proposto que a hipotése nula é que a oscilação de rotação do corpo não foi melhorada com o uso do controle de rotação, considerando testes entre os mesmos terrenos. O resultado desta análise nos mostrou que a hipotése nula pode ser rejeitada, uma vez que os valores t-crítico para uma calda foram maiores que 0.01. Logo, pode-se afirmar que quando utilizado o controle de rotação é observado uma caminhada mais estável.
   
   %% Sugiro juntar essas section em uma só, pra economizar espaço
-  \subsection{Plano inclinado}
+  \subsubsection{Plano inclinado}
   Durante este experimento, contatou-se que o robô possui a habilidade de andar por terrenos com até 5,336\degree de inclinação. Entretanto, foi observado uma melhor estabilidade em inclinações de até X\degree. 
   
-  \subsection{Superação de obstáculos}
+  \subsubsection{Superação de obstáculos}
   O Caramelo se mostrou capaz de ultrapassar obstáculos de até 5cm de altura. 
 
   COLOCAR UMA IMAGEM DOS DOIS TESTES JUNTAS A e B
