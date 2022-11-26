@@ -65,7 +65,7 @@
   \end{figure}
 
   \subsection{Controle de velocidade}
-  Durante os testes de controle de velocidade, de maneira geral, foi observado uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos planos do que em terrenos irregulares. Por meio dos dados coletados, foram extraídos as informações, velocidade média da caminhada, oscilação máxima de rotação do corpo em roll e pitch e os respectivos desvios padões, e apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que a menor oscilação em roll e em pitch ocorreu no terreno plano utilizando o controle de estabilidade, enquanto que a maior ocorreu nas condições opostas (teste 3).  Por outro lado, o robô se aproximou mais vezes da velocidade solicitada no terreno plano combinado ao controle de estabilidade, enquanto que no irregular com controle de estabilidade foi apresentada uma velocidade média inferior e baixa consistência nos dados.
+  Durante os testes de controle de velocidade, de maneira geral, foi observado uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos planos do que em terrenos irregulares. Por meio dos dados coletados, foram extraídos as informações, velocidade média da caminhada, oscilação máxima de rotação do corpo em roll e pitch e os respectivos desvios padões, e apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que a menor oscilação em roll e em pitch ocorreu no terreno plano utilizando o controle de rotação, enquanto que a maior ocorreu nas condições opostas (teste 3).  Por outro lado, o robô se aproximou mais vezes da velocidade solicitada no terreno plano combinado ao controle de rotação, enquanto que no irregular com controle de rotação foi apresentada uma velocidade média inferior e baixa consistência nos dados.
 
   \begin{table}[]
     \caption{Titulo da Figura}
@@ -86,8 +86,18 @@
     \label{tab:vel_stab}
   \end{table}
 
-  A fim de avaliar se o controle de estabilidade aqui proposto contribuiu de fato na estabilidade da caminhada, utilizaremos o teste T-Student de uma amostra, com um nível de confiança de 99\%. Então, foi proposto que a hipotése nula é que a oscilação de rotação do corpo não foi melhorada com o uso do controle de estabilidade, considerando testes entre os mesmos terrenos. O resultado desta análise nos mostrou que a hipotése nula pode ser rejeitada, uma vez que os valores t-crítico  bi-caudal foram maiores que 0.01. Logo, pode-se afirmar que quando utilizado o controle de estabilidade é observado uma caminhada mais estável.
-  \subsection{Teste 3}
-  Além dos testes realizados em terreno plano e irregular, o protótipo também foi submetido a 
+  A fim de avaliar se o controle de rotação aqui proposto contribuiu de fato na estabilidade da caminhada, utilizaremos o teste T-Student de uma amostra, com um nível de confiança de 99\%. Então, foi proposto que a hipotése nula é que a oscilação de rotação do corpo não foi melhorada com o uso do controle de rotação, considerando testes entre os mesmos terrenos. O resultado desta análise nos mostrou que a hipotése nula pode ser rejeitada, uma vez que os valores t-crítico  bi-caudal foram maiores que 0.01. Logo, pode-se afirmar que quando utilizado o controle de rotação é observado uma caminhada mais estável.
+  
+  %% Sugiro juntar essas section em uma só, pra economizar espaço
+  \subsection{Plano inclinado}
+  Durante este experimento, contatou-se que o robô possui a habilidade de andar por terrenos com até 5\degree de inclinação. Entretanto, foi observado uma melhor estabilidade em inclinações de até X\degree. 
+  
+  \subsection{Superação de obstáculos}
+  O Caramelo se mostrou capaz de ultrapassar obstáculos de até 5cm de altura. 
+  
+  COLOCAR UMA IMAGEM DOS DOIS TESTES JUNTAS A e B
+
+   
+
 
 \end{document}
