@@ -14,7 +14,6 @@ Pelo fato de robôs quadrúpedes terem se tornado um grande foco de pesquisa nos
 
 Um dos tipos de estrutura que existem é a de tipo mamífero. Exemplos de robôs que utilizam essa estrutura estão ilustrados nas Figuras \ref{fig:robots_structures_a} e \ref{fig:robots_structures_b}.
 
-%TODO adicionar figura dos planos frontal, sagital
 \begin{figure*}[h]
   \centering
   \caption{Exemplos de robôs com estruturas do tipo mamífero e \textit{sprawling}.}
@@ -107,13 +106,11 @@ O modo como cada perna se comporta durante as etapas de \textit{stance} e \texti
 Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio, além de deslocar o corpo na direção desejada de locomoção. Para isso, alguns robôs utilizam trajetórias para os pés com um formato pré-determinado assim como na fase de \textit{swing}, não necessariamente repetindo o mesmo formato de curva \cite{X.118} \cite{X.58}. Além disso, controladores de equilíbrio também podem ser implementados nessa etapa. Esses controladores visam estabilizar os ângulos de \textit{pitch} e \textit{roll} do robô \cite{Shi2021} \cite{HackadayQuadruped} \cite{StanfordPupper} \cite{Notspot} ou até ainda outros graus de liberdade \cite{Chen2020140736} \cite{X.134} \cite{Zhang2016284}. Eles podem controlar diretamente a angulação do corpo do robô (com o auxílio de um sensor inercial) e/ou a força de contato com o solo em cada perna, por exemplo. No entanto, alguns trabalhos se baseiam apenas no controle individual de cada junta para manter o robô em equilíbrio, o que é uma abordagem mais simples, mas que pode falhar especialmente em terrenos irregulares.
 
 \subsection{Projeto do robô}
-%TODO add FOTO e refs para as fotos
 Baseado nos conceitos apresentados, foi projetado, simulado e desenvolvido um robô quadrúpede nomeado de Caramelo. Caramelo é um robô quadrúpede de pequeno porte voltado para pesquisa e educação. Seu \textit{hardware} foi modelado inteiramente pela equipe e impresso com impressora 3D no material ABS. Os atuadores do robô são servomotores do modelo \textit{dynamixel} MX-28 e sua central de processamento é composta por uma RaspberryPi 4. Além disso, ele conta com um sensor inercial modelo MPU6050, que está instalado no corpo do robô. Este sensor contém um giroscópio e um acelerômetro, o que permite obter a aceleração linear, a velocidade angular e a orientação do corpo do robô. Todo o \textit{software} foi desenvolvido com o ROS2 Humble (\textit{Robot Operation System 2}) \cite{ROS2Humble}, que é um \textit{framework} de robótica \textit{open source} com vários recursos disponíveis para facilitar o desenvolvimento de sistemas robóticos.
 
 A estrutura do caramelo é do tipo mamífero e a configuração das pernas é a \textit{full-elbow}. Além disso, possui 3 GDL por perna, o que permite uma grande liberdade de movimentação para os pés. Seu \textit{design} foi pensado para favorecer o balanço de massas entre o corpo e as pernas do robô, ou seja, a maior parte da massa se encontra no corpo ou próxima a ele. Os componentes eletrônicos internos, que abrangem sensores, unidades de processamento e a interface de comunicação com os atuadores, foram dispostos de forma simétrica, a fim de manter o centro de massa o mais próximo do centro do corpo. Os motores (componentes que contribuem com a maior massa para o sistema) foram dispostos o mais próximo possível do corpo. Um destaque para o motor que atua na junta da tíbia, que foi instalado na parte de cima do fêmur com o objetivo de diminuir o momento de inércia da perna. Essa escolha demandou a adição de um sistema de transmissão entre o eixo do motor e a tíbia, formado por uma haste rígida de metal com duas juntas esfera nas extremidades.
 
 A locomoção do Caramelo foi desenvolvida baseada nas marchas periódicas e simétricas. Dessa forma, foi adotada a marcha \textit{trot} como a marcha principal do robô. Embora sua estrutura permita a realização de muitos outros tipos de marcha, neste trabalho, foi considerada apenas o \textit{trot}, devido a sua simplicidade e eficiência. Com o objetivo de diminuir a complexidade do controle de locomoção, foi adotada uma marcha descontínua, ou seja, o corpo do robô se desloca apenas quando todos os pés estão do solo. A sequência de etapas da marcha do Caramelo pode ser vista na Figura \ref{fig:trot_pattern}, na qual as áreas em branco representam a etapa de \textit{swing} e as em cinza a de \textit{stance}. É possível perceber que sempre o mesmo par de pernas diagonais se move no mesmo instante. Entre duas etapas consecutivas de \textit{swing}, há um momento em que todos os pés estão em \textit{stance}, que é quanto o corpo do robô é deslocado no sentido desejado de locomoção.
-
 \begin{figure}[h]
   \caption{Padrão de movimentação da marcha.}
   \centering
@@ -168,7 +165,6 @@ Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinem
 
 
 Essas equações são úteis para o cálculo da posição de uma única perna, mas são insuficientes para realizar a cinemática do corpo do robô. Desta forma, um \textit{frame} central, chamado de \textit{base\_link} (figura \ref{fig:caramel_body}), é utilizado como referência, e uma matriz $T_M$ (eqs. \ref{eq:Tm} e \ref{eq:Rxyz}) é utilizada para realizar a cinemática do corpo, a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas, sendo possível controlar cada um dos 6 graus de liberdade. Para isso, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros (\textit{hip\_links}) em relação ao \textit{base\_link} são necessárias.
-
 \begin{equation}
   \label{eq:Tm}
   T_M =
@@ -204,7 +200,6 @@ Essas equações são úteis para o cálculo da posição de uma única perna, m
 \end{equation}
 
 O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{IK}, y_{IK}, z_{IK})$ resultantes de cada uma das transformações, conforme a equação \ref{eq:xyzik}. O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$.
-
 \begin{equation}
   \label{eq:xyzik}
   \begin{bmatrix}
@@ -222,7 +217,6 @@ O cálculo das angulações de cada perna então é feito utilizando como entrad
 \end{equation}
 
 Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu link quando o robô está em seu estado de repouso (figura \ref{fig:caramel_body}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
-
 \begin{figure}[h]
   \centering
   \caption{Eixos do robô em posição de repouso.}
@@ -253,7 +247,6 @@ Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta
 \subsubsection{Controle de angulação}
 
 Os controladores de angulação são dois controladores PID em paralelo responsáveis por controlar a rotação de \textit{roll} e \textit{pitch} do corpo do robô. Eles atuam de forma independente, controlando a rotação do corpo em ambos os eixos simultaneamente. Ambos os controladores são iguais e foram implementados seguindo o modelo apresentado no diagrama de blocos da figura \ref{fig:pid}.
-
 \begin{figure}[h]
   \centering
   \caption{Controlador PID projetado.}
@@ -268,7 +261,6 @@ O IMU é o sensor responsável por medir a rotação do corpo do robô, possibil
 \subsubsection{Planejador de trajetória}
 
 O planejador de trajetória é responsável por calcular a trajetória que cada pé deve realizar, tanto na fase de \textit{stance} quanto na fase de \textit{swing}. Para o caramelo, a trajetória é uma curva cicloidal em ambas as etapas. Como apresentado em \cite{Shi2021}, uma curva cicloidal pode ser definida no espaço tridimensional entre os pontos $(x_o, y_o, z_o)$ e $(x_f, y_f, z_f)$ em função do tempo $t$ pelas equações (\ref{eq:traj_x}) a (\ref{eq:traj_k}), sendo $H$ a altura do passo e $T$ o período.
-
 \begin{equation}
   x = (x_f - x_o) \frac{K - \sin{(K)}}{2 \pi} + x_o
   \label{eq:traj_x}
@@ -287,7 +279,6 @@ O planejador de trajetória é responsável por calcular a trajetória que cada 
 \end{equation}
 
 O gráfico de uma curva cicloidal no espaço 3D pode ser vista na Figura \ref{fig:traj_space}. A mesma trajetória é ilustrada na Figura \ref{fig:traj_time} em função do tempo. É possível perceber que a curva possui primeira derivada nula no momento em que o pé toca o solo, o que é favorável ao controle de malha aberta já que quanto mais suave for a aterrissagem, menos distúrbios são causados no sistema.
-
 \begin{figure*}[h]
   \centering
   \caption{Trajetórias cicloidais para o passo de robô.}

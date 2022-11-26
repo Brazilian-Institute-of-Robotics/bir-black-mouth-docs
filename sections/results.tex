@@ -36,7 +36,7 @@
   Durante este experimento, o objetivo foi analisar o tempo real de execução da trajetória, as coordenadas finais $(x_f, y_f)$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias encontradas para cada um desses parâmetros durante a realização dos testes.
 
   \begin{table}[h]
-    \caption{Titulo da Tabela}
+    \caption{Resultados do experimento da trajetória da pata.}
     \centering
     \begin{tabular}{ccc}
       \hline
@@ -60,11 +60,11 @@
       \hline   
     \end{tabular}
 
-    Fonte: autores
+    Fonte: autores.
     \label{tab:trajetoria}
   \end{table}
 
-  Inicialmente, foram realizados dois testes de t-Student para amostras independentes, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2 e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores desejados de $(x, y)$. O resultado da análise de t-Student traz um $t$ de aproximadamente $1.087$, em se tratando de tempo, e de $1.0658$ para a altura máxima alcançada durante o passo. Para uma confiabilidade de $95\%$ e um total de 58 graus de liberdade, o valor crítico $t_c$ encontrado é de $2.00$. Como ambos os valores encontrados estão dentro do intervalo de confiança ($-t_c < t < t_c$), isso mostra que não há uma diferença significativa entre as médias em cada experimento, o que significa que diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e altura máxima do passo.
+  Inicialmente, foram realizados dois testes de t-Student para amostras independentes, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2, e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores $(x, y)$ desejados. O resultado da análise de t-Student traz um $p_{valor}$ de aproximadamente $0.6931$, em se tratando de tempo, e de $0.1722$ para a altura máxima alcançada durante o passo. Ambos os valores encontrados são superiores a $0.05$, o que mostra que, para uma confiabilidade de $95\%$, não há uma diferença significativa entre as médias em cada experimento, o que significa que diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e altura máxima do passo.
   
   Os gráficos da figura \ref{fig:grafico_trajetoria_xyz} representam um dos testes realizados para o primeiro caso ($x=0.05m$, $y=0.03m$), sendo os gráficos superiores esquerdo e direito correspondentes à trajetória em $x$ e $y$ respectivamente, e o gráfico inferior correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0.0476m$).
 
@@ -82,7 +82,7 @@
   Durante os testes de controle de velocidade foi observada uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos regulares do que em terrenos irregulares. Por meio dos dados coletados, foram extraídas as informações da velocidade média da caminhada para cada teste, oscilação máxima de rotação do corpo em \textit{roll} e \textit{pitch} e os respectivos desvios padrões, apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que o robô se aproximou mais vezes da velocidade solicitada no terreno regular combinado ao controle de rotação, enquanto que no irregular, o teste com controle de rotação ativo apresentou uma velocidade média inferior e baixa consistência nos dados. A diferença percebida entre a velocidade solicitada e a inferida é justificada pelo acúmulo de erro nas coordenadas finais $(x_f, y_f)$ das patas a cada passo. Ou seja, quando levado em consideração o próprio peso do robô, o sistema de controle não é capaz de seguir fielmente a trajetória do passo.
 
   \begin{table}[]
-    \caption{Titulo da Figura}
+    \caption{Resultados do experimento do controlde de velocidade.}
     \centering
     \begin{tabular}{ccccc}
       \hline
@@ -111,7 +111,7 @@
 
   \begin{figure}[h]
     \centering
-    \caption{Titulo da Figura}
+    \caption{Fotos do robô no teste da rampa e do degrau.}
     \includegraphics[width=0.48\textwidth]{ramp_test.jpeg}
     \includegraphics[width=0.48\textwidth]{test4.png}
 
