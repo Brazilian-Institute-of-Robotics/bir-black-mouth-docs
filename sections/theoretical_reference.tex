@@ -108,17 +108,26 @@ Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio, a
 
 \subsection{Projeto do robô}
 %TODO add FOTO e refs para as fotos
-Baseado nos conceitos apresentados, foi projetado, simulado e desenvolvido um robô quadrúpede nomeado de Caramelo. Caramelo é um robô quadrúpede de pequeno porte voltado para pesquisa e educação. Seu \textit{hardware} foi modelado inteiramente pela equipe e impresso com impressora 3D no material ABS. Os atuadores do robô são servomotores do modelo \textit{dynamixel} MX-28 e sua central de processamento é composta por uma RaspberryPi 4. Além disso, ele conta com um sensor inercial modelo MPU6050, que está instalado no corpo do robô. Este sensor contém um giroscópio e um acelerômetro, o que permite obter a aceleração linear, a velocidade angular e a orientação do corpo do robô. Todo o \textit{software} foi desenvolvido com o ROS2 Humble (\textit{Robot Operation System 2}) \cite{ROS2Humble}, que é um \textit{framework} de robótica \textit{open source} com vários recursos disponíveis para facilitar o desenvolvimento de sistemas robóticos.  
+Baseado nos conceitos apresentados, foi projetado, simulado e desenvolvido um robô quadrúpede nomeado de Caramelo. Caramelo é um robô quadrúpede de pequeno porte voltado para pesquisa e educação. Seu \textit{hardware} foi modelado inteiramente pela equipe e impresso com impressora 3D no material ABS. Os atuadores do robô são servomotores do modelo \textit{dynamixel} MX-28 e sua central de processamento é composta por uma RaspberryPi 4. Além disso, ele conta com um sensor inercial modelo MPU6050, que está instalado no corpo do robô. Este sensor contém um giroscópio e um acelerômetro, o que permite obter a aceleração linear, a velocidade angular e a orientação do corpo do robô. Todo o \textit{software} foi desenvolvido com o ROS2 Humble (\textit{Robot Operation System 2}) \cite{ROS2Humble}, que é um \textit{framework} de robótica \textit{open source} com vários recursos disponíveis para facilitar o desenvolvimento de sistemas robóticos.
 
 A estrutura do caramelo é do tipo mamífero e a configuração das pernas é a \textit{full-elbow}. Além disso, possui 3 GDL por perna, o que permite uma grande liberdade de movimentação para os pés. Seu \textit{design} foi pensado para favorecer o balanço de massas entre o corpo e as pernas do robô, ou seja, a maior parte da massa se encontra no corpo ou próxima a ele. Os componentes eletrônicos internos, que abrangem sensores, unidades de processamento e a interface de comunicação com os atuadores, foram dispostos de forma simétrica, a fim de manter o centro de massa o mais próximo do centro do corpo. Os motores (componentes que contribuem com a maior massa para o sistema) foram dispostos o mais próximo possível do corpo. Um destaque para o motor que atua na junta da tíbia, que foi instalado na parte de cima do fêmur com o objetivo de diminuir o momento de inércia da perna. Essa escolha demandou a adição de um sistema de transmissão entre o eixo do motor e a tíbia, formado por uma haste rígida de metal com duas juntas esfera nas extremidades.
 
-A locomoção do Caramelo foi desenvolvida baseada nas marchas periódicas e simétricas. Dessa forma, foi adotada a marcha \textit{trot} como a marcha principal do robô. Embora sua estrutura permita a realização de muitos outros tipos de marcha, neste trabalho, foi considerada apenas o \textit{trot}, devido a sua simplicidade e eficiência. Com o objetivo de diminuir a complexidade do controle de locomoção, foi adotada uma marcha descontínua, ou seja, o corpo do robô se desloca apenas quando todos os pés estão do solo. A sequência de etapas da marcha do Caramelo pode ser vista na Figura \textcolor{red}{DiagStanceSwing}. É possível perceber que sempre o mesmo par de pernas diagonais se move no mesmo instante. Entre duas etapas consecutivas de \textbf{swing}, há um momento em que todos os pés estão em \textit{stance}, que é quanto o corpo do robô é deslocado no sentido desejado de locomoção.
+A locomoção do Caramelo foi desenvolvida baseada nas marchas periódicas e simétricas. Dessa forma, foi adotada a marcha \textit{trot} como a marcha principal do robô. Embora sua estrutura permita a realização de muitos outros tipos de marcha, neste trabalho, foi considerada apenas o \textit{trot}, devido a sua simplicidade e eficiência. Com o objetivo de diminuir a complexidade do controle de locomoção, foi adotada uma marcha descontínua, ou seja, o corpo do robô se desloca apenas quando todos os pés estão do solo. A sequência de etapas da marcha do Caramelo pode ser vista na Figura \ref{fig:trot_pattern}, na qual as áreas em branco representam a etapa de \textit{swing} e as em cinza a de \textit{stance}. É possível perceber que sempre o mesmo par de pernas diagonais se move no mesmo instante. Entre duas etapas consecutivas de \textit{swing}, há um momento em que todos os pés estão em \textit{stance}, que é quanto o corpo do robô é deslocado no sentido desejado de locomoção.
+
+\begin{figure}[h]
+  \caption{Padrão de movimentação da marcha.}
+  \centering
+  \includegraphics[width=0.45\textwidth]{trot_pattern.png}
+  \vfill
+  Fonte: autores.
+  \label{fig:trot_pattern}
+\end{figure}
 
 O sistema de controle do robô é composto por dois subsistemas principais: os controladores individuais de cada junta e os controladores da angulação do corpo do robô. Os controladores das juntas são os próprios controladores PID embarcados nos motores \textit{dynamixel}. Foi utilizada a interface de controle de posição com o atuador, de forma que o \textit{setpoint} de controle enviado para cada motor é o ângulo em radianos para o qual ele deve rotacionar. O modelo cinemático do robô, apresentado na seção \ref{sec:detail_inv_kinematics}, é o responsável por mapear não apenas a posição tridimensional de cada pé com a angulação de cada junta, mas também a posição do corpo em seis dimensões: translação e rotação em $(x, y, z)$. Dessa forma, é possível controlar cada pé e o corpo do robô ao mesmo tempo de forma independente. Os controladores de angulação do corpo são dois controladores PID em paralelo, responsáveis por controlar o ângulo de \textit{pitch} (rotação em $y$) e o de \textit{roll} (rotação em $x$).
 
 O planejador de marchas é o responsável por controlar cada pé do robô e, por consequência, o corpo. Ele calcula a trajetória que cada pé deve realizar, com base nas etapas de \textit{stance} e \textit{swing}, e envia o próximo ponto em que cada pé deve estar a uma frequência de 50Hz. Além disso, ele também considera o esforço de controle enviado pelos controladores de angulação, a fim de manter o corpo do robô em $0^{\circ}$ a todo momento.
 
-A seguir, serão apresentados o desenvolvimento do modelo cinemático, dos controladores de angulação e da trajetória que cada pé realiza na etapa de \textit{swing}. 
+A seguir, serão apresentados o desenvolvimento do modelo cinemático, dos controladores de angulação e da trajetória que cada pé realiza na etapa de \textit{swing}.
 
 \subsubsection{Modelo cinemático}
 \label{sec:detail_inv_kinematics}
@@ -246,7 +255,7 @@ Os controladores de angulação são dois controladores PID em paralelo respons�
   \label{fig:pid}
 \end{figure}
 
-O IMU é o sensor responsável por medir a rotação do corpo do robô, possibilitando a realimentação das saídas do sistema. O limitador foi adicionado para evitar que sejam enviados valores que extrapolam os limites de rotação das juntas do robô. Os esforços de controle são enviados o planejador de marchas que, por sua vez, envia envia os comandos de movimentação para os controladores das juntas. 
+O IMU é o sensor responsável por medir a rotação do corpo do robô, possibilitando a realimentação das saídas do sistema. O limitador foi adicionado para evitar que sejam enviados valores que extrapolam os limites de rotação das juntas do robô. Os esforços de controle são enviados o planejador de marchas que, por sua vez, envia envia os comandos de movimentação para os controladores das juntas.
 
 \subsubsection{Planejador de trajetória}
 
@@ -269,7 +278,7 @@ O planejador de trajetória é responsável por calcular a trajetória que cada 
   \label{eq:traj_k}
 \end{equation}
 
-O gráfico de uma curva cicloidal no espaço 3D pode ser vista na Figura \ref{fig:traj_space}. A mesma trajetória é ilustrada na Figura \ref{fig:traj_fig:traj_time} em função do tempo. É possível perceber que a curva possui primeira derivada nula no momento em que o pé toca o solo, o que é favorável ao controle de malha aberta já que quanto mais suave for a aterrissagem, menos distúrbios são causados no sistema. 
+O gráfico de uma curva cicloidal no espaço 3D pode ser vista na Figura \ref{fig:traj_space}. A mesma trajetória é ilustrada na Figura \ref{fig:traj_fig:traj_time} em função do tempo. É possível perceber que a curva possui primeira derivada nula no momento em que o pé toca o solo, o que é favorável ao controle de malha aberta já que quanto mais suave for a aterrissagem, menos distúrbios são causados no sistema.
 
 \begin{figure*}[h]
   \centering
@@ -301,7 +310,7 @@ Além da altura, distâncias em $x$ e $y$ e período, o planejador de trajetóri
 
 
 \begin{figure}
-  
+
 \end{figure}
 
 
