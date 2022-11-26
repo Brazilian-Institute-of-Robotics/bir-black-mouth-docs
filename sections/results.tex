@@ -70,12 +70,12 @@
       & 1 & 2 & 3 & 4 \\ \hline
       Terreno & Reg. & Reg. & Irreg. & Irreg. \\ \hline
       \begin{tabular}[c]{@{}c@{}}C. R.\end{tabular} & Não & Sim & Não & Sim \\ \hline
-      \begin{tabular}[c]{@{}c@{}}Vel. \\(m/s)\end{tabular} & 0.0292 & 0.0333 & 0.0297 & 0.0277 \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\sigma_{Vel}$  \end{tabular} & 0.00135 & 0.00079 & 0.00197 & 0.00241 \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\Delta_{Roll}$ \end{tabular} & 12.541 & 8.742 & 13.897 & 12.168 \\\hline
-      \begin{tabular}[c]{@{}c@{}} $\sigma_{Roll}$ \end{tabular}  & 2.416 & 2.145 & 1.802 & 3.270 \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\Delta_{Pitch}$ \end{tabular} & 11.458 & 8.295 & 15.189 & 13.182 \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular}  & 1.826 & 2.386 & 1.441 & 2.944 \\ \hline
+      \begin{tabular}[c]{@{}c@{}}Vel. \\ (m/s) \end{tabular} &   0.0292   &  0.0333  &   0.0297   & 0.0277  \\ \hline
+      \begin{tabular}[c]{@{}c@{}} $\sigma_{Vel}$  \\ (m/s) \end{tabular} & 0.00135 & 0.00079 & 0.00197 & 0.00241 \\ \hline
+      \begin{tabular}[c]{@{}c@{}} $\Delta_{Roll}$ \end{tabular} & 12.541\degree & 8.742\degree & 13.897\degree & 12.168\degree \\\hline
+      \begin{tabular}[c]{@{}c@{}} $\sigma_{Roll}$ \end{tabular}  & 2.416\degree & 2.145\degree & 1.802\degree & 3.270\degree \\ \hline
+      \begin{tabular}[c]{@{}c@{}} $\Delta_{Pitch}$ \end{tabular} & 11.458\degree & 8.295\degree & 15.189\degree & 13.182\degree \\ \hline
+      \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular}  & 1.826\degree & 2.386\degree & 1.441\degree & 2.944\degree \\ \hline
 
     \end{tabular}
     Fonte: Autoria própria
@@ -83,10 +83,10 @@
   \end{table}
 
   A fim de avaliar se o controle de rotação aqui proposto contribuiu de fato na estabilidade da caminhada, utilizaremos o teste T-Student de uma amostra, com um nível de confiança de 99\%. Então, foi proposto que a hipotése nula é que a oscilação de rotação do corpo não foi melhorada com o uso do controle de rotação, considerando testes entre os mesmos terrenos. O resultado desta análise nos mostrou que a hipotése nula pode ser rejeitada, pois os p-valores para as duas situações, terrenos planos e irregulares, se mostraram maiores que 0.01. Logo, pode-se afirmar que quando utilizado o controle de rotação o Caramelo desempenha uma caminhada mais estável.
-  
+    
   %% Sugiro juntar essas section em uma só, pra economizar espaço
   \subsubsection{Plano inclinado}
-  Durante este experimento, contatou-se que o robô possui a habilidade de andar por terrenos com até 5,336\degree de inclinação, figura \ref{fig:tests3-4}. 
+  Durante este experimento, contatou-se que o robô possui a habilidade de andar por terrenos com 5,336\degree de inclinação, figura \ref{fig:tests3-4}. 
 
   \subsubsection{Superação de obstáculos}
   O último experimento, constatou que o robô é capaz de ultrapassar obstáculos de até 5cm de altura. Para isso foram testados três degraus de 2, 4 e 5 cm de altura, sendo os dois últimos apresentados na figura \ref{fig:tests3-4}.
