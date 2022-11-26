@@ -7,10 +7,10 @@
 
   \begin{figure}[h]
     \centering
-    \caption{Titulo da Figura}
+    \caption{Movimentação do corpo do robô.}
     \includegraphics[width=0.48\textwidth]{moving_body.png}
     
-    Fonte: XXX
+    Fonte: autores.
     \label{fig:moving_body}
   \end{figure}
 
@@ -18,11 +18,11 @@
 
   \begin{figure}[h]
     \centering
-    \caption{Titulo da Figura}
+    \caption{Respostas dos controles de angulação}
     \includegraphics[width=0.48\textwidth]{grafico_controlling_X.png}
     \includegraphics[width=0.48\textwidth]{grafico_controlling_Y.png}
     
-    Fonte: XXX
+    Fonte: autores
     \label{fig:grafico_controlling}
   \end{figure}
 
@@ -35,27 +35,45 @@
   \begin{table}[h]
     \caption{Titulo da Tabela}
     \centering
-      \begin{tabular}{lllll}
-             & $tempo (s)$ & $x_{final}(m)$ & $y_{final}(m)$ & $z_{max}(m)$ \\
-      Exp. 1 & 0.559457 & 0.050349 & 0.029247 & 0.047585 \\
-      Exp. 2 & 0.556770 & 0.030240 & 0.049132 & 0.046562      
-      \end{tabular}
+    \begin{tabular}{ccc}
+      \hline
+                            & 1         & 2        \\
+      \hline
+      $\bar{tempo}$ (s)          & 0.569965  & 0.576984 \\
+      \hline
+      $\sigma_{tempo}$            & 0.058441  & 0.077332 \\
+      \hline
+      $\bar{x}_{final}$ (m)     & 0.050344  & 0.030237 \\
+      \hline
+      $\sigma_{x_{final}}$ (m)  & 0.000104  & 0.000134 \\
+      \hline
+      $\bar{y}_{final}$ (m)     & 0.029242  & 0.049143 \\      
+      \hline
+      $\sigma_{y_{final}}$ (m)  & 0.000128  & 0.000095 \\      
+      \hline
+      $\bar{z}_{max}$ (m)       & 0.047568  & 0.046162 \\      
+      \hline
+      $\sigma_{z_{max}}$    & 0.000278  & 0.005562 \\
+      \hline   
+    \end{tabular}
 
-    Fonte: Autoria própria
+    Fonte: autores
     \label{tab:trajetoria}
   \end{table}
 
-  Inicialmente, foram realizados dois testes de T Student para amostras independentes, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2, e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores $(x, y)$ desejados. O resultado da análise de T Student traz um $t$ de aproximadamente $1.087$, em se tratando de tempo, e de $1.0658$ para a altura máxima alcançada durante o passo. Para uma confiabilidade de $95\%$ e um total de 58 graus de liberdade, o valor crítico $t_c$ encontrado é de $2.00$. Como ambos os valores encontrados estão dentro do intervalo de confiança ($-t_c < t < t_c$), isso mostra que não há uma diferença significativa entre as médias em cada experimento, o que significa que diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e altura máxima do passo.
+  % Inicialmente, foram realizados dois testes de T Student para amostras independentes, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2, e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores $(x, y)$ desejados. O resultado da análise de T Student traz um $t$ de aproximadamente $1.087$, em se tratando de tempo, e de $1.0658$ para a altura máxima alcançada durante o passo. Para uma confiabilidade de $95\%$ e um total de 58 graus de liberdade, o valor crítico $t_c$ encontrado é de $2.00$. Como ambos os valores encontrados estão dentro do intervalo de confiança ($-t_c < t < t_c$), isso mostra que não há uma diferença significativa entre as médias em cada experimento, o que significa que diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e altura máxima do passo.
+
+  Inicialmente, foram realizados dois testes de T Student para amostras independentes, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2, e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores $(x, y)$ desejados. O resultado da análise de T Student traz um $p_{valor}$ de aproximadamente $0.6931$, em se tratando de tempo, e de $0.1722$ para a altura máxima alcançada durante o passo. Ambos os valores encontrados são superiores a $0.05$, o que mostra que, para uma confiabilidade de $95\%$, não há uma diferença significativa entre as médias em cada experimento, o que significa que diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e altura máxima do passo.
   
   Os gráficos da figura \ref{fig:grafico_trajetoria_xyz} representam um dos testes realizados para o primeiro caso ($x=0.05m$, $y=0.03m$), sendo os gráficos superiores esquerdo e direito correspondentes à trajetória em $x$ e $y$ respectivamente, e o gráfico inferior correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0.0476m$).
 
   \begin{figure}[h]
     \centering
-    \caption{Titulo da Figura}
+    \caption{Trajetórias realizadas pelos pés.}
     \includegraphics[width=0.48\textwidth]{grafico_trajetoria_xy.png}
     \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
     
-    Fonte: XXX
+    Fonte: autores.
     \label{fig:grafico_trajetoria_xyz}
   \end{figure}
 
@@ -79,7 +97,7 @@
       \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular}  & 1.826\degree & 2.386\degree & 1.441\degree & 2.944\degree \\ \hline
 
     \end{tabular}
-    Fonte: Autoria própria
+    Fonte: autores
     \label{tab:vel_stab}
   \end{table}
 
@@ -97,7 +115,7 @@
     \includegraphics[width=0.48\textwidth]{ramp_test.jpeg}
     \includegraphics[width=0.48\textwidth]{test4.png}
 
-    Fonte: XXX
+    Fonte: autores
     \label{fig:tests3-4}
   \end{figure}
 

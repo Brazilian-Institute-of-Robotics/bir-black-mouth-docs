@@ -132,15 +132,14 @@ A seguir, serão apresentados o desenvolvimento do modelo cinemático, dos contr
 \subsubsection{Modelo cinemático}
 \label{sec:detail_inv_kinematics}
 
-Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinemática inversa e a cinemática direta do robô. Para resolver a cinemática direta, foi utilizado o pacote \textit{tf2}, um recurso disponível no ROS2 que facilita o gerenciamento de transformações entre eixos de coordenadas. A cinemática inversa, por outro lado, foi feita com base em uma análise geométrica. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô e são calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B} em função da posição $(x, y, z)$ desejada para a pata e dos comprimentos $L_1$, $L_2$ e $L_3$.
-
+Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinemática inversa e a cinemática direta do robô. Para a cinemática direta, foi utilizado o pacote \textit{tf2}, um recurso disponível no ROS2 que facilita o gerenciamento de transformações entre eixos de coordenadas. A cinemática inversa, por outro lado, foi feita com base em uma análise geométrica. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô e são calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B} em função da posição $(x_{IK}, y_{IK}, z_{IK})$ desejada para a pata e dos comprimentos $L_1$, $L_2$ e $L_3$ (figura \ref{fig:caramel_tfs}).
 \begin{equation}
   \label{eq:theta1}
-  \theta_1 = \arctan{(\frac{x}{y})} - \arctan{(\frac{L_1}{a})}
+  \theta_1 = \arctan{(\frac{x_{IK}}{y_{IK}})} - \arctan{(\frac{L_1}{a})}
 \end{equation}
 \begin{equation}
   \label{eq:theta2}
-  \theta_2 = \frac{\pi}{2} - \arctan{(\frac{a}{z}}) - \arctan{(\frac{\sqrt{1-A^2}}{A})}
+  \theta_2 = \frac{\pi}{2} - \arctan{(\frac{a}{z_{IK}}}) - \arctan{(\frac{\sqrt{1-A^2}}{A})}
 \end{equation}
 \begin{equation}
   \label{eq:theta3}
@@ -148,22 +147,31 @@ Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinem
 \end{equation}
 \begin{equation}
   \label{eq:a}
-  a = \sqrt{x^2+y^2-L_1^2}
+  a = \sqrt{x_{IK}^2+y_{IK}^2-L_1^2}
 \end{equation}
 \begin{equation}
   \label{eq:A}
-  A =\frac{a^2+z^2+L_2^2-L_3^2}{2L_2\sqrt{a^2+z^2}}
+  A =\frac{a^2+z^2+L_2^2-L_3^2}{2L_2\sqrt{a^2+z_{IK}^2}}
 \end{equation}
 \begin{equation}
   \label{eq:B}
-  B = \frac{a^2+z^2-L_2^2-L_3^2}{2L_2L_3}
+  B = \frac{a^2+z_{IK}^2-L_2^2-L_3^2}{2L_2L_3}
 \end{equation}
+\begin{figure}[h]
+  \centering
+  \caption{Links da perna do robô.}
+  \includegraphics[width=0.48\textwidth]{caramel_tfs.png}
 
-Essas equações são úteis para o cálculo da posição de uma única perna, mas são insuficientes para realizar a cinemática do corpo do robô. Para isso, o \textit{base\_link} é utilizado como referência, e uma matriz $T_m$ (eq. \ref{eq:Tm}) é utilizada para realizar a cinemática do corpo, a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas, sendo possível controlar cada um dos 6 graus de liberdade. Para isso, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros em relação ao \textit{base\_link} são necessárias.
+  Fonte: autores.
+  \label{fig:caramel_tfs}
+\end{figure}
+
+
+Essas equações são úteis para o cálculo da posição de uma única perna, mas são insuficientes para realizar a cinemática do corpo do robô. Desta forma, um \textit{frame} central, chamado de \textit{base\_link} (figura \ref{fig:caramel_body}), é utilizado como referência, e uma matriz $T_M$ (eqs. \ref{eq:Tm} e \ref{eq:Rxyz}) é utilizada para realizar a cinemática do corpo, a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas, sendo possível controlar cada um dos 6 graus de liberdade. Para isso, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros (\textit{hip\_links}) em relação ao \textit{base\_link} são necessárias.
 
 \begin{equation}
   \label{eq:Tm}
-  T_m =
+  T_M =
   \begin{bmatrix}
       &         &   & x_c \\
       & R_{xyz} &   & y_c \\
@@ -195,16 +203,16 @@ Essas equações são úteis para o cálculo da posição de uma única perna, m
   \end{split}
 \end{equation}
 
-O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{ik}, y_{ik}, z_{ik})$ resultantes de cada uma das transformações, conforme a equação \ref{eq:xyzik}. O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$.
+O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{IK}, y_{IK}, z_{IK})$ resultantes de cada uma das transformações, conforme a equação \ref{eq:xyzik}. O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$.
 
 \begin{equation}
   \label{eq:xyzik}
   \begin{bmatrix}
-    x_{ik} \\
-    y_{ik} \\
-    z_{ik} \\
+    x_{IK} \\
+    y_{IK} \\
+    z_{IK} \\
     1
-  \end{bmatrix}= (T_m.T_{FR})^{-1}.
+  \end{bmatrix}= (T_M.T_{FR})^{-1}.
   \begin{bmatrix}
     x \\
     y \\
@@ -213,17 +221,17 @@ O cálculo das angulações de cada perna então é feito utilizando como entrad
   \end{bmatrix}
 \end{equation}
 
-Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu link quando o robô está em seu estado de repouso (figura \ref{fig:joints_ik}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
+Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu link quando o robô está em seu estado de repouso (figura \ref{fig:caramel_body}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
 
 \begin{figure}[h]
   \centering
-  \caption{Titulo da Figura}
-  \includegraphics[width=0.48\textwidth]{joints_ik.png}
-
-  Fonte: XXX
-  \label{fig:joints_ik}
+  \caption{Eixos do robô em posição de repouso.}
+  \vspace{-0.75cm}
+  \includegraphics[width=0.48\textwidth]{caramel_body.drawio.png}
+  
+  Fonte: autores.
+  \label{fig:caramel_body}
 \end{figure}
-
 
 \begin{equation}
   \label{eq:xyzik_foot}
@@ -232,7 +240,7 @@ Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta
     y_{ik} \\
     z_{ik} \\
     1
-  \end{bmatrix}= (T_m.T_{FR})^{-1}.
+  \end{bmatrix}= (T_M.T_{FR})^{-1}.
   (F_{FR}.
   \begin{bmatrix}
     x \\
@@ -248,10 +256,10 @@ Os controladores de angulação são dois controladores PID em paralelo respons�
 
 \begin{figure}[h]
   \centering
-  \caption{Titulo da Figura}
+  \caption{Controlador PID projetado.}
   \includegraphics[width=0.48\textwidth]{PID.drawio.png}
 
-  Fonte: XXX
+  Fonte: autores
   \label{fig:pid}
 \end{figure}
 
@@ -278,7 +286,7 @@ O planejador de trajetória é responsável por calcular a trajetória que cada 
   \label{eq:traj_k}
 \end{equation}
 
-O gráfico de uma curva cicloidal no espaço 3D pode ser vista na Figura \ref{fig:traj_space}. A mesma trajetória é ilustrada na Figura \ref{fig:traj_fig:traj_time} em função do tempo. É possível perceber que a curva possui primeira derivada nula no momento em que o pé toca o solo, o que é favorável ao controle de malha aberta já que quanto mais suave for a aterrissagem, menos distúrbios são causados no sistema.
+O gráfico de uma curva cicloidal no espaço 3D pode ser vista na Figura \ref{fig:traj_space}. A mesma trajetória é ilustrada na Figura \ref{fig:traj_time} em função do tempo. É possível perceber que a curva possui primeira derivada nula no momento em que o pé toca o solo, o que é favorável ao controle de malha aberta já que quanto mais suave for a aterrissagem, menos distúrbios são causados no sistema.
 
 \begin{figure*}[h]
   \centering
