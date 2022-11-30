@@ -8,7 +8,7 @@
 
   Os primeiros testes realizados com o protótipo foram relacionados à movimentação do corpo a partir do modelo cinemático. Foi observado que o sistema não só é capaz de realizar a cinemática de cada uma das pernas individualmente como também do seu corpo em todos os 6 graus de liberdade (translações em $x$, $y$ e $z$ e rotações em $roll$, $pitch$ e $yaw$). A figura \ref{fig:moving_body} ilustra o movimento do corpo do robô em cada um desses graus de liberdade.
 
-  \begin{figure}[h]
+  \begin{figure}[!htb]
     \centering
     \caption{Movimentação do corpo do robô.}
     \includegraphics[width=0.48\textwidth]{moving_body.png}
@@ -19,7 +19,7 @@
 
   Do mesmo modo, os gráficos da figura \ref{fig:grafico_controlling} ilustram o comportamento do sistema à variação dos \textit{setpoints} de orientação em \textit{roll} (gráfico superior) e em \textit{pitch} (gráfico inferior) para o corpo do robô, a partir da aplicação de diversos degraus (curvas em azul). Nota-se que o protótipo é capaz de se adaptar rapidamente aos novos valores desejados de orientação simultaneamente em ambos os eixos.
 
-  \begin{figure}[h]
+  \begin{figure}[!htb]
     \centering
     \caption{Respostas dos controles de angulação}
     \includegraphics[width=0.48\textwidth]{grafico_controlling_X.png}
@@ -35,7 +35,7 @@
   \subsubsection{Análise de trajetória}
   Durante este experimento, o objetivo foi analisar o tempo real de execução da trajetória, as coordenadas finais $(x_f, y_f)$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias encontradas para cada um desses parâmetros durante a realização dos testes.
 
-  \begin{table}[h]
+  \begin{table}[!htb]
     \caption{Resultados do experimento da trajetória da pata.}
     \centering
     \begin{tabular}{ccc}
@@ -68,7 +68,7 @@
   
   Os gráficos da figura \ref{fig:grafico_trajetoria_xyz} representam um dos testes realizados para o primeiro caso ($x=0.05m$, $y=0.03m$), sendo os gráficos superiores esquerdo e direito correspondentes à trajetória em $x$ e $y$ respectivamente, e o gráfico inferior correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0.0476m$).
 
-  \begin{figure}[h]
+  \begin{figure}[!htb]
     \centering
     \caption{Trajetórias realizadas pelas patas.}
     \includegraphics[width=0.48\textwidth]{grafico_trajetoria_xy.png}
@@ -81,7 +81,7 @@
   \subsubsection{Controle de velocidade}
   Durante os testes de controle de velocidade foi observada uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos regulares do que em terrenos irregulares. Por meio dos dados coletados, foram extraídas as informações da velocidade média da caminhada para cada teste, oscilação máxima de rotação do corpo em \textit{roll} e \textit{pitch} e os respectivos desvios padrões, apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que o robô se aproximou mais vezes da velocidade solicitada no terreno regular combinado ao controle de rotação, enquanto que no irregular, o teste com controle de rotação ativo apresentou uma velocidade média inferior e baixa consistência nos dados. A diferença percebida entre a velocidade solicitada e a inferida é justificada pelo acúmulo de erro nas coordenadas finais $(x_f, y_f)$ das patas a cada passo. Ou seja, quando levado em consideração o próprio peso do robô, o sistema de controle não é capaz de seguir fielmente a trajetória do passo.
 
-  \begin{table}[]
+  \begin{table}[!htb]
     \caption{Resultados do experimento do controlde de velocidade.}
     \centering
     \begin{tabular}{ccccc}
@@ -109,7 +109,7 @@
   \subsubsection{Superação de obstáculos}
   O último experimento constatou que o robô é capaz de ultrapassar pequenos obstáculos. Para isso, foram considerados degraus de três diferentes alturas: 2, 4 e 5 $cm$ (ver figura \ref{fig:tests3-4}). O robô foi capaz de superar degraus de 2 e 4 $cm$, porém falhou ao tentar subir um de 5 $cm$.
 
-  \begin{figure}[h]
+  \begin{figure}[!htb]
     \centering
     \caption{Fotos do robô no teste da rampa e do degrau.}
     \includegraphics[width=0.48\textwidth]{ramp_test.jpeg}
