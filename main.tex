@@ -11,25 +11,29 @@
 \usepackage{xcolor}
 \usepackage{amsmath}
 \usepackage[abnt-emphasize=bf, num]{abntex2cite}
+\usepackage[superscript,biblabel]{cite}
+\usepackage[square]{natbib}
 \usepackage{subcaption}
 \usepackage{gensymb}
 \usepackage{titlesec}
 \usepackage{enumitem}
+\usepackage{textcomp}
+\usepackage{xurl}
 
 \graphicspath{ {./images/} }
-
 % \pagenumbering{gobble}
 \setlength{\parskip}{0.2cm}
 \setlength{\parindent}{1.3cm}
 \sectionfont{\fontsize{12}{15}\selectfont}
 \subsectionfont{\fontsize{12}{15}\selectfont}
 \subsubsectionfont{\fontsize{12}{15}\selectfont}
-\titlespacing*{\section}
-{0pt}{0.3\baselineskip}{0.3\baselineskip}
-\titlespacing*{\subsection}
-{0pt}{0.3\baselineskip}{0.3\baselineskip}
-\titlespacing*{\subsubsection}
-{0pt}{0.3\baselineskip}{0.3\baselineskip}
+\let\OriginalSubsubsection\subsubsection%
+\renewcommand{\subsubsection}[1]{\OriginalSubsubsection{\textmd{#1}}}%
+\let\OriginalTheSubsubsection\thesubsubsection
+\renewcommand{\thesubsubsection}{\textmd{\OriginalTheSubsubsection}}
+\titlespacing*{\section}{0pt}{\parskip}{\parskip}
+\titlespacing*{\subsection}{0pt}{\parskip}{\parskip}
+\titlespacing*{\subsubsection}{0pt}{\parskip}{\parskip}
 
 \captionsetup{belowskip=-0.0pt}
 
@@ -55,6 +59,9 @@
 
     \section{\MakeUppercase{Conclusão}}
     \subfile{sections/conclusion.tex}
+
+    \section{\MakeUppercase{Considerações finais}}
+    \subfile{sections/final_points.tex}
 
     
     \bibliography{refs.bib}
