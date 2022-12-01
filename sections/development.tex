@@ -9,8 +9,8 @@ A estrutura do caramelo é do tipo mamífero e a configuração das pernas é a 
 A locomoção do Caramelo foi desenvolvida baseada nas marchas periódicas e simétricas. Dessa forma, foi adotada a marcha \textit{trot} como a marcha principal do robô. Embora sua estrutura permita a realização de muitos outros tipos de marcha, neste trabalho, foi considerada apenas o \textit{trot}, devido a sua simplicidade e eficiência. Com o objetivo de diminuir a complexidade do controle de locomoção, foi adotada uma marcha descontínua, ou seja, o corpo do robô se desloca apenas quando todas as patas estão do solo. A sequência de etapas da marcha do Caramelo pode ser vista na Figura \ref{fig:trot_pattern}, na qual as áreas em branco representam a etapa de \textit{swing} e as em cinza a de \textit{stance}. É possível perceber que sempre o mesmo par de pernas diagonais se move no mesmo instante. Entre duas etapas consecutivas de \textit{swing}, há um momento em que todas as patas estão em \textit{stance}, que é quanto o corpo do robô é deslocado no sentido desejado de locomoção.
 
 \begin{figure}[!htb]
-  \caption{Padrão de movimentação da marcha.}
   \centering
+  \caption{Padrão de movimentação da marcha para cada perna.}
   \includegraphics[width=0.45\textwidth]{trot_pattern.png}
   \vfill
   Fonte: autores.
@@ -56,7 +56,7 @@ Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinem
 \begin{figure}[!htb]
   \centering
   \caption{Links da perna do robô.}
-  \includegraphics[width=0.48\textwidth]{caramel_tfs.png}
+  \includegraphics[width=0.4\textwidth]{caramel_tfs.png}
 
   Fonte: autores.
   \label{fig:caramel_tfs}
@@ -102,7 +102,7 @@ Essas equações são úteis para o cálculo da posição de uma única perna, m
   \centering
   \caption{Eixos do robô em posição de repouso.}
   \vspace{-0.75cm}
-  \includegraphics[width=0.48\textwidth]{caramel_body.drawio.png}
+  \includegraphics[width=0.35\textwidth]{caramel_body.drawio.png}
   
   Fonte: autores.
   \label{fig:caramel_body}

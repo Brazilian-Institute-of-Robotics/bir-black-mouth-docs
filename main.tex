@@ -11,8 +11,8 @@
 \usepackage{xcolor}
 \usepackage{amsmath}
 \usepackage[abnt-emphasize=bf, num]{abntex2cite}
-\usepackage[superscript,biblabel]{cite}
-\usepackage[square]{natbib}
+% \usepackage[superscript,biblabel]{cite}
+% \usepackage[square]{natbib}
 \usepackage{subcaption}
 \usepackage{gensymb}
 \usepackage{titlesec}
@@ -35,7 +35,9 @@
 \titlespacing*{\subsection}{0pt}{\parskip}{\parskip}
 \titlespacing*{\subsubsection}{0pt}{\parskip}{\parskip}
 
-\captionsetup{belowskip=-0.0pt}
+\captionsetup{belowskip=-0.0pt, justification=centering}
+% \captionsetup{justification=centering}
+
 
 \citebrackets[]
 
@@ -43,24 +45,31 @@
     \subfile{sections/cover.tex}
 
     \section{\MakeUppercase{Introdução}}
+    \label{sec:intro}
     \subfile{sections/introduction.tex}
 
     \section{\MakeUppercase{O robô quadrúpede}}
+    \label{sec:the_quadruped_robot}
     \subfile{sections/theoretical_reference.tex}
 
-    \section{\MakeUppercase{Metodologia}} 
+    \section{\MakeUppercase{Metodologia}}
+    \label{sec:methodology}
     \subfile{sections/methodology.tex}
 
-    \section{\MakeUppercase{O robô Caramelo}} 
+    \section{\MakeUppercase{O robô Caramelo}}
+    \label{sec:the_caramel}
     \subfile{sections/development.tex}
 
     \section{\MakeUppercase{Resultados e Discussão}}
+    \label{sec:results}
     \subfile{sections/results.tex}
 
     \section{\MakeUppercase{Conclusão}}
+    \label{sec:conclusion}
     \subfile{sections/conclusion.tex}
 
     \section{\MakeUppercase{Considerações finais}}
+    \label{sec:final_points}
     \subfile{sections/final_points.tex}
 
     

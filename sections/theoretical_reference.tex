@@ -9,31 +9,34 @@ Robôs com pernas também apresentam diversas diferenças entre si, majoritariam
 \subsection{Estrutura e design}
 Pelo fato de robôs quadrúpedes terem se tornado um grande foco de pesquisa nos últimos anos, diferentes \textit{designs} já foram pesquisados. Esses \textit{designs} se diferenciam em aspectos como estrutura, configuração de pernas e o número de graus de liberdade (GDL) por perna.
 
-\begin{figure*}[h]
+Um dos tipos de estrutura que existem é a de tipo mamífero. A estrutura tipo mamífero tem esse nome por conta da sua semelhança com a postura de quadrúpedes como cachorros e cavalos. Kitano et al., em \cite{Kitano2016}, analisa dois tipos diferentes de estruturas de robôs quadrúpedes: a do tipo mamífero (Figuras \ref{fig:robots_structures_a} e \ref{fig:robots_structures_b}) e a do tipo \textit{sprawling} (Figura \ref{fig:robots_structures_c}). Segundo sua análise, a primeira permite alcançar maiores velocidades por possuir duas juntas no plano sagital. Além disso, ela também é mais eficiente, pois os atuadores requerem menos torque para sustentar o robô: sua estrutura mais compacta diminui o braço de alavanca sobre o qual a força peso do robô atua. Essa estrutura também favorece a navegação em ambientes estreitos, onde um robô do tipo \textit{sprawling}, por exemplo, teria dificuldades de acessar.
+
+\begin{figure}[h]
   \centering
   \caption{Exemplos de robôs com estruturas do tipo mamífero e \textit{sprawling}.}
-  \begin{subfigure}[t]{0.32\textwidth}
-    \includegraphics[width=1.0\textwidth]{Anymal.png}
-    \caption{ANYmal}
-    \label{fig:robots_structures_a}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.32\textwidth}
-    \includegraphics[width=1.0\textwidth]{Spot.png}
+  % \begin{subfigure}[t]{0.32\textwidth}
+  %   \includegraphics[width=1.0\textwidth]{Anymal.png}
+  %   \caption{ANYmal}
+  %   \label{fig:robots_structures_a}
+  % \end{subfigure}
+  \begin{subfigure}[t]{0.23\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{Spot.png}
     \caption{Spot}
     \label{fig:robots_structures_b}
   \end{subfigure}
-  \begin{subfigure}[t]{0.32\textwidth}
+  \begin{subfigure}[t]{0.23\textwidth}
+    \centering
     \includegraphics[width=1.0\textwidth]{Titan.png}
     \caption{TITAN-XIII}
     \label{fig:robots_structures_c}
   \end{subfigure}
+  \vfill
   Fonte: Adaptado de \cite{AnymalImg1} \cite{SpotImg1} \cite{Kitano2016}.
   \label{fig:robots_structures}
-\end{figure*}
+\end{figure}
 
-Um dos tipos de estrutura que existem é a de tipo mamífero. A estrutura tipo mamífero tem esse nome por conta da sua semelhança com a postura de quadrúpedes como cachorros e cavalos. Kitano et al., em \cite{Kitano2016}, analisa dois tipos diferentes de estruturas de robôs quadrúpedes: a do tipo mamífero (Figuras \ref{fig:robots_structures_a} e \ref{fig:robots_structures_b}) e a do tipo \textit{sprawling} (Figura \ref{fig:robots_structures_c}). Segundo sua análise, a primeira permite alcançar maiores velocidades por possuir duas juntas no plano sagital. Além disso, ela também é mais eficiente, pois os atuadores requerem menos torque para sustentar o robô: sua estrutura mais compacta diminui o braço de alavanca sobre o qual a força peso do robô atua. Essa estrutura também favorece a navegação em ambientes estreitos, onde um robô do tipo \textit{sprawling}, por exemplo, teria dificuldades de acessar.
-
-Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto à configuração das pernas. Os quatro tipos de configuração podem ser vistos na Figura \ref{fig:joint_configurations}. Entre elas destacam-se a \textit{full-elbow} e o \textit{elbow-knee}. Robôs como o Spot, MIT Cheetah e Stanford Pupper utilizam a configuração \textit{full-elbow}, enquanto outros como o ANYmal, StarlETH e BigDog adotam a configuração  \textit{elbow-knee}. Yao \textit{et al.}, em \cite{Yao2021}, acreditam que a configuração \textit{elbow-knee} possibilita maior estabilidade, mas as características de movimento da configuração \textit{full-elbow} podem ser superiores.
+Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto à configuração das pernas. As duas configurações mais utilizadas podem ser vistas na Figura \ref{fig:joint_configurations}. Robôs como o Spot, MIT Cheetah e Stanford Pupper utilizam a configuração \textit{full-elbow}, enquanto outros como o ANYmal, StarlETH e BigDog adotam a configuração  \textit{elbow-knee}. Yao \textit{et al.}, em \cite{Yao2021}, acreditam que a configuração \textit{elbow-knee} possibilita maior estabilidade, mas as características de movimento da configuração \textit{full-elbow} podem ser superiores.
 
 \begin{figure}[h]
   \centering
@@ -44,18 +47,18 @@ Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto
     \caption{\textit{full-elbow}}
     \label{fig:joint_configurations_a}
   \end{subfigure}
-  \begin{subfigure}[t]{0.24\textwidth}
-    \centering
-    \includegraphics[width=1.0\textwidth]{full_knee.png}
-    \caption{\textit{full-knee}}
-    \label{fig:joint_configurations_b}
-  \end{subfigure}
-  \begin{subfigure}[t]{0.24\textwidth}
-    \centering
-    \includegraphics[width=1.0\textwidth]{knee_elbow.png}
-    \caption{\textit{knee-elbow}}
-    \label{fig:joint_configurations_c}
-  \end{subfigure}
+  % \begin{subfigure}[t]{0.24\textwidth}
+  %   \centering
+  %   \includegraphics[width=1.0\textwidth]{full_knee.png}
+  %   \caption{\textit{full-knee}}
+  %   \label{fig:joint_configurations_b}
+  % \end{subfigure}
+  % \begin{subfigure}[t]{0.24\textwidth}
+  %   \centering
+  %   \includegraphics[width=1.0\textwidth]{knee_elbow.png}
+  %   \caption{\textit{knee-elbow}}
+  %   \label{fig:joint_configurations_c}
+  % \end{subfigure}
   \begin{subfigure}[t]{0.24\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{elbow_knee.png}
