@@ -92,7 +92,7 @@
     \label{fig:grafico_trajetoria_xyz}
   \end{figure}
 
-  \begin{figure}
+  \begin{figure}[!htb]
     \centering
     \caption{Tempo e altura da pata durante um passo.}
     \includegraphics[width=0.5\textwidth]{tempo_zmax_traj.png}
@@ -121,7 +121,29 @@
   \end{figure}
 
   \subsubsection{Controle de velocidade}
-  Durante o experimento de controle de velocidade foi observada uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos planos do que em terrenos irregulares. Por meio dos dados coletados, foram extraídas as informações da velocidade média da caminhada para cada amostra, oscilação máxima de rotação do corpo em \textit{roll} e \textit{pitch} e os respectivos desvios padrões, apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que o robô se aproximou mais vezes da velocidade solicitada no terreno plano combinado ao controle de angulação, enquanto que no irregular, o teste com controle de angulação ativo apresentou uma velocidade média inferior e baixa consistência nos dados. A diferença percebida entre a velocidade solicitada e a inferida é justificada pelo acúmulo de erro nas coordenadas finais $(x_f, y_f)$ das patas a cada passo. Ou seja, quando levado em consideração o próprio peso do robô, o sistema de controle não é capaz de seguir fielmente a trajetória do passo.
+  Durante o experimento de controle de velocidade foi observada uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos planos (figura \ref{fig:terreno_plano}) do que em terrenos irregulares (figura \ref{fig:terreno_irregular}). Por meio dos dados coletados, foram extraídas as informações da velocidade média da caminhada para cada amostra, oscilação máxima de rotação do corpo em \textit{roll} e \textit{pitch} e os respectivos desvios padrões, apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que o robô se aproximou mais vezes da velocidade solicitada no terreno plano combinado ao controle de angulação, enquanto que no irregular, o teste com controle de angulação ativo apresentou uma velocidade média inferior e baixa consistência nos dados. A diferença percebida entre a velocidade solicitada e a inferida é justificada pelo acúmulo de erro nas coordenadas finais $(x_f, y_f)$ das patas a cada passo. Ou seja, quando levado em consideração o próprio peso do robô, o sistema de controle não é capaz de seguir fielmente a trajetória do passo.
+
+
+  \begin{figure}[!htb]
+    \centering
+    \caption{Terrenos dos testes.}
+    \begin{subfigure}[t]{0.24\textwidth}
+      \centering
+      \includegraphics[width=1.0\textwidth]{terreno_plano.jpeg}
+      \caption{Plano}
+      \label{fig:terreno_plano}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+      \centering
+      \includegraphics[width=1.0\textwidth]{terreno_irregular.jpeg}
+      \caption{Irregular}
+      \label{fig:terreno_irregular}
+    \end{subfigure}
+    \vfill
+    Fonte: autores.
+    \label{fig:terrenos}
+  \end{figure}
+
 
   \begin{table}[!htb]
     \caption{Resultados do experimento do controlde de velocidade.}
