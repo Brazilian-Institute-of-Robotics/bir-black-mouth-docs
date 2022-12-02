@@ -78,22 +78,21 @@
     \label{tab:trajetoria}
   \end{table}
 
-  Inicialmente, foram realizados dois testes de t-Student para amostras independentes, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2, e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores $(x, y)$ desejados. O resultado da análise de t-Student traz um $p_{valor}$ de aproximadamente $0.6931$, em se tratando de tempo, e de $0.1722$ para a altura máxima alcançada durante o passo. Ambos os valores encontrados são superiores a $0.05$, o que mostra que, para uma confiabilidade de $95\%$, não há uma diferença significativa entre as médias em cada experimento, o que significa que diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e altura máxima do passo.
-  
-  Os gráficos da figura \ref{fig:grafico_trajetoria_xyz} representam uma das amostras coletada para o primeiro caso ($x=0.05m$, $y=0.03m$), sendo os gráficos superiores esquerdo e direito correspondentes à trajetória em $x$ e $y$ respectivamente, e o gráfico inferior correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0.0476m$).
+  Inicialmente, foram removidos os \textit{outliers} das amostras, valores que fogem da normalidade e podem prejudicar a análise dos dados. Em seguida, a fim de avaliar a normalidade dos dados, foi empregado o teste de \textit{Shapiro-Wilk}, o qual indicou que as amostras de ambos os testes estão semelhantes a uma distribuição normal, considerando um nível de confiança de $95\%$.  Foram realizadas dois testes de análise de variância (ANOVA) unilaterais, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2, e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores de $(x, y)$ requisitados. O resultado da ANOVA indica um $f_{valor}$ de aproximadamente $0.7212$, em se tratando de tempo, e de $0.5070$ para a altura máxima alcançada durante o passo, ambos valores superiores a $0.05$. Implica-se então que não há uma diferença significativa entre as médias em cada experimento, o que significa que diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e na altura máxima do passo.
+
+  O gráfico da figura \ref{fig:grafico_trajetoria_xyz} representa uma das amostras coletada para o primeiro caso ($x=0.05m$, $y=0.03m$), correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0.0476m$).
 
   \begin{figure}[!htb]
     \centering
-    \caption{Trajetórias realizadas pelas patas.}
-    \includegraphics[width=0.48\textwidth]{grafico_trajetoria_xy.png}
+    \caption{Trajetória em $z$ realizada pelas patas.}
     \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
-    
+  
     Fonte: autores.
     \label{fig:grafico_trajetoria_xyz}
   \end{figure}
 
   \subsubsection{Controle de velocidade}
-  Durante o experimento de controle de velocidade foi observada uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos regulares do que em terrenos irregulares. Por meio dos dados coletados, foram extraídas as informações da velocidade média da caminhada para cada amostra, oscilação máxima de rotação do corpo em \textit{roll} e \textit{pitch} e os respectivos desvios padrões, apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que o robô se aproximou mais vezes da velocidade solicitada no terreno regular combinado ao controle de rotação, enquanto que no irregular, o teste com controle de rotação ativo apresentou uma velocidade média inferior e baixa consistência nos dados. A diferença percebida entre a velocidade solicitada e a inferida é justificada pelo acúmulo de erro nas coordenadas finais $(x_f, y_f)$ das patas a cada passo. Ou seja, quando levado em consideração o próprio peso do robô, o sistema de controle não é capaz de seguir fielmente a trajetória do passo.
+  Durante o experimento de controle de velocidade foi observada uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos regulares do que em terrenos irregulares. Por meio dos dados coletados, foram extraídas as informações da velocidade média da caminhada para cada amostra, oscilação máxima de rotação do corpo em \textit{roll} e \textit{pitch} e os respectivos desvios padrões, apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que o robô se aproximou mais vezes da velocidade solicitada no terreno regular combinado ao controle de angulação, enquanto que no irregular, o teste com controle de angulação ativo apresentou uma velocidade média inferior e baixa consistência nos dados. A diferença percebida entre a velocidade solicitada e a inferida é justificada pelo acúmulo de erro nas coordenadas finais $(x_f, y_f)$ das patas a cada passo. Ou seja, quando levado em consideração o próprio peso do robô, o sistema de controle não é capaz de seguir fielmente a trajetória do passo.
 
   \begin{table}[!htb]
     \caption{Resultados do experimento do controlde de velocidade.}
