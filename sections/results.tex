@@ -42,10 +42,10 @@
   Nota-se que o protótipo é capaz de se adaptar rapidamente aos novos valores desejados de orientação simultaneamente em ambos os eixos.
 
   \subsection{Experimentos}
-  Em seguida, serão apresentados os resultados dos experimentos descritos na seção \ref{sec:method_results_analysis}.
+  A seguir, serão apresentados os resultados dos experimentos descritos na seção \ref{sec:method_results_analysis}.
 
   \subsubsection{Análise de trajetória}
-  Durante este experimento, o objetivo foi analisar o tempo real de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. Inicialmente, foram removidos os \textit{outliers} das amostras, valores que fogem da normalidade e podem prejudicar a análise dos dados. Em seguida, a fim de avaliar a normalidade dos dados, foi empregado o teste de \textit{Shapiro-Wilk}, o qual indicou que as amostras de ambos os testes estão semelhantes a uma distribuição normal, considerando um nível de confiança de $95\%$. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros durante a realização do experimento.
+  O objetivo desse experimento foi analisar o tempo real de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros durante a realização do experimento.
 
   \begin{table}[!htb]
     \caption{Resultados do experimento da trajetória da pata.}
@@ -76,7 +76,7 @@
     \label{tab:trajetoria}
   \end{table}
 
-  Foram realizados dois testes de análise de variância (ANOVA) unilaterais, o primeiro relacionando o tempo de execução da trajetória nos experimentos 1 e 2, e o segundo relacionando a altura máxima alcançada, com o intuito de verificar se os resultados se alteram para diferentes valores de $(x, y)$ requisitados. O resultado da ANOVA indica um $f_{valor}$ de aproximadamente $0,7212$, em se tratando de tempo, e de $0,5070$ para a altura máxima alcançada durante o passo, ambos valores superiores a $0,05$. Implica-se então que não há uma diferença significativa entre as médias em cada experimento, ou seja, diferentes comandos de trajetórias em $(x, y)$ não interferem nos resultados de tempo e na altura máxima do passo.
+  Inicialmente, foram removidos os \textit{outliers} (valores do conjunto de dados acima ou abaixo dos limites superior e inferior, respectivamente) das amostras, valores que fogem da normalidade e podem prejudicar a análise dos dados. Em seguida, a fim de avaliar a normalidade dos dados, foram aplicados testes de Shapiro-Wilk nos dados de tempo e altura máxima de ambos os testes, os quais obtiveram $p_{valor} > 0,05$ em todos os casos. Isso indica que as amostras de ambos os testes estão semelhantes a uma distribuição normal para um nível de confiança de $95\%$. Posteriormente, foram realizados dois testes de análise de variância (ANOVA) unilaterais: o primeiro relacionando o tempo de execução da trajetória nos testes 1 e 2 e o segundo a altura máxima alcançada. O objetivo foi verificar se os resultados se alteraram para diferentes valores de $(x, y)$ requisitados. O resultado da ANOVA indica um $p_{valor}$ de aproximadamente $0,7212$ referente ao tempo e de $0,5070$ referente à altura máxima alcançada durante o passo. Ambos os valores são superiores a $0,05$, indicando que não há uma diferença significativa entre as médias de cada teste, considerando um nível de confiança de $95\%$. Ou seja, diferentes pontos de destino em $(x, y)$ não interferiram no tempo de execução do passo nem na altura máxima alcançada pela pata.
 
   O gráfico da figura \ref{fig:grafico_trajetoria_xyz} representa uma das amostras coletada para o primeiro teste ($x=0,05m$, $y=0,03m$), correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0,0476m$).
 
