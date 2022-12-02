@@ -85,11 +85,39 @@
   \begin{figure}[!htb]
     \centering
     \caption{Trajetórias realizadas pelas patas.}
-    \includegraphics[width=0.48\textwidth]{grafico_trajetoria_xy.png}
+    % \includegraphics[width=0.48\textwidth]{grafico_trajetoria_xy.png}
     \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
     
     Fonte: autores.
     \label{fig:grafico_trajetoria_xyz}
+  \end{figure}
+
+  \begin{figure}
+    \centering
+    \caption{Tempo e altura da pata durante um passo.}
+    \includegraphics[width=0.5\textwidth]{tempo_zmax_traj.png}
+    Fonte: autores.
+    \label{fig:time_zmax_traj}
+  \end{figure}
+
+  \begin{figure}[!htb]
+    \centering
+    \caption{Oscilação do corpo em ambos os tipos de terreno.}
+    \begin{subfigure}[t]{0.49\textwidth}
+      \centering
+      \includegraphics[width=1.0\textwidth]{plane_boxplot.png}
+      \caption{Terreno plano}
+      \label{fig:imu_test_plane}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.49\textwidth}
+      \centering
+      \includegraphics[width=1.0\textwidth]{irregular_boxplot.png}
+      \caption{Terreno irregular}
+      \label{fig:imu_test_irregular}
+    \end{subfigure}
+    
+    Fonte: autores.
+    \label{fig:imu_test}
   \end{figure}
 
   \subsubsection{Controle de velocidade}
