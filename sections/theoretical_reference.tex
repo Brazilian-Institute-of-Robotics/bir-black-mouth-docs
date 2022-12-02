@@ -9,7 +9,7 @@ Robôs com pernas também apresentam diversas diferenças entre si, majoritariam
 \subsection{Estrutura e design}
 Pelo fato de robôs quadrúpedes terem se tornado um grande foco de pesquisa nos últimos anos, diferentes \textit{designs} já foram pesquisados. Esses \textit{designs} se diferenciam em aspectos como estrutura, configuração de pernas e o número de graus de liberdade (GDL) por perna.
 
-Um dos tipos de estrutura que existem é a de tipo mamífero. A estrutura tipo mamífero tem esse nome por conta da sua semelhança com a postura de quadrúpedes como cachorros e cavalos. Kitano et al., em \cite{Kitano2016}, analisa dois tipos diferentes de estruturas de robôs quadrúpedes: a do tipo mamífero (Figuras \ref{fig:robots_structures_a} e \ref{fig:robots_structures_b}) e a do tipo \textit{sprawling} (Figura \ref{fig:robots_structures_c}). Segundo sua análise, a primeira permite alcançar maiores velocidades por possuir duas juntas no plano sagital. Além disso, ela também é mais eficiente, pois os atuadores requerem menos torque para sustentar o robô: sua estrutura mais compacta diminui o braço de alavanca sobre o qual a força peso do robô atua. Essa estrutura também favorece a navegação em ambientes estreitos, onde um robô do tipo \textit{sprawling}, por exemplo, teria dificuldades de acessar.
+Um dos tipos de estrutura que existem é a de tipo mamífero. A estrutura tipo mamífero tem esse nome por conta da sua semelhança com a postura de quadrúpedes como cachorros e cavalos. Kitano et al., em \cite{Kitano2016}, analisa dois tipos diferentes de estruturas de robôs quadrúpedes: a do tipo mamífero (figura \ref{fig:robots_structures_b}) e a do tipo \textit{sprawling} (figura \ref{fig:robots_structures_c}). Segundo sua análise, a primeira permite alcançar maiores velocidades por possuir duas juntas no plano sagital. Além disso, ela também é mais eficiente, pois os atuadores requerem menos torque para sustentar o robô: sua estrutura mais compacta diminui o braço de alavanca sobre o qual a força peso do robô atua. Essa estrutura também favorece a navegação em ambientes estreitos, onde um robô do tipo \textit{sprawling}, por exemplo, teria dificuldades de acessar.
 
 \begin{figure}[h]
   \centering
@@ -32,11 +32,11 @@ Um dos tipos de estrutura que existem é a de tipo mamífero. A estrutura tipo m
     \label{fig:robots_structures_c}
   \end{subfigure}
   \vfill
-  Fonte: Adaptado de \cite{AnymalImg1} \cite{SpotImg1} \cite{Kitano2016}.
+  Fonte: Adaptado de  \cite{Kitano2016} \cite{SpotImg1}.
   \label{fig:robots_structures}
 \end{figure}
 
-Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto à configuração das pernas. As duas configurações mais utilizadas podem ser vistas na Figura \ref{fig:joint_configurations}. Robôs como o Spot, MIT Cheetah e Stanford Pupper utilizam a configuração \textit{full-elbow}, enquanto outros como o ANYmal, StarlETH e BigDog adotam a configuração  \textit{elbow-knee}. Yao \textit{et al.}, em \cite{Yao2021}, acreditam que a configuração \textit{elbow-knee} possibilita maior estabilidade, mas as características de movimento da configuração \textit{full-elbow} podem ser superiores.
+Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto à configuração das pernas. As duas configurações mais utilizadas podem ser vistas na figura \ref{fig:joint_configurations}. Robôs como o Spot, MIT Cheetah e Stanford Pupper utilizam a configuração \textit{full-elbow}, enquanto outros como o ANYmal, StarlETH e BigDog adotam a configuração  \textit{elbow-knee}. Yao \textit{et al.}, em \cite{Yao2021}, acreditam que a configuração \textit{elbow-knee} possibilita maior estabilidade, mas as características de movimento da configuração \textit{full-elbow} podem ser superiores.
 
 \begin{figure}[h]
   \centering
@@ -66,7 +66,7 @@ Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto
     \label{fig:joint_configurations_d}
   \end{subfigure}
 
-  Fonte: \cite{Yao2021}
+  Fonte: \cite{Yao2021}.
   \label{fig:joint_configurations}
 \end{figure}
 
@@ -90,7 +90,7 @@ Todo o controle de locomoção do robô é realizado pelo planejador de marchas.
 \subsubsection{Modelo cinemático}
 O modelo cinemático de um robô quadrúpede descreve a relação entre a posição de uma pata em três dimensões com a rotação de cada junta da sua respectiva perna. Como todas as pernas do robô são iguais, pode-se formular as relações de apenas uma perna e replicá-la quatro vezes, acrescentando as devidas translações e rotações, para se ter o modelo cinemático de todo o sistema.
 
-O modelo cinemático pode ser usado para resolver dois problemas: a cinemática direta e a cinemática inversa. A cinemática direta fornece a posição de uma pata em $(x, y, z)$ em função dos ângulos das juntas, enquanto que a cinemática inversa fornece os ângulos das juntas correspondentes a uma posição da pata no espaço tridimensional. Esses dois problemas são complementares, sendo a saída de um a entrada do outro e vice-versa. A partir da cinemática inversa, o robô consegue determinar quanto deve rotacionar seus atuadores para mover a pata alguma distância nas direções $(x, y e z)$. Com a cinemática direta, é possível saber se a pata de fato chegou na posição em que ele deveria estar. Portanto, ambos são muito importantes para o controle de locomoção do robô.
+O modelo cinemático pode ser usado para resolver dois problemas: a cinemática direta e a cinemática inversa. A cinemática direta fornece a posição de uma pata em $(x, y, z)$ em função dos ângulos das juntas, enquanto que a cinemática inversa fornece os ângulos das juntas correspondentes a uma posição da pata no espaço tridimensional. Esses dois problemas são complementares, sendo a saída de um a entrada do outro e vice-versa. A partir da cinemática inversa, o robô consegue determinar quanto deve rotacionar seus atuadores para mover a pata alguma distância nas direções $(x, y, z)$. Com a cinemática direta, é possível saber se a pata de fato chegou na posição em que ele deveria estar. Portanto, ambos são muito importantes para o controle de locomoção do robô.
 
 \subsubsection{Estratégias de controle}
 A locomoção de robôs quadrúpede, em geral, segue uma sequência de passos. Raibert propôs em \cite{Raibert1986} um método de controle baseado em três etapas: controle de salto, controle de velocidade e controle de postura do corpo. Essa estratégia de controle foi utilizada para controlar robôs com uma, duas e quatro pernas (o motivo de se ter um controle de salto é que robôs com apenas uma perna só podem ser locomover saltando). Sua premissa básica era a de que apenas uma perna estaria em \textit{stance} ou em \textit{swing} por vez. A fim da satisfazer essa premissa para robôs com mais de duas pernas, foi proposto o conceito de pernas virtuais. Isto é, um conjunto de pernas deve realizar igual comportamento quando em \textit{swing} e \textit{stance} e as fases de \textit{swing} e \textit{stance} de cada conjunto devem ser alternadas. Esse conceito foi utilizado para embasar o uso de marchas simétricas e periódicas como o \textit{trot}.
