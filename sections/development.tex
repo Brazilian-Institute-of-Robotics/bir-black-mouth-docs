@@ -144,17 +144,16 @@ Desta forma, a Cinemática Inversa é capaz de computar as angulações  $\theta
 
 \subsection{Controle de angulação}
 
-Os controladores de angulação são dois controladores PID em paralelo responsáveis por controlar a rotação de \textit{roll} e \textit{pitch} do corpo do robô. Eles atuam de forma independente, controlando a rotação do corpo em ambos os eixos simultaneamente. Ambos os controladores são iguais e foram implementados seguindo o modelo apresentado no diagrama de blocos da figura \ref{fig:pid}.
-\begin{figure}[!htb]
-  \centering
-  \caption{Controlador PID projetado.}
-  \includegraphics[width=0.48\textwidth]{PID.drawio.png}
-  Fonte: autores.
-  \label{fig:pid}
-  \vspace{-\baselineskip}
-\end{figure}
-
-O IMU é o sensor responsável por medir a rotação do corpo do robô, possibilitando a realimentação das saídas do sistema. O limitador foi adicionado para evitar que sejam enviados valores que extrapolam os limites de rotação das juntas do robô. Os esforços de controle são enviados para o planejador de marchas que, por sua vez, envia os comandos de movimentação para os controladores das juntas.
+Os controladores de angulação são dois controladores PID iguais em paralelo responsáveis por controlar a rotação de \textit{roll} e \textit{pitch} do corpo do robô. Eles atuam de forma independente, controlando a rotação do corpo em ambos os eixos simultaneamente. 
+% \begin{figure}[!htb]
+%   \centering
+%   \caption{Controlador PID projetado.}
+%   \includegraphics[width=0.48\textwidth]{PID.drawio.png}
+%   Fonte: autores.
+%   \label{fig:pid}
+%   \vspace{-\baselineskip}
+% \end{figure}
+O IMU é o sensor responsável por medir a rotação do corpo do robô, possibilitando a realimentação das saídas do sistema. Existe um limitador na saída do controlador para evitar que sejam enviados valores que extrapolem os limites de rotação das juntas do robô. Os esforços de controle são enviados para o planejador de marchas que, por sua vez, envia os comandos de movimentação para os controladores das juntas.
 
 \subsection{Planejador de trajetória}
 
