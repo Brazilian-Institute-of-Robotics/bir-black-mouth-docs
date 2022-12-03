@@ -45,14 +45,15 @@
   A seguir, serão apresentados os resultados dos experimentos descritos na seção \ref{sec:method_results_analysis}.
 
   \subsubsection{Análise de trajetória}
-  O objetivo desse experimento foi analisar o tempo real de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros durante a realização do experimento.
+  \label{sec:trajectory_analysis}
+  O objetivo desse experimento foi analisar o tempo de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros durante a realização do experimento.
 
   \begin{table}[!htb]
     \caption{Resultados do experimento da trajetória da pata.}
     \centering
     \begin{tabular}{ccc}
       \hline
-      Teste & 1         & 2        \\
+      \textbf{Teste} & \textbf{1}      & \textbf{2}  \\
       \hline
       $\bar{tempo} (s)$         & 0,557  & 0,557 \\
       \hline
@@ -119,15 +120,15 @@
     \label{fig:imu_test}
   \end{figure}
 
-  \subsubsection{Controle de velocidade}
-  Durante o experimento de controle de velocidade foi observada uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos planos do que em terrenos irregulares. Por meio dos dados coletados, foram extraídas as informações da velocidade média da caminhada para cada amostra, oscilação máxima de rotação do corpo em \textit{roll} e \textit{pitch} e os respectivos desvios padrões, apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que o robô se aproximou mais vezes da velocidade solicitada no terreno plano combinado ao controle de angulação, enquanto que no irregular, o teste com controle de angulação ativo apresentou uma velocidade média inferior e baixa consistência nos dados. A diferença percebida entre a velocidade solicitada e a inferida é justificada pelo acúmulo de erro nas coordenadas finais $(x_f, y_f)$ das patas a cada passo. Ou seja, quando levado em consideração o próprio peso do robô, o sistema de controle não é capaz de seguir fielmente a trajetória do passo.
-
+  \subsubsection{Análise da velocidade e estabilidade}
+  Esse experimento teve como objetivo avaliar se o robô consegue se mover em uma velocidade desejada e o quão estável ele se mantém durante a caminhada. Foram coletados dados de velocidade média do robô (inferida com base no tempo que o robô levou para percorrer $1,5m$) e oscilação máxima do corpo em \textit{roll} e \textit{pitch}. As médias e desvios padrões de cada variável para cada teste estão apresentadas na tabela \ref{tab:vel_stab}. 
+  
   \begin{table}[!htb]
-    \caption{Resultados do experimento do controlde de velocidade.}
+    \caption{Resultados da análise da velocidade e estabilidade.}
     \centering
     \begin{tabular}{ccccc}
       \hline
-      Teste & 1 & 2 & 3 & 4 \\ \hline
+      \textbf{Teste} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} \\ \hline
       Ter. & Reg. & Reg. & Irreg. & Irreg. \\ \hline
       \begin{tabular}[c]{@{}c@{}}C. R.\end{tabular} & Não & Sim & Não & Sim \\ \hline
       \begin{tabular}[c]{@{}c@{}}Vel. \\ (cm/s) \end{tabular} &   2,15   &  3,68  &   2,03  & 2,39  \\ \hline
@@ -142,9 +143,10 @@
     \label{tab:vel_stab}
   \end{table}
 
-  Ainda na Tabela \ref{tab:vel_stab}, foi observado que a menor oscilação em \textit{roll} e em \textit{pitch} ocorreu no terreno plano utilizando o controle de angulação, enquanto que a maior oscilação ocorreu nas condições opostas (teste 3). Seguindo com a análise dos dados, assim como no primeiro experimento, foram removidos os \textit{outliers} das amostras e aplicado o teste de normalidade de \textit{Shapiro-Wilk}. A fim de avaliar se o controle de angulação implementado contribuiu na estabilidade da caminhada, foi utilizada a ANOVA para comparar os testes 1 e 2 (mostrados na tabela), e os testes 3 e 4. O resultado desta análise aponta que a hipótese nula de que o controle de angulação não influencia na estabilidade do robô pode ser rejeitada, uma vez que o $f_{valor}$ para ambas as análises se mostrou menor que $0,05$, (incluir valores). Desse modo, comprova-se que o controle de angulação influencia positivamente na estabilidade do robô
+  A partir desses dados, foi observado que o robô não alcançou a velocidade desejada de $0,05 m/s$ em nenhum dos testes, alcançando apenas $74\%$ desse valor para a média de velocidades do teste feito em terreno plano com controle de estabilidade ativo. É possível justificar essa diferença pelo acúmulo de erros nas coordenadas finais $(x_f, y_f)$ das patas a cada passo nesse cenário em que os atuadores do robô operam com carga. Isto é, ao operar sustentando o peso do robô, o sistema de controle não foi capaz de seguir fielmente a trajetória do passo, percorrendo com a pata uma distância menor do que a necessária para alcançar uma velocidade média de $0,05 m/s$. Esse resultado é diferente do que foi mostrado na seção \ref{sec:trajectory_analysis}, onde os motores foram avaliados em um cenário sem carga significativa.
+  
+  A tabela \ref{tab:vel_stab} também mostra que as oscilações médias em \textit{roll} e \textit{pitch} foram menores quando o controle de estabilidade estava ativo tanto no terreno plano quanto no irregular. A fim de comprovar que o controle de estabilidade contribuiu efetivamente para diminuir as oscilações do robô em ambos os tipos de terreno, o mesmo procedimento de análise do experimento anterior foi seguido. Primeiramente, foram removidos os \textit{outliers} das amostras e aplicado o teste de normalidade de Shapiro-Wilk, o qual indicou um $p_{valor} > 0,05$ para todos os casos. Em seguida, foi aplicado o teste ANOVA para comparar a oscilação em \textit{roll} e em \textit{pitch} dos testes 1 e 2. O mesmo processo foi repetido para os testes 3 e 4. O resultado da análise apontou que as distribuições de oscilação em \textit{roll} e \textit{pitch} são significativamente diferentes tanto no terreno plano quanto no terreno irregular, uma vez que o $p_{valor}$ de todos os testes foi inferior a $0,05$. Os gráficos da figura \ref{fig:imu_test} ilustram com mais detalhes a distribuição dos dados. Nota-se que com o controle de estabilidade, a oscilação foi mais dispersa na maioria dos testes, o que pode ser comprovado analisando os desvios padrões apresentados na tabela \ref{tab:vel_stab}. No entanto, exceto para a oscilação em \textit{roll} no terreno plano, o terceiro quartil está abaixo do primeiro quartil das distribuições de oscilação sem o controle de estabilidade, mostrando que o controlador diminuiu a oscilação do corpo do robô em \textit{roll} ou em \textit{pitch} em pelo menos $75\%$ das amostras coletadas.
 
-    
   % \subsection{Testes complementares}
   % Como resultados complementares, foi observado que o robô possui a habilidade de andar por terrenos inclinados. Durante o teste, o robô foi capaz de se locomover por um plano inclinado com aproximadamente 5,3$\degree$ de inclinação (figura \ref{fig:tests3-4}). 
 
