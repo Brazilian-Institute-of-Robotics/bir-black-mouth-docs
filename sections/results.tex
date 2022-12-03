@@ -19,9 +19,10 @@
     \label{fig:moving_body}
   \end{figure}
 
-  A seguir, foi avaliada a performance do controlador de angulação do corpo. Os gráficos da figura \ref{fig:grafico_controlling} ilustram o comportamento do sistema à variação dos \textit{setpoints} de orientação em \textit{roll} e em \textit{pitch} para o corpo do robô ao longo do tempo. As curvas em azul representam os \textit{setpoints} aplicados como sinais degrau, enquanto que as curvas em vermelho ilustram o comportamento do sistema. 
+  \vspace{-\parskip}
+  A seguir, foi avaliada a performance do controlador de angulação do corpo. Os gráficos da figura \ref{fig:grafico_controlling} ilustram o comportamento do sistema à variação dos \textit{setpoints} de orientação em \textit{roll} e em \textit{pitch} para o corpo do robô ao longo do tempo. As curvas em azul representam os \textit{setpoints} aplicados como sinais degrau, enquanto que as curvas em vermelho ilustram o comportamento do sistema. Nota-se a capacidade de o protótipo de se adaptar rapidamente aos novos valores desejados de orientação em \textit{roll} e \textit{pitch} simultaneamente.
 
-  \begin{figure}[!h]
+  \begin{figure}
     \centering
     \caption{Respostas dos controles de angulação.}
     \begin{subfigure}[t]{0.48\textwidth}
@@ -38,9 +39,8 @@
     \end{subfigure}
     Fonte: autores.
     \label{fig:grafico_controlling}
+    \vspace{-\baselineskip}
   \end{figure}
-
-  Nota-se que o protótipo é capaz de se adaptar rapidamente aos novos valores desejados de orientação simultaneamente em ambos os eixos.
 
   O último teste preliminar teve o objetivo de analisar o tempo de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros durante a realização do experimento.
 
@@ -72,10 +72,14 @@
     Fonte: autores.
     \label{tab:trajetoria}
   \end{table}
+  
+  \vspace{-\parskip}
 
   Inicialmente, foram removidos os \textit{outliers} (valores do conjunto de dados acima ou abaixo dos limites superior e inferior, respectivamente) das amostras, valores que fogem da normalidade e podem prejudicar a análise dos dados. Em seguida, a fim de avaliar a normalidade dos dados, foram aplicados testes de Shapiro-Wilk nos dados de tempo e altura máxima de ambos os testes, os quais obtiveram $p_{valor} > 0,05$ em todos os casos. Isso indica que as amostras de ambos os testes estão semelhantes a uma distribuição normal para um nível de confiança de $95\%$. Posteriormente, foram realizados dois testes de análise de variância (ANOVA) unilaterais: o primeiro relacionando o tempo de execução da trajetória nos testes 1 e 2 e o segundo a altura máxima alcançada. O objetivo foi verificar se os resultados se alteraram para diferentes valores de $(x, y)$ requisitados. O resultado da ANOVA indica um $p_{valor}$ de aproximadamente $0,7212$ referente ao tempo e de $0,5070$ referente à altura máxima alcançada durante o passo. Ambos os valores são superiores a $0,05$, indicando que não há uma diferença significativa entre as médias de cada teste, considerando um nível de confiança de $95\%$. Ou seja, diferentes pontos de destino em $(x, y)$ não interferiram no tempo de execução do passo nem na altura máxima alcançada pela pata.
 
   O gráfico da figura \ref{fig:grafico_trajetoria_xyz} representa uma das amostras coletada para o primeiro teste ($x=0,05m$, $y=0,03m$), correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0,0476m$).
+  
+  \vspace{-0.4\baselineskip}
   
   \begin{figure}[!htb]
     \centering
@@ -85,6 +89,7 @@
     Fonte: autores.
     \label{fig:grafico_trajetoria_xyz}
   \end{figure}
+  \vspace{-0.4\baselineskip}
 
   A distribuição das amostras de tempo e de altura máxima da pata em ambos os testes pode ser percebida pelos gráficos de \textit{box plot}, apresentados na figura \ref{fig:time_zmax_traj}. Nestes gráficos, é observado a proximidade entre as medianas dos testes e a similaridade na distribuição dos seus quartis,(representados pelos retângulos). Ainda que haja uma pequena diferença entre os valores mínimos e máximos das amostras, é possível enfatizar a semelhança entre os resultados dos testes 1 e 2.
 
@@ -127,14 +132,15 @@
       \textbf{Teste} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} \\ \hline
       Ter. & Reg. & Reg. & Irreg. & Irreg. \\ \hline
       \begin{tabular}[c]{@{}c@{}}C. R.\end{tabular} & Não & Sim & Não & Sim \\ \hline
-      \begin{tabular}[c]{@{}c@{}}Vel. \\ (cm/s) \end{tabular} &   2,15   &  3,68  &   2,03  & 2,39  \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\sigma_{Vel}$  \\ (cm/s) \end{tabular} & 0,040 & 0,075 & 0,016 & 0,047 \\ \hline
+      \begin{tabular}[c]{@{}c@{}}Vel. \\ $(cm/s)$ \end{tabular} &   2,15   &  3,68  &   2,03  & 2,39  \\ \hline
+      \begin{tabular}[c]{@{}c@{}} $\sigma_{Vel}$  \\ $(cm/s)$ \end{tabular} & 0,040 & 0,075 & 0,016 & 0,047 \\ \hline
       \begin{tabular}[c]{@{}c@{}} $\Delta_{Roll}$ \end{tabular} & 12,59\degree & 8,81\degree & 13,37\degree & 11,13\degree \\\hline
       \begin{tabular}[c]{@{}c@{}} $\sigma_{Roll}$ \end{tabular}  & 2,54\degree & 2,36\degree & 0,78\degree & 1,47\degree \\ \hline
       \begin{tabular}[c]{@{}c@{}} $\Delta_{Pitch}$ \end{tabular} & 11,55\degree & 8,31\degree & 15,19\degree & 12,09\degree \\ \hline
       \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular}  & 1,89\degree & 2,63\degree & 1,44\degree & 1,66\degree \\ \hline
 
     \end{tabular}
+    
     Fonte: autores.
     \label{tab:vel_stab}
   \end{table}
