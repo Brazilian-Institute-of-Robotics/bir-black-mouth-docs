@@ -79,7 +79,7 @@
   Inicialmente, foram removidos os \textit{outliers} (valores do conjunto de dados acima ou abaixo dos limites superior e inferior, respectivamente) das amostras, valores que fogem da normalidade e podem prejudicar a análise dos dados. Em seguida, a fim de avaliar a normalidade dos dados, foram aplicados testes de Shapiro-Wilk nos dados de tempo e altura máxima de ambos os testes, os quais obtiveram $p_{valor} > 0,05$ em todos os casos. Isso indica que as amostras de ambos os testes estão semelhantes a uma distribuição normal para um nível de confiança de $95\%$. Posteriormente, foram realizados dois testes de análise de variância (ANOVA) unilaterais: o primeiro relacionando o tempo de execução da trajetória nos testes 1 e 2 e o segundo a altura máxima alcançada. O objetivo foi verificar se os resultados se alteraram para diferentes valores de $(x, y)$ requisitados. O resultado da ANOVA indica um $p_{valor}$ de aproximadamente $0,7212$ referente ao tempo e de $0,5070$ referente à altura máxima alcançada durante o passo. Ambos os valores são superiores a $0,05$, indicando que não há uma diferença significativa entre as médias de cada teste, considerando um nível de confiança de $95\%$. Ou seja, diferentes pontos de destino em $(x, y)$ não interferiram no tempo de execução do passo nem na altura máxima alcançada pela pata.
 
   O gráfico da figura \ref{fig:grafico_trajetoria_xyz} representa uma das amostras coletada para o primeiro teste ($x=0,05m$, $y=0,03m$), correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico de aproximadamente $54ms$) e a altura máxima alcançada é levemente inferior à desejada (alcançando neste caso um valor próximo a $0,0476m$).
-
+  
   \begin{figure}[!htb]
     \centering
     \caption{Trajetórias realizadas pelas patas.}
@@ -89,7 +89,7 @@
     \label{fig:grafico_trajetoria_xyz}
   \end{figure}
 
-  ANÁLISE DO BOXPLOT 
+  A distribuição das amostras de tempo e de altura máxima da pata em ambos os testes pode ser percebida pelos gráficos de \textit{box plot}, apresentados na figura \ref{fig:time_zmax_traj}. Nestes gráficos, é observado a proximidade entre as medianas dos testes e a similaridade na distribuição dos seus quartis,(representados pelos retângulos). Ainda que haja uma pequena diferença entre os valores mínimos e máximos das amostras, é possível enfatizar a semelhança entre os resultados dos testes 1 e 2.
 
   \begin{figure}[!htb]
     \centering
@@ -98,27 +98,7 @@
     Fonte: autores.
     \label{fig:time_zmax_traj}
   \end{figure}
-
-  \begin{figure}[!htb]
-    \centering
-    \caption{Oscilação do corpo em ambos os tipos de terreno.}
-    \begin{subfigure}[t]{0.49\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{plane_boxplot.png}
-      \caption{Terreno plano.}
-      \label{fig:imu_test_plane}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.49\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{irregular_boxplot.png}
-      \caption{Terreno irregular.}
-      \label{fig:imu_test_irregular}
-    \end{subfigure}
-    
-    Fonte: autores.
-    \label{fig:imu_test}
-  \end{figure}
-
+  
   \subsubsection{Controle de velocidade}
   Durante o experimento de controle de velocidade foi observada uma caminhada eficiente em ambos os terrenos, porém, mais linear e com menor trepidação em terrenos planos do que em terrenos irregulares. Por meio dos dados coletados, foram extraídas as informações da velocidade média da caminhada para cada amostra, oscilação máxima de rotação do corpo em \textit{roll} e \textit{pitch} e os respectivos desvios padrões, apresentados na Tabela \ref{tab:vel_stab}. Assim, foi observado que o robô se aproximou mais vezes da velocidade solicitada no terreno plano combinado ao controle de angulação, enquanto que no irregular, o teste com controle de angulação ativo apresentou uma velocidade média inferior e baixa consistência nos dados. A diferença percebida entre a velocidade solicitada e a inferida é justificada pelo acúmulo de erro nas coordenadas finais $(x_f, y_f)$ das patas a cada passo. Ou seja, quando levado em consideração o próprio peso do robô, o sistema de controle não é capaz de seguir fielmente a trajetória do passo.
 
@@ -143,6 +123,27 @@
   \end{table}
 
   Ainda na Tabela \ref{tab:vel_stab}, foi observado que a menor oscilação em \textit{roll} e em \textit{pitch} ocorreu no terreno plano utilizando o controle de angulação, enquanto que a maior oscilação ocorreu nas condições opostas (teste 3). Seguindo com a análise dos dados, assim como no primeiro experimento, foram removidos os \textit{outliers} das amostras e aplicado o teste de normalidade de \textit{Shapiro-Wilk}. A fim de avaliar se o controle de angulação implementado contribuiu na estabilidade da caminhada, foi utilizada a ANOVA para comparar os testes 1 e 2 (mostrados na tabela), e os testes 3 e 4. O resultado desta análise aponta que a hipótese nula de que o controle de angulação não influencia na estabilidade do robô pode ser rejeitada, uma vez que o $f_{valor}$ para ambas as análises se mostrou menor que $0,05$, (incluir valores). Desse modo, comprova-se que o controle de angulação influencia positivamente na estabilidade do robô
+
+  \begin{figure}[!htb]
+    \centering
+    \caption{Oscilação do corpo em ambos os tipos de terreno.}
+    \begin{subfigure}[t]{0.49\textwidth}
+      \centering
+      \includegraphics[width=1.0\textwidth]{plane_boxplot.png}
+      \caption{Terreno plano.}
+      \label{fig:imu_test_plane}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.49\textwidth}
+      \centering
+      \includegraphics[width=1.0\textwidth]{irregular_boxplot.png}
+      \caption{Terreno irregular.}
+      \label{fig:imu_test_irregular}
+    \end{subfigure}
+    
+    Fonte: autores.
+    \label{fig:imu_test}
+  \end{figure}
+ 
 
     
   % \subsection{Testes complementares}
