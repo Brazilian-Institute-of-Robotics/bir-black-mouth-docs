@@ -5,10 +5,11 @@
   A seguir, serão apresentados os resultados preliminares e os experimentos realizados com o Caramelo. 
   
   \subsection{Testes preliminares}
+  \label{subsec:testes_preliminares}
   
-  Os resultados preliminares referem-se aos resultados obtidos com as funcionalidades básicas do robô: capacidade de movimentação a partir do modelo cinemático e capacidade de controle da orientação do corpo com o controlador de angulação.
+  Os resultados preliminares referem-se aos resultados obtidos com as funcionalidades básicas do robô: capacidade de movimentação do corpo a partir do modelo cinemático, capacidade de controle da orientação do corpo com o controlador de angulação e capacidade de seguir uma trajetória de passo calculada.
 
-  Primeiramente, foi avaliada a movimentação do corpo a partir do modelo cinemático. Foi observado que o sistema não só é capaz de realizar a cinemática de cada uma das pernas individualmente como também do seu corpo em todos os 6 graus de liberdade (translações em $x$, $y$ e $z$ e rotações em $roll$, $pitch$ e $yaw$). A figura \ref{fig:moving_body} ilustra o movimento do corpo do robô em cada um desses graus de liberdade.
+  No primeiro teste preliminar, foi avaliada a movimentação do corpo a partir do modelo cinemático. Foi observado que o sistema não só é capaz de realizar a cinemática de cada uma das pernas individualmente como também do seu corpo em todos os 6 graus de liberdade (translações em $x$, $y$ e $z$ e rotações em $roll$, $pitch$ e $yaw$). A figura \ref{fig:moving_body} ilustra o movimento do corpo do robô em cada um desses graus de liberdade.
 
   \begin{figure}[!htb]
     \centering
@@ -41,12 +42,7 @@
 
   Nota-se que o protótipo é capaz de se adaptar rapidamente aos novos valores desejados de orientação simultaneamente em ambos os eixos.
 
-  \subsection{Experimentos}
-  A seguir, serão apresentados os resultados dos experimentos descritos na seção \ref{sec:method_results_analysis}.
-
-  \subsubsection{Análise de trajetória}
-  \label{sec:trajectory_analysis}
-  O objetivo desse experimento foi analisar o tempo de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros durante a realização do experimento.
+  O último teste preliminar teve o objetivo de analisar o tempo de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros durante a realização do experimento.
 
   \begin{table}[!htb]
     \caption{Resultados do experimento da trajetória da pata.}
@@ -120,8 +116,8 @@
     \label{fig:imu_test}
   \end{figure}
 
-  \subsubsection{Análise da velocidade e estabilidade}
-  Esse experimento teve como objetivo avaliar se o robô consegue se mover em uma velocidade desejada e o quão estável ele se mantém durante a caminhada. Foram coletados dados de velocidade média do robô (inferida com base no tempo que o robô levou para percorrer $1,5m$) e oscilação máxima do corpo em \textit{roll} e \textit{pitch}. As médias e desvios padrões de cada variável para cada teste estão apresentadas na tabela \ref{tab:vel_stab}. 
+  \subsection{Experimentos}
+  A seguir, serão apresentados os resultados dos experimentos de locomoção descritos na seção \ref{sec:method_results_analysis}. Esses experimentos tiveram o objetivo de avaliar se o robô consegue se mover em uma velocidade desejada e o quão estável ele se mantém durante a caminhada. Foram coletados dados de velocidade média do robô (inferida com base no tempo que o robô levou para percorrer $1,5m$) e oscilação máxima do corpo em \textit{roll} e \textit{pitch}. As médias e desvios padrões de cada variável para cada teste estão apresentadas na tabela \ref{tab:vel_stab}. 
   
   \begin{table}[!htb]
     \caption{Resultados da análise da velocidade e estabilidade.}
@@ -143,7 +139,7 @@
     \label{tab:vel_stab}
   \end{table}
 
-  A partir desses dados, foi observado que o robô não alcançou a velocidade desejada de $0,05 m/s$ em nenhum dos testes, alcançando apenas $74\%$ desse valor para a média de velocidades do teste feito em terreno plano com controle de estabilidade ativo. É possível justificar essa diferença pelo acúmulo de erros nas coordenadas finais $(x_f, y_f)$ das patas a cada passo nesse cenário em que os atuadores do robô operam com carga. Isto é, ao operar sustentando o peso do robô, o sistema de controle não foi capaz de seguir fielmente a trajetória do passo, percorrendo com a pata uma distância menor do que a necessária para alcançar uma velocidade média de $0,05 m/s$. Esse resultado é diferente do que foi mostrado na seção \ref{sec:trajectory_analysis}, onde os motores foram avaliados em um cenário sem carga significativa.
+  A partir desses dados, foi observado que o robô não alcançou a velocidade desejada de $0,05 m/s$ em nenhum dos testes, alcançando apenas $74\%$ desse valor para a média de velocidades do teste feito em terreno plano com controle de estabilidade ativo. É possível justificar essa diferença pelo acúmulo de erros nas coordenadas finais $(x_f, y_f)$ das patas a cada passo nesse cenário em que os atuadores do robô operam com carga. Isto é, ao operar sustentando o peso do robô, o sistema de controle não foi capaz de seguir fielmente a trajetória do passo, percorrendo com a pata uma distância menor do que a necessária para alcançar uma velocidade média de $0,05 m/s$. Esse resultado é diferente do que foi mostrado na seção \ref{subsec:testes_preliminares}, onde os motores foram avaliados em um cenário sem carga significativa.
   
   A tabela \ref{tab:vel_stab} também mostra que as oscilações médias em \textit{roll} e \textit{pitch} foram menores quando o controle de estabilidade estava ativo tanto no terreno plano quanto no irregular. A fim de comprovar que o controle de estabilidade contribuiu efetivamente para diminuir as oscilações do robô em ambos os tipos de terreno, o mesmo procedimento de análise do experimento anterior foi seguido. Primeiramente, foram removidos os \textit{outliers} das amostras e aplicado o teste de normalidade de Shapiro-Wilk, o qual indicou um $p_{valor} > 0,05$ para todos os casos. Em seguida, foi aplicado o teste ANOVA para comparar a oscilação em \textit{roll} e em \textit{pitch} dos testes 1 e 2. O mesmo processo foi repetido para os testes 3 e 4. O resultado da análise apontou que as distribuições de oscilação em \textit{roll} e \textit{pitch} são significativamente diferentes tanto no terreno plano quanto no terreno irregular, uma vez que o $p_{valor}$ de todos os testes foi inferior a $0,05$. Os gráficos da figura \ref{fig:imu_test} ilustram com mais detalhes a distribuição dos dados. Nota-se que com o controle de estabilidade, a oscilação foi mais dispersa na maioria dos testes, o que pode ser comprovado analisando os desvios padrões apresentados na tabela \ref{tab:vel_stab}. No entanto, exceto para a oscilação em \textit{roll} no terreno plano, o terceiro quartil está abaixo do primeiro quartil das distribuições de oscilação sem o controle de estabilidade, mostrando que o controlador diminuiu a oscilação do corpo do robô em \textit{roll} ou em \textit{pitch} em pelo menos $75\%$ das amostras coletadas.
 
