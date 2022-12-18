@@ -14,13 +14,13 @@ A locomoção do Caramelo foi desenvolvida baseada nas marchas periódicas e sim
   \includegraphics[width=0.45\textwidth]{trot_pattern.png}
   \vfill
   Fonte: autores.
-  \vspace{-\baselineskip}
+  % \vspace{-\baselineskip}
   \label{fig:trot_pattern}
 \end{figure}
 
 O sistema de controle do robô é composto por dois subsistemas principais: os controladores individuais de cada junta e os controladores da angulação do corpo do robô. Os controladores das juntas são os próprios controladores PID embarcados nos motores \textit{dynamixel}. Foi utilizada a interface de controle de posição com o atuador, de forma que o \textit{setpoint} de controle enviado para cada motor é o ângulo em radianos para o qual ele deve rotacionar. O modelo cinemático do robô, apresentado na seção \ref{sec:detail_inv_kinematics}, é o responsável por mapear não apenas a posição tridimensional de cada pata com a angulação de cada junta, mas também a posição do corpo em seis dimensões: translação e rotação em $(x, y, z)$. Dessa forma, é possível controlar cada pata e o corpo do robô ao mesmo tempo de forma independente. Os controladores de angulação do corpo são dois controladores PID em paralelo, responsáveis por controlar o ângulo de \textit{pitch} (rotação em $y$) e o de \textit{roll} (rotação em $x$).
 
-O planejador de marchas é o responsável por controlar cada pata do robô e, por consequência, o corpo. Ele calcula a trajetória que cada pata deve realizar, com base nas etapas de \textit{stance} e \textit{swing}, e envia o próximo ponto em que cada pata deve estar a uma frequência de $\SI{50}{\hertz}$. Além disso, ele também considera o esforço de controle enviado pelos controladores de angulação, a fim de manter o corpo do robô em $0^{\circ}$ a todo momento.
+O planejador de marchas é o responsável por controlar cada pata do robô e, por consequência, o corpo. Ele calcula a trajetória que cada pata deve realizar, com base nas etapas de \textit{stance} e \textit{swing}, e envia o próximo ponto em que cada pata deve estar a uma frequência de $\SI{50}{\hertz}$. Essa frequência foi definida por ser a maior que o sistema de processamento do robô foi capaz de suportar e por respeitar o teorema Nyquist, que indica que a frequência deve ser maior do que $\SI{4}{\hertz}$ --- já que o período do passo é $0.5 s$. Além disso, o planejador de marchas também considera o esforço de controle enviado pelos controladores de angulação, a fim de manter o corpo do robô em $0^{\circ}$ a todo momento.
 
 A seguir, serão apresentados o desenvolvimento do modelo cinemático, dos controladores de angulação e da trajetória que cada pata realiza na etapa de \textit{swing}.
 
@@ -153,6 +153,7 @@ Os controladores de angulação são dois controladores PID em paralelo respons�
   \label{fig:pid}
   \vspace{-\baselineskip}
 \end{figure}
+
 O IMU é o sensor responsável por medir a rotação do corpo do robô, possibilitando a realimentação das saídas do sistema. O limitador foi adicionado para evitar que sejam enviados valores que extrapolam os limites de rotação das juntas do robô. Os esforços de controle são enviados para o planejador de marchas que, por sua vez, envia os comandos de movimentação para os controladores das juntas.
 
 \subsection{Planejador de trajetória}
