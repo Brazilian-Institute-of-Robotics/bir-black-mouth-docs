@@ -16,10 +16,10 @@
     \caption{Movimentação do corpo do robô.}
     \includegraphics[width=0.48\textwidth]{moving_body.png}
     Fonte: autores.
+    \vspace{-\baselineskip}
     \label{fig:moving_body}
   \end{figure}
 
-  \vspace{-\parskip}
   A seguir, foi avaliada a performance do controlador de angulação do corpo. Os gráficos da figura \ref{fig:grafico_controlling} ilustram o comportamento do sistema à variação dos \textit{setpoints} de orientação em \textit{roll} e em \textit{pitch} para o corpo do robô ao longo do tempo. As curvas em azul representam os \textit{setpoints} aplicados como sinais degrau, enquanto que as curvas em vermelho ilustram o comportamento do sistema. Nota-se a capacidade de o protótipo de se adaptar rapidamente aos novos valores desejados de orientação em \textit{roll} e \textit{pitch} simultaneamente.
 
   \begin{figure}
@@ -39,7 +39,7 @@
     \end{subfigure}
     Fonte: autores.
     \label{fig:grafico_controlling}
-    \vspace{-\baselineskip}
+    % \vspace{-\baselineskip}
   \end{figure}
 
   O último teste preliminar teve o objetivo de analisar o tempo de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros durante a realização do teste.
@@ -70,10 +70,10 @@
     \end{tabular}
 
     Fonte: autores.
+    \vspace{-\baselineskip}
     \label{tab:trajetoria}
   \end{table}
   
-  \vspace{-\parskip}
 
   Inicialmente, foram removidos os \textit{outliers} (valores do conjunto de dados acima ou abaixo dos limites superior e inferior, respectivamente) das amostras, valores que fogem da normalidade e podem prejudicar a análise dos dados. Em seguida, a fim de avaliar a normalidade dos dados, foram aplicados testes de Shapiro-Wilk nos dados de tempo e altura máxima de ambos os testes, os quais obtiveram $p_{valor} > 0,05$ em todos os casos. Isso indica que as amostras de ambos os testes estão semelhantes a uma distribuição normal para um nível de confiança de $95\%$. Posteriormente, foram realizados dois testes de análise de variância (ANOVA) unilaterais: o primeiro relacionando o tempo de execução da trajetória nos testes 1 e 2 e o segundo a altura máxima alcançada. O objetivo foi verificar se os resultados se alteraram para diferentes valores de $(x, y)$ requisitados. O resultado da ANOVA indica um $p_{valor}$ de aproximadamente $0,7212$ referente ao tempo e de $0,5070$ referente à altura máxima alcançada durante o passo. Ambos os valores são superiores a $0,05$, indicando que não há uma diferença significativa entre as médias de cada teste, considerando um nível de confiança de $95\%$. Ou seja, diferentes pontos de destino em $(x, y)$ não interferiram no tempo de execução do passo nem na altura máxima alcançada pela pata.
 
@@ -116,8 +116,8 @@
       \caption{Terreno irregular.}
       \label{fig:imu_test_irregular}
     \end{subfigure}
-    
     Fonte: autores.
+    \vspace{-\baselineskip}
     \label{fig:imu_test}
   \end{figure}
 

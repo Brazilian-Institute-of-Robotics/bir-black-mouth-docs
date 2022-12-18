@@ -24,7 +24,7 @@
 
   Os experimentos de locomoção têm o objetivo de avaliar estatisticamente a capacidade do robô de se locomover em terrenos planos e irregulares. Para isso, foi verificada a capacidade do robô de seguir um comando de velocidade pré-estabelecido e de manter a orientação do seu corpo estável em $0\degree$ nos ângulos de \textit{roll} e \textit{pitch}. Para analisar os dados, foram utilizados métodos estatísticos. O teste de Shapiro-Wilk \cite{leotti2005comparaccao} foi aplicado para verificar a normalidade dos dados. Caso eles se assemelhem a uma distribuição normal, a Análise de Variância (ANOVA) \cite{cano2012six} pode ser utilizada para verificar se os dados analisados são estatisticamente semelhantes ou não.
 
-  O primeiro teste premilinar consistiu em enviar comandos de posição e orientação para o corpo do robô individualmente em cada um dos eixos ($x, y, z$, \textit{roll}, \textit{pitch} e \textit{yaw}) e obervar seu comportamento. O segundo teste teve o objetivo de verificar a resposta do controle de angulação do robô a diferentes valores de rotações desejadas. Para isso, foram aplicados sinais degrau nos \textit{setpoints} de angulação em $roll$ e em $pitch$, simultaneamente, e as respostas do sistema foram analisadas de forma gráfica.
+  O primeiro teste preliminar consistiu em enviar comandos de posição e orientação para o corpo do robô individualmente em cada um dos eixos ($x, y, z$, \textit{roll}, \textit{pitch} e \textit{yaw}) e observar seu comportamento. O segundo teste teve o objetivo de verificar a resposta do controle de angulação do robô a diferentes valores de rotações desejadas. Para isso, foram aplicados sinais degrau nos \textit{setpoints} de angulação em $roll$ e em $pitch$, simultaneamente, e as respostas do sistema foram analisadas de forma gráfica.
   
   O terceiro teste preliminar consistiu em mover uma das patas por uma trajetória cicloidal feita pelo planejador de trajetórias. Para isso, o corpo do robô foi apoiado em um suporte elevado, de modo que as patas não tocassem o chão, diminuindo a carga sobre os motores. O objetivo principal deste teste foi verificar se o sistema de controle do robô era capaz de responder de forma coerente aos comandos enviados pelo planejador de marchas numa situação mais próxima da ideal (sem carga). As trajetórias foram calculadas considerando a altura de passo $0,05 m$, período de $0,5 s$ e uma resolução de $25$ pontos distribuídos de forma homogênea ($P_T = P_N = 1,0$). Foram feitos dois tipos de testes, variando as distâncias que a pata deve percorrer nas coordenadas $x$ e $y$, e para cada teste foram coletadas 30 amostras. Desta forma, foi possível realizar uma análise estatística, assim como feito com os experimentos de locomoção.
   
@@ -47,6 +47,7 @@
     \end{subfigure}
     \vfill
     Fonte: autores.
+    \vspace{-\baselineskip}
     \label{fig:terrenos}
   \end{figure}
   
