@@ -2,32 +2,55 @@
 \graphicspath{{\subfix{../images/}}}
 \begin{document}
 
-  Para o desenvolvimento do projeto, foi criada uma metodologia própria composta por três etapas sequenciais. A seguir, serão detalhadas cada uma dessas etapas.
+  Para o desenvolvimento do projeto, foi seguida uma metodologia própria composta por três etapas sequenciais: fundamentação, desenvolvimento e resultados e análises. A seguir, serão detalhadas cada uma dessas etapas.
 
   \subsection{Fundamentação}
-  A primeira etapa teve como objetivo buscar referências para embasar o estudo os robôs quadrúpedes e servir de padrão para o desenvolvimento do projeto.
-
-  Primeiramente, foi realizada uma pesquisa bibliográfica com o intuito de selecionar artigos relacionados com o projeto. Para realizar essa busca, foi utilizado o método \textit{BILI} (\textit{Bibliographic and Literary Review Method}), que é um método de busca iterativa de artigos, guiada por análises estatísticas das palavras-chave e da rede de co-citação entre os trabalhos encontrados.
-
-  A partir dessa pesquisa, foi possível realizar um estudo do estado da arte com o objetivo de entender a teoria de locomoção dos robôs quadrúpedes. Além disso, foi feito com um \textit{benchmarking} de projetos \textit{open source} desse tipo de sistema robótico, objetivando encontrar referências para a definição do conceito do robô que será projetado e, consequentemente, para a prototipação dele. Neste \textit{benchmarking}, foram buscados características que indicassem a viabilidade de prototipação como a disponibilidade do código na internet, linguagem de programação utilizada, disponibilidade do modelo 3D, se foi feito em impressão 3D ou não, tipo dos atuadores, sensores que foram utilizados, entre outras.
-
+  Com o intuito de buscar referências para o projeto, foi utilizado o método \textit{Bibliographic and Literary Review Method} (\textit{BiLi}), que consiste em um método de busca iterativa de artigos, guiada por análises estatísticas das palavras-chave e da rede de co-citação entre os trabalhos encontrados \cite{bili}. Em seguida, foi realizado um \textit{benchmarking} de projetos \textit{open source} de robôs quadrúpedes para auxiliar na definição do conceito do robô que será projetado e prototipado.
+  
   \subsection{Desenvolvimento}
-  Durante esta etapa, ocorreu o desenvolvimento do robô propriamente dito. Foram criadas duas frentes de trabalho que ocorreram em paralelo: a implementação e simulação dos algoritmos em ambiente computacional e a criação do \textit{design} junto com a prototipação do robô.
+  Durante esta etapa, houve o desenvolvimento do robô propriamente dito. Foram criadas duas frentes de trabalho que ocorreram em paralelo: a implementação e simulação dos algoritmos em ambiente computacional, e a criação do \textit{design} junto à prototipação do robô.
 
-  Durante a implementação dos algoritmos na simulação, foram elaborados, primeiramente, o diagrama de blocos do sistema e a arquitetura de \textit{software} do controlador. A partir disso, os algoritmos de cinemática e controle foram implementados e testados na simulação. Para auxiliar o desenvolvimento do projeto, algumas ferramentas de \textit{softwares} serão utilizadas como o \textit{ROS2 Humble} e o simulador \textit{Gazebo}.
+  Durante a implementação dos algoritmos na simulação, foram elaborados, primeiramente, o diagrama de blocos do sistema e a arquitetura de \textit{software} do controlador. A partir disso, os algoritmos de cinemática e controle foram implementados e testados na simulação. Para auxiliar o desenvolvimento do projeto, algumas ferramentas de \textit{softwares} foram utilizadas, como o \textit{ROS2 Humble} e o simulador \textit{Gazebo}.
 
-  Em paralelo ao desenvolvimento do \textit{software}, foi realizado o \textit{design} e a prototipação do robô através da elaboração dos desenhos mecânicos e do projeto eletroeletrônico. Esta etapa incluiu também a impressão 3D das partes mecânicas, o teste dos atuadores e sensores e a configuração da comunicação entre a central de processamento e os atuadores, culminando na montagem física do protótipo. Durante essa etapa, o \textit{software} \textit{OnShape} foi utilizado para a modelagem 3D do robô e o \textit{QElectroTech} para o projeto eletroeletrônico.
+  Em paralelo ao desenvolvimento do \textit{software}, foi realizado o \textit{design} e a prototipação do robô através da elaboração dos desenhos mecânicos e do projeto eletroeletrônico. Esta etapa incluiu também a impressão 3D das partes mecânicas, o teste dos atuadores e sensores e a configuração da comunicação entre a central de processamento e os atuadores, culminando na montagem física do protótipo. Durante essa etapa, o \textit{software} \textit{OnShape} foi utilizado para a modelagem 3D do robô e o \textit{QElectroTech}, para o projeto eletroeletrônico.
 
   Após essas duas etapas, foi possível realizar a integração dos algoritmos no protótipo físico. Ao final da integração, o protótipo já estava funcional e pronto para a fase de testes.
 
   \subsection{Resultados e análises}
   \label{sec:method_results_analysis}
-  Durante a etapa de resultados e análises, foram feitos alguns testes para avaliar de forma estatística a performance de locomoção do robô. Também procurou-se avaliar o cumprimento dos requisitos definidos para o protótipo.
+  Durante a etapa de resultados e análises, foram feitos testes para fins de avaliação do funcionamento e da performance de locomoção do robô. Eles foram divididos em dois grupos: testes preliminares e experimentos de locomoção. 
+  
+  Os testes preliminares objetivaram testar três funcionalidades básicas do robô: a movimentação do corpo com base no modelo cinemático, o controle de angulação do corpo e a execução da trajetória do passo. As duas primeiras funcionalidades foram avaliadas de forma qualitativa e a última de forma estatística. Esses testes são importantes porque ambas as funcionalidades são utilizadas nos experimentos de locomoção e influenciam diretamente no comportamento do robô. 
 
-  O primeiro experimento realizado consistiu em testar a capacidade do protótipo de mover o pé por uma trajetória cicloidal, feita pelo planejador de trajetórias. Para isso, o corpo do robô foi deixado em um suporte estático, de modo que os pés não tocassem o chão, diminuindo a carga sobre os motores. O objetivo principal deste teste foi verificar se o sistema de controle do robô era capaz de responder de forma coerente aos comandos enviados pelo planejador de marchas numa situação mais próxima da ideal (sem carga). As trajetórias foram calculadas considerando a altura de passo $0,05m$, período de $0,5$ segundos e uma resolução de 25 pontos distribuídos de forma homogênea ($P_T = P_N = 1,0$).
+  Os experimentos de locomoção foram realizados a fim de avaliar a locomoção do robô em terrenos planos e irregulares. Para isso, foi verificada a capacidade do robô de seguir um comando de velocidade pré-estabelecido e de manter a orientação do seu corpo estável em $0\degree$ nos ângulos de \textit{roll} e \textit{pitch}. A análise dos dados se deu mediante métodos estatísticos. O teste de Shapiro-Wilk \cite{leotti2005comparaccao} foi aplicado para verificar a normalidade dos dados. Caso eles se assemelhassem a uma distribuição normal, a Análise de Variância (ANOVA) \cite{cano2012six} poderia ser utilizada para verificar se os dados analisados são estatisticamente semelhantes ou não.
+
+  O primeiro teste preliminar consistiu em enviar comandos de posição e orientação para o corpo do robô individualmente em cada um dos eixos ($x, y, z$, \textit{roll}, \textit{pitch} e \textit{yaw}) e observar seu comportamento. O segundo teste teve o objetivo de verificar a resposta do controle de angulação do robô a diferentes valores de rotações desejadas. Para isso, foram aplicados sinais degrau nos \textit{setpoints} de angulação em $roll$ e em $pitch$, simultaneamente, e as respostas do sistema foram analisadas de forma gráfica.
   
-  O segundo teste teve como objetivo verificar a capacidade do robô de seguir um comando de velocidade pré-estabelecido e de manter a orientação do seu corpo estável em $0\degree$ nos ângulos de \textit{roll} e \textit{pitch}. O teste foi realizado em dois tipos de terreno: um chão de cimento plano e um terreno irregular formado por pequenas pedras soltas. Este experimento consistiu em enviar um comando de velocidade constante para frente de $0,05 m/s$ e medir o tempo que o robô precisou para percorrer 1,5 m. Dessa forma, foi possível obter a velocidade média do robô e compará-la com a do comando enviado. Além disso, a fim de avaliar a contribuição do controle de angulação do robô para sua estabilidade, metade dos experimentos foram realizados com esta funcionalidade ativa e a outra não. A estabilidade do robô foi mensurada por meio da oscilação máxima do corpo do robô nos ângulos de \textit{roll} e \textit{pitch}. A trajetória utilizada para o passo possui as mesmas especificações do primeiro experimento, exceto pelos parâmetros de disposição dos pontos, cujos valores adotados foram $P_T = 0,66$ e $P_N = 0,33$. Dessa forma, os testes foram organizados em quatro combinações, variando o tipo do terreno e o uso, ou não, do controle de angulação.
+  O terceiro teste preliminar consistiu em mover uma das patas por uma trajetória cicloidal feita pelo planejador de trajetórias. Para isso, o corpo do robô foi apoiado em um suporte elevado, de modo que as patas não tocassem o chão, diminuindo a carga sobre os motores. O objetivo principal deste teste foi verificar se o sistema de controle do robô era capaz de responder de forma coerente aos comandos enviados pelo planejador de marchas numa situação mais próxima da ideal (sem carga). As trajetórias foram calculadas considerando a altura de passo $0,05 m$, período de $0,5 s$ e uma resolução de $25$ pontos distribuídos de forma homogênea ($P_T = P_N = 1,0$). Foram feitos dois tipos de testes, variando as distâncias que a pata deve percorrer nas coordenadas $x$ e $y$, e para cada teste foram coletadas 30 amostras. Desta forma, foi possível realizar uma análise estatística, assim como feito com os experimentos de locomoção.
   
-  No terceiro experimento, foi avaliada a capacidade do Caramelo de se locomover por terrenos inclinados. Para isso, foi construída uma rampa com uma inclinação de aproximadamente $5,34\degree$ pela qual o robô deveria subir e descer de forma teleoperada. No quarto teste, por fim, foi proposto que o Caramelo atravessasse degraus com diferentes alturas, também de forma teleoperada, a fim de encontrar a máxima altura de obstáculo que ele consegue superar.
+  Os experimentos de locomoção foram realizados em dois tipos de terreno: um chão de cimento plano (figura \ref{fig:terreno_plano}) e um terreno irregular formado por pequenas pedras soltas (figura \ref{fig:terreno_irregular}). Estes experimentos consistiram em enviar um comando de velocidade constante para frente de $0,05 m/s$ e medir o tempo que o robô precisou para percorrer $1,5 m$. Assim, foi possível inferir a velocidade média e compará-la com o comando enviado. Além disso, visando avaliar a contribuição do controle de angulação do robô para sua estabilidade, metade dos experimentos foram realizados com esta funcionalidade ativa e a outra não. A estabilidade do robô foi mensurada por meio da oscilação máxima do corpo do robô nos ângulos de \textit{roll} e \textit{pitch}. A trajetória utilizada para o passo possui as mesmas especificações utilizadas no terceiro teste preliminar, exceto pelos parâmetros de disposição dos pontos, cujos valores adotados foram $P_T = 0,66$ e $P_N = 0,33$. Os experimentos foram organizados em quatro combinações de testes, variando o tipo do terreno e o uso, ou não, do controle de angulação. Para cada um dos 4 testes, foram coletadas 10 amostras.
+
+  \begin{figure}[!htb]
+    \centering
+    \caption{Terrenos dos testes.}
+    \begin{subfigure}[t]{0.24\textwidth}
+      \centering
+      \includegraphics[width=1.0\textwidth]{terreno_plano.jpeg}
+      \caption{Plano.}
+      \label{fig:terreno_plano}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+      \centering
+      \includegraphics[width=1.0\textwidth]{terreno_irregular.jpeg}
+      \caption{Irregular.}
+      \label{fig:terreno_irregular}
+    \end{subfigure}
+    \vfill
+    Fonte: autores.
+    \vspace{-\baselineskip}
+    \label{fig:terrenos}
+  \end{figure}
+  
+  % Por fim, foram feitos dois testes complementares a fim de checar a capacidade do robô de superar dois tipos de obstáculos: planos inclinados e degraus. Para o primeiro teste, foi construído um plano inclinado de aproximadamente $5,3\degree$ sobre o qual o robô deveria subir e descer. No segundo teste, foi testada a capacidade do robô de subir e descer degraus de 2, 4 e 5 centímetros. Ambos os testes foram feitos de forma teleoperada.
 
 \end{document}

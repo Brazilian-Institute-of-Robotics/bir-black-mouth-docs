@@ -10,28 +10,36 @@
 \usepackage{multirow}
 \usepackage{xcolor}
 \usepackage{amsmath}
+\usepackage{siunitx}
 \usepackage[abnt-emphasize=bf, num]{abntex2cite}
+% \usepackage[superscript,biblabel]{cite}
+% \usepackage[square]{natbib}
 \usepackage{subcaption}
 \usepackage{gensymb}
 \usepackage{titlesec}
 \usepackage{enumitem}
+\usepackage{textcomp}
+\usepackage{icomma}
+\usepackage{xurl}
 
 \graphicspath{ {./images/} }
-
 % \pagenumbering{gobble}
 \setlength{\parskip}{0.2cm}
 \setlength{\parindent}{1.3cm}
 \sectionfont{\fontsize{12}{15}\selectfont}
 \subsectionfont{\fontsize{12}{15}\selectfont}
 \subsubsectionfont{\fontsize{12}{15}\selectfont}
-\titlespacing*{\section}
-{0pt}{0.3\baselineskip}{0.3\baselineskip}
-\titlespacing*{\subsection}
-{0pt}{0.3\baselineskip}{0.3\baselineskip}
-\titlespacing*{\subsubsection}
-{0pt}{0.3\baselineskip}{0.3\baselineskip}
+\let\OriginalSubsubsection\subsubsection%
+\renewcommand{\subsubsection}[1]{\OriginalSubsubsection{\textmd{#1}}}%
+\let\OriginalTheSubsubsection\thesubsubsection
+\renewcommand{\thesubsubsection}{\textmd{\OriginalTheSubsubsection}}
+\titlespacing*{\section}{0pt}{\parskip}{\parskip}
+\titlespacing*{\subsection}{0pt}{\parskip}{\parskip}
+\titlespacing*{\subsubsection}{0pt}{\parskip}{\parskip}
 
-\captionsetup{belowskip=-0.0pt}
+\captionsetup{belowskip=-0.0pt, justification=centering}
+% \captionsetup{justification=centering}
+
 
 \citebrackets[]
 
@@ -39,19 +47,32 @@
     \subfile{sections/cover.tex}
 
     \section{\MakeUppercase{Introdução}}
+    \label{sec:intro}
     \subfile{sections/introduction.tex}
 
-    \section{\MakeUppercase{Referencial Teórico}}
+    \section{\MakeUppercase{O robô quadrúpede}}
+    \label{sec:the_quadruped_robot}
     \subfile{sections/theoretical_reference.tex}
 
-    \section{\MakeUppercase{Metodologia}} 
+    \section{\MakeUppercase{Metodologia}}
+    \label{sec:methodology}
     \subfile{sections/methodology.tex}
 
+    \section{\MakeUppercase{O robô Caramelo}}
+    \label{sec:the_caramel}
+    \subfile{sections/development.tex}
+
     \section{\MakeUppercase{Resultados e Discussão}}
+    \label{sec:results}
     \subfile{sections/results.tex}
 
     \section{\MakeUppercase{Conclusão}}
+    \label{sec:conclusion}
     \subfile{sections/conclusion.tex}
+
+    \section{\MakeUppercase{Considerações finais}}
+    \label{sec:final_points}
+    \subfile{sections/final_points.tex}
 
     
     \bibliography{refs.bib}

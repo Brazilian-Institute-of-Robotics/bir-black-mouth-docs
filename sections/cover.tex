@@ -18,14 +18,12 @@
         \end{large}
     \end{center}
 
-    
-
     \begin{flushright}
         Brenda Silva de Alencar\textsuperscript{1}\\
-        Felipe Mohr Santos Muniz Barreto \textsuperscript{2}\\
+        Felipe Mohr Santos Muniz Barreto\textsuperscript{2}\\
         Lucas Lins Souza\textsuperscript{3}\\
-        Orientador: Paulo Andrade Souza \textsuperscript{4}\\
-        Coorientador: Marco Antônio dos Reis \textsuperscript{5}\\
+        Orientador: MSc. Paulo Andrade Souza\textsuperscript{4}\\
+        Coorientador: MSc. Marco Antônio dos Reis\textsuperscript{5}\\
     \end{flushright}
     \begin{flushleft}
       \begin{small}
@@ -33,35 +31,38 @@
           \textsuperscript{2}Instituição: Centro Universitário SENAI CIMATEC, E-mail: felipe18mohr@gmail.com;\\
           \textsuperscript{3}Instituição: Centro Universitário SENAI CIMATEC, E-mail: lucaslinssouza@gmail.com;\\
           \textsuperscript{4}Instituição: Centro Universitário SENAI CIMATEC, E-mail: paulo.andrade@fieb.org.br;\\
-          \textsuperscript{5}Instituição: xxx, E-mail: yyy;\\      
-      \end{small}
-    \end{flushleft}
+          \textsuperscript{5}Instituição: Centro Universitário SENAI CIMATEC, E-mail: marcoreis@me.com;\\      
+        \end{small}
+      \end{flushleft}
 
-    \begin{center}
-      \begin{large}
-        \MakeUppercase{Analysis, prototyping and locomotion control of a quadruped robot}
-      \end{large}
-    \end{center}
-
+      \begin{center}
+        \begin{large}
+          \MakeUppercase{Analysis, prototyping and locomotion control of a quadruped robot}
+        \end{large}
+      \end{center}
+    
     \noindent\textbf{Resumo:} 
-      O resumo deve ser digitado em fonte Times New Roman / Arial tamanho 12,  itálico, e dentro desta área. O texto deve ser justificado. O resumo deve conter o objetivo  e  justificativa  do  trabalho,  sua  importância  e  as  principais  conclusões.  Não  deve  ultrapassar 250 palavras. Vide NBR 6028
-
+    \textit{Com o avanço da robótica, robôs móveis estão cada vez mais tomando espaço em setores chave da economia. Quando comparados aos robôs com rodas ou esteiras, robôs com pernas possuem melhor mobilidade e manobrabilidade, porém menor estabilidade na locomoção, demandando maior complexidade de controle. Esse trabalho teve como objetivo desenvolver um sistema robótico do tipo quadrúpede capaz de se locomover de forma estável quando teleoperado e avaliar sua performance de locomoção estatisticamente a partir de experimentos. A metodologia seguida envolveu uma etapa de pesquisa e definição do conceito do protótipo, seguida pela etapa de desenvolvimento. Nessa etapa, foi desenvolvido o software do robô com o auxílio da simulação e, em paralelo, o protótipo físico foi projetado, fabricado, montado e, por fim, integrado com o software. Em seguida, foram feitos experimentos para avaliar a performance de locomoção do robô. A partir desses experimentos, foi possível concluir que o robô foi capaz de realizar passos de diferentes tamanhos e se locomover em terrenos planos e irregulares. Ademais, pôde-se observar que o controlador PID de orientação do corpo contribuiu positivamente para a estabilidade do robô, diminuindo a oscilação do corpo em roll e pitch durante a caminhada em ambos os terrenos.}
+    
     \noindent\textbf{Palavras-Chaves:} 
-      \textit{deve  ter  no  mínimo  3  palavras  chaves  e  no  máximo  5  palavras  separadas por ponto e vírgula;}
+      \textit{Robô quadrúpede; Locomoção; Controle.}    
 
-    \vspace{\baselineskip}
-      
-    \noindent\textbf{Abstract:} 
-      O resumo deve ser digitado em fonte Times New Roman / Arial tamanho 12,  itálico, e dentro desta área. O texto deve ser justificado. O resumo deve conter o objetivo  e  justificativa  do  trabalho,  sua  importância  e  as  principais  conclusões.  Não  deve  ultrapassar 250 palavras. Vide NBR 6028
-    
-    \noindent\textbf{Keywords:} 
-      \textit{deve  ter  no  mínimo  3  palavras  chaves  e  no  máximo  5  palavras  separadas por ponto e vírgula;}
-    
+}
+
+\newcommand\makeabstract{
+  \noindent\textbf{Abstract:} 
+    \textit{With the growth of robotics, mobile robots are increasingly becoming a common aspect in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot capable of walking when teleoperated and assess its locomotion performance based on experiments. The first part of the methodology was dedicated to research and the definition of the robot's concept. The following stage involved the development of the robot's software, simulation, and, in parallel, the design, fabrication and assembly of the prototype. After both stages were done, the software was integrated into the prototype. After the integration stage, the locomotion experiments were conducted. Based on these experiments, it was possible to conclude that the robot was able to perform gaits of different sizes and walk in both plane and irregular terrains. Furthermore, it was observed that the body's rotation PID controller contributed to reducing the oscillation of the robot's body in both roll and pitch during walking in both terrains.}
+
+  \vspace{0.4\baselineskip}
+
+  \noindent\textbf{Keywords:} 
+  \textit{Quadruped robot; Locomotion; Control.}
+
+  \vspace{\baselineskip}
 }
     
 \begin{document}
     \onecolumn
     \maketitle
-    \newpage
-    \twocolumn
+    \twocolumn[\makeabstract]
 \end{document}
