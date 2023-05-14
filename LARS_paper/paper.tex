@@ -25,32 +25,32 @@ should not be used}
 }
 
 \author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
-\and
-\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
-\and
-\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+    \textit{name of organization (of Aff.)}\\
+    City, Country \\
+    email address or ORCID}
+  \and
+  \IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+    \textit{name of organization (of Aff.)}\\
+    City, Country \\
+    email address or ORCID}
+  \and
+  \IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
+  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+    \textit{name of organization (of Aff.)}\\
+    City, Country \\
+    email address or ORCID}
 }
 
 \maketitle
 
 \begin{abstract}
-With the growth of robotics, mobile robots are increasingly becoming a common aspect in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot capable of walking when teleoperated and assess its locomotion performance based on experiments. The first part of the methodology was dedicated to research and the definition of the robot's concept. The following stage involved the development of the robot's software, simulation, and, in parallel, the design, fabrication and assembly of the prototype. After both stages were done, the software was integrated into the prototype. After the integration stage, the locomotion experiments were conducted. Based on these experiments, it was possible to conclude that the robot was able to perform gaits of different sizes and walk in both plane and irregular terrains. Furthermore, it was observed that the body's rotation PID controller contributed to reducing the oscillation of the robot's body in both roll and pitch during walking in both terrains.
+  With the growth of robotics, mobile robots are increasingly becoming a common aspect in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot capable of walking when teleoperated and assess its locomotion performance based on experiments. The first part of the methodology was dedicated to research and the definition of the robot's concept. The following stage involved the development of the robot's software, simulation, and, in parallel, the design, fabrication and assembly of the prototype. After both stages were done, the software was integrated into the prototype. After the integration stage, the locomotion experiments were conducted. Based on these experiments, it was possible to conclude that the robot was able to perform gaits of different sizes and walk in both plane and irregular terrains. Furthermore, it was observed that the body's rotation PID controller contributed to reducing the oscillation of the robot's body in both roll and pitch during walking in both terrains.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Quadruped robot; Locomotion; Control.
+  Quadruped robot; Locomotion; Control.
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -75,23 +75,23 @@ Pelo fato de robôs quadrúpedes terem se tornado um grande foco de pesquisa nos
 Um dos tipos de estrutura existente é a de tipo mamífero. A estrutura tipo mamífero tem esse nome devido a sua semelhança com a postura de quadrúpedes, como cachorros e cavalos. Kitano \textit{et al.}, em \cite{Kitano2016}, analisa dois tipos diferentes de estruturas de robôs quadrúpedes: a do tipo mamífero (figura \ref{fig:robots_structures_b}) e a do tipo \textit{sprawling} (figura \ref{fig:robots_structures_c}). Segundo sua análise, a primeira permite alcançar maiores velocidades por possuir duas juntas no plano sagital. Além disso, ela também apresenta maior eficiência, pois os atuadores requerem menos torque para sustentar o robô: sua estrutura mais compacta diminui o braço de alavanca sobre o qual a força peso do robô atua. Essa estrutura também favorece a navegação em ambientes estreitos, onde um robô do tipo \textit{sprawling}, por exemplo, teria dificuldades de acessar.
 
 \begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[htbp]{0.23\textwidth}
     \centering
-    \begin{subfigure}[htbp]{0.23\textwidth}
-        \centering
-        \includegraphics[width=0.9\textwidth]{Spot.png}
-        \caption{Spot.}
-        \label{fig:robots_structures_b}
-    \end{subfigure}
-    \begin{subfigure}[htbp]{0.23\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{Titan.png}
-        \caption{TITAN-XIII.}
-        \label{fig:robots_structures_c}
-    \end{subfigure}
+    \includegraphics[width=0.9\textwidth]{Spot.png}
+    \caption{Spot.}
+    \label{fig:robots_structures_b}
+  \end{subfigure}
+  \begin{subfigure}[htbp]{0.23\textwidth}
     \centering
-    \caption{Exemplos de robôs com estruturas do tipo mamífero e \textit{sprawling}.}
-    Fonte: Adaptado de  \cite{Kitano2016} e \cite{SpotImg1}.
-    \label{fig:robots_structures}
+    \includegraphics[width=1.0\textwidth]{Titan.png}
+    \caption{TITAN-XIII.}
+    \label{fig:robots_structures_c}
+  \end{subfigure}
+  \centering
+  \caption{Exemplos de robôs com estruturas do tipo mamífero e \textit{sprawling}.}
+  Fonte: Adaptado de  \cite{Kitano2016} e \cite{SpotImg1}.
+  \label{fig:robots_structures}
 \end{figure}
 
 Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto à configuração das pernas. As duas configurações mais utilizadas podem ser vistas na figura \ref{fig:joint_configurations}. Robôs como o \textit{Spot}, \textit{MIT Cheetah} e \textit{Stanford Pupper} utilizam a configuração \textit{full-elbow}, enquanto outros como o \textit{ANYmal}, \textit{StarlETH} e \textit{BigDog} adotam a configuração \textit{elbow-knee}. Yao \textit{et al.}, em \cite{Yao2021}, acreditam que a configuração \textit{elbow-knee} possibilita maior estabilidade, mas as características de movimento da configuração \textit{full-elbow} podem ser superiores.
@@ -105,10 +105,10 @@ Os robôs quadrúpedes que utilizam essa estrutura também se diferenciam quanto
     \label{fig:joint_configurations_a}
   \end{subfigure}
   \begin{subfigure}[htbp]{0.24\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{elbow_knee.png}
-      \caption{\textit{elbow-knee}.}
-      \label{fig:joint_configurations_d}
+    \centering
+    \includegraphics[width=1.0\textwidth]{elbow_knee.png}
+    \caption{\textit{elbow-knee}.}
+    \label{fig:joint_configurations_d}
   \end{subfigure}
 
   \caption{Tipos de configuração de pernas para robôs com estrutura tipo mamífero.}
@@ -146,55 +146,6 @@ Essa estratégia de controle em três etapas foi responsável por locomover rob�
 O modo como cada perna se comporta durante as etapas de \textit{stance} e \textit{swing} pode variar em diversos aspectos, mas ainda é possível elencar semelhanças gerais. No início da etapa de \textit{swing}, calcula-se o local do próximo ponto de apoio das patas com base na velocidade desejada para o robô e uma trajetória de passo até esse ponto. Essa trajetória pode ter o formato de uma curva senoidal \cite{X.118}, triangular \cite{StanfordPupper}, de Bezier \cite{HackadayQuadruped}, cicloidal \cite{Shi2021} \cite{X.58}, entre outras. Uma consideração que pode ser feita a fim de simplificar o sistema de controle é de que a movimentação das pernas durante a fase de \textit{swing} não interfere no movimento do corpo do robô. Para que isto seja válido, é necessário controlar a força com que a pata toca o solo, a fim de diminuir os distúrbios causados no corpo do robô. A força de contato entre as patas e o solo é um ponto-chave para a estabilidade do quadrúpede \cite{X.118}. Nesse sentido, a trajetória cicloidal ganha destaque por conta de sua primeira derivada nula no momento em que se aproxima do seu ponto mínimo.
 
 Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio, além de deslocar o corpo na direção desejada de locomoção. Para isso, alguns robôs utilizam trajetórias para as patas com um formato pré-determinado, assim como na fase de \textit{swing}, não necessariamente repetindo o mesmo formato de curva \cite{X.118, X.58}. Além disso, controladores de equilíbrio também podem ser implementados nessa etapa. Esses controladores visam estabilizar os ângulos de \textit{pitch} e \textit{roll} do robô \cite{Shi2021, StanfordPupper, HackadayQuadruped, Notspot} ou ainda outros graus de liberdade \cite{X.134, Chen2020140736, Zhang2016284}. Eles podem controlar diretamente a angulação do corpo do robô (com o auxílio de um sensor inercial) e/ou a força de contato com o solo em cada perna, por exemplo. No entanto, alguns trabalhos se baseiam apenas no controle individual de cada junta para manter o robô em equilíbrio, o que é uma abordagem mais simples, mas que pode falhar, especialmente em terrenos irregulares.
-
-\section{Metodologia}
-Para o desenvolvimento do projeto, foi seguida uma metodologia própria composta por três etapas sequenciais: fundamentação, desenvolvimento e resultados e análises. A seguir, serão detalhadas cada uma dessas etapas.
-
-  \subsection{Fundamentação}
-  Com o intuito de buscar referências para o projeto, foi utilizado o método \textit{Bibliographic and Literary Review Method} (\textit{BiLi}), que consiste em um método de busca iterativa de artigos, guiada por análises estatísticas das palavras-chave e da rede de co-citação entre os trabalhos encontrados \cite{bili}. Em seguida, foi realizado um \textit{benchmarking} de projetos \textit{open source} de robôs quadrúpedes para auxiliar na definição do conceito do robô que será projetado e prototipado.
-  
-  \subsection{Desenvolvimento}
-  Durante esta etapa, houve o desenvolvimento do robô propriamente dito. Foram criadas duas frentes de trabalho que ocorreram em paralelo: a implementação e simulação dos algoritmos em ambiente computacional, e a criação do \textit{design} junto à prototipação do robô.
-
-  Durante a implementação dos algoritmos na simulação, foram elaborados, primeiramente, o diagrama de blocos do sistema e a arquitetura de \textit{software} do controlador. A partir disso, os algoritmos de cinemática e controle foram implementados e testados na simulação. Para auxiliar o desenvolvimento do projeto, algumas ferramentas de \textit{softwares} foram utilizadas, como o \textit{ROS2 Humble} e o simulador \textit{Gazebo}.
-
-  Em paralelo ao desenvolvimento do \textit{software}, foi realizado o \textit{design} e a prototipação do robô através da elaboração dos desenhos mecânicos e do projeto eletroeletrônico. Esta etapa incluiu também a impressão 3D das partes mecânicas, o teste dos atuadores e sensores e a configuração da comunicação entre a central de processamento e os atuadores, culminando na montagem física do protótipo. Durante essa etapa, o \textit{software} \textit{OnShape} foi utilizado para a modelagem 3D do robô e o \textit{QElectroTech}, para o projeto eletroeletrônico.
-
-  Após essas duas etapas, foi possível realizar a integração dos algoritmos no protótipo físico. Ao final da integração, o protótipo já estava funcional e pronto para a fase de testes.
-
-  \subsection{Resultados e análises}
-  \label{sec:method_results_analysis}
-  Durante a etapa de resultados e análises, foram feitos testes para fins de avaliação do funcionamento e da performance de locomoção do robô. Eles foram divididos em dois grupos: testes preliminares e experimentos de locomoção. 
-  
-  Os testes preliminares objetivaram testar três funcionalidades básicas do robô: a movimentação do corpo com base no modelo cinemático, o controle de angulação do corpo e a execução da trajetória do passo. As duas primeiras funcionalidades foram avaliadas de forma qualitativa e a última de forma estatística. Esses testes são importantes porque ambas as funcionalidades são utilizadas nos experimentos de locomoção e influenciam diretamente no comportamento do robô. 
-
-  Os experimentos de locomoção foram realizados a fim de avaliar a locomoção do robô em terrenos planos e irregulares. Para isso, foi verificada a capacidade do robô de seguir um comando de velocidade pré-estabelecido e de manter a orientação do seu corpo estável em $0°$ nos ângulos de \textit{roll} e \textit{pitch}. A análise dos dados se deu mediante métodos estatísticos. O teste de Shapiro-Wilk \cite{leotti2005comparaccao} foi aplicado para verificar a normalidade dos dados. Caso eles se assemelhassem a uma distribuição normal, a Análise de Variância (ANOVA) \cite{cano2012six} poderia ser utilizada para verificar se os dados analisados são estatisticamente semelhantes ou não.
-
-  O primeiro teste preliminar consistiu em enviar comandos de posição e orientação para o corpo do robô individualmente em cada um dos eixos ($x, y, z$, \textit{roll}, \textit{pitch} e \textit{yaw}) e observar seu comportamento. O segundo teste teve o objetivo de verificar a resposta do controle de angulação do robô a diferentes valores de rotações desejadas. Para isso, foram aplicados sinais degrau nos \textit{setpoints} de angulação em $roll$ e em $pitch$, simultaneamente, e as respostas do sistema foram analisadas de forma gráfica.
-  
-  O terceiro teste preliminar consistiu em mover uma das patas por uma trajetória cicloidal feita pelo planejador de trajetórias. Para isso, o corpo do robô foi apoiado em um suporte elevado, de modo que as patas não tocassem o chão, diminuindo a carga sobre os motores. O objetivo principal deste teste foi verificar se o sistema de controle do robô era capaz de responder de forma coerente aos comandos enviados pelo planejador de marchas numa situação mais próxima da ideal (sem carga). As trajetórias foram calculadas considerando a altura de passo $0,05 m$, período de $0,5 s$ e uma resolução de $25$ pontos distribuídos de forma homogênea ($P_T = P_N = 1,0$). Foram feitos dois tipos de testes, variando as distâncias que a pata deve percorrer nas coordenadas $x$ e $y$, e para cada teste foram coletadas 30 amostras. Desta forma, foi possível realizar uma análise estatística, assim como feito com os experimentos de locomoção.
-  
-  Os experimentos de locomoção foram realizados em dois tipos de terreno: um chão de cimento plano (figura \ref{fig:terreno_plano}) e um terreno irregular formado por pequenas pedras soltas (figura \ref{fig:terreno_irregular}). Estes experimentos consistiram em enviar um comando de velocidade constante para frente de $0,05 m/s$ e medir o tempo que o robô precisou para percorrer $1,5 m$. Assim, foi possível inferir a velocidade média e compará-la com o comando enviado. Além disso, visando avaliar a contribuição do controle de angulação do robô para sua estabilidade, metade dos experimentos foram realizados com esta funcionalidade ativa e a outra não. A estabilidade do robô foi mensurada por meio da oscilação máxima do corpo do robô nos ângulos de \textit{roll} e \textit{pitch}. A trajetória utilizada para o passo possui as mesmas especificações utilizadas no terceiro teste preliminar, exceto pelos parâmetros de disposição dos pontos, cujos valores adotados foram $P_T = 0,66$ e $P_N = 0,33$. Os experimentos foram organizados em quatro combinações de testes, variando o tipo do terreno e o uso, ou não, do controle de angulação. Para cada um dos 4 testes, foram coletadas 10 amostras.
-
-  \begin{figure}[htbp]
-    \centering
-    \begin{subfigure}[htbp]{0.24\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{terreno_plano.jpeg}
-      \caption{Plano.}
-      \label{fig:terreno_plano}
-    \end{subfigure}
-    \begin{subfigure}[htbp]{0.24\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{terreno_irregular.jpeg}
-      \caption{Irregular.}
-      \label{fig:terreno_irregular}
-    \end{subfigure}
-    \vfill
-    \caption{Terrenos dos testes.}
-    Fonte: autores.
-    \label{fig:terrenos}
-  \end{figure}
 
 \section{O Robô Caramelo}
 
@@ -251,7 +202,7 @@ Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinem
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.4\textwidth]{caramel_tfs.png}
-  
+
   \caption{Links da perna do robô.}
   Fonte: autores.
   \label{fig:caramel_tfs}
@@ -296,7 +247,7 @@ Essas equações são úteis para o cálculo da posição de uma única perna, m
   \centering
   \vspace{-0.75cm}
   \includegraphics[width=0.35\textwidth]{caramel_body.drawio.png}
-  
+
   \caption{Eixos do robô em posição de repouso.}
   Fonte: autores.
   \label{fig:caramel_body}
@@ -373,182 +324,86 @@ O planejador de trajetória é responsável por calcular a trajetória que cada 
 O gráfico de uma curva cicloidal no espaço 3D pode ser vista na figura \ref{fig:traj_space}. A mesma trajetória é ilustrada na figura \ref{fig:traj_time} em função do tempo. É possível perceber que a curva possui a primeira derivada nula no momento em que a pata toca o solo, o que é favorável ao controle de malha aberta, uma vez que quanto mais suave a aterrissagem, menos distúrbios são causados no sistema.
 
 \begin{figure*}[h]
+  \centering
+  \begin{subfigure}[t]{0.32\textwidth}
     \centering
-    \begin{subfigure}[t]{0.32\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{Cycloid_space.png}
-      \caption{Curva no espaço 3D.}
-      \label{fig:traj_space}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.32\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{Cycloid_time.png}
-      \caption{Curva no tempo.}
-      \label{fig:traj_time}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.32\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{Cycloid_modified.png}
-      \caption{Curva com disposição de pontos modificada.}
-      \label{fig:traj_time_modified}
-    \end{subfigure}
-    \vfill
-    \caption{Trajetórias cicloidais para o passo de robô.}
-    Fonte: autores.
-    \label{fig:traj_curve}
+    \includegraphics[width=1.0\textwidth]{Cycloid_space.png}
+    \caption{Curva no espaço 3D.}
+    \label{fig:traj_space}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{Cycloid_time.png}
+    \caption{Curva no tempo.}
+    \label{fig:traj_time}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.32\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{Cycloid_modified.png}
+    \caption{Curva com disposição de pontos modificada.}
+    \label{fig:traj_time_modified}
+  \end{subfigure}
+  \vfill
+  \caption{Trajetórias cicloidais para o passo de robô.}
+  Fonte: autores.
+  \label{fig:traj_curve}
 \end{figure*}
 
 Além da altura, distâncias em $x$ e $y$ e período, o planejador de trajetória do Caramelo também conta com dois parâmetros que têm como objetivo melhorar ainda mais o controle da força com que a pata toca o chão. Como os atuadores do robô são servomotores controlados por posição, o torque é proporcional ao deslocamento que este deve realizar entre os pontos da trajetória. Ou seja, quanto maior a resolução da trajetória, mais suave será o movimento. No entanto, a resolução da trajetória $N$ é fixa, dada em função do período do passo e da frequência de controle do planejador de marchas ($\SI{50}{\hertz}$) $N = 50T$. Logo, a estratégia adotada é a de espaçar a mesma quantidade de pontos de forma desigual ao longo do período do passo, de forma que haja mais pontos próximos ao momento em que a pata aterrissa no solo, e menos pontos próximos ao momento em que ela é erguida. O parâmetro $P_T$ é uma fração do período total do passo, e o parâmetro $P_N$, a fração do número total de pontos do passo que deve se encontrar entre o tempo $0$ e $P_T \cdot T$. Em outras palavras, se $P_T = 0,66$ e $P_N = 0,33$, $33\%$ de $N$ estará nos primeiros dois terços do período, enquanto os $67\%$ restantes estarão no um terço final. A trajetória, considerando esses parâmetros, está ilustrada na figura \ref{fig:traj_time_modified}.
 
-\section{Resultados e Discussão}
-A seguir, serão apresentados os resultados preliminares e os experimentos realizados com o Caramelo. 
-  
-  \subsection{Testes preliminares}
-  \label{subsec:testes_preliminares}
-  
-  Os resultados preliminares referem-se aos resultados obtidos com as funcionalidades básicas do robô: capacidade de movimentação do corpo a partir do modelo cinemático, capacidade de controle da orientação do corpo com o controlador de angulação, e capacidade de seguir uma trajetória de passo calculada.
+\section{Results}
 
-  No primeiro teste preliminar, foi avaliada a movimentação do corpo a partir do modelo cinemático. Foi observado que o sistema não só é capaz de realizar a cinemática de cada uma das pernas individualmente, como também do seu corpo em todos os 6 graus de liberdade (translações em $x$, $y$ e $z$ e rotações em $roll$, $pitch$ e $yaw$). A figura \ref{fig:moving_body} ilustra o movimento do corpo do robô em cada um desses graus de liberdade.
+In order to assess the robot's locomotion performance with the implemented stabilization controller, the robot's capability of following a forward velocity setpoint and the oscillation of its body while walking were evaluated. An experiment was conducted, in which the robot should walk in a straight line of 1.5 meters in both flat and irregular terrain, with and without the stabilization controller, totalizing four tests. The flat terrain consisted of a cement floor and the irregular terrain, a ground formed by small loose stones. Both are illustrated in Figures \ref{fig:terreno_plano} and \ref{fig:terreno_irregular}, respectively. For each test, the robot received a forward velocity command of 0.05 m/s, and its mean velocity, as well as its pitch and roll oscillation, were recorded. The mean velocity was calculated based on the time it took to travel 1.5 meters and the oscillation is the difference between the maximum and minimum readings of the IMU. The calculated velocity was compared to the desired velocity sent to the robot and the stability data was analyzed statistically: first, the Shapiro-Wilk test was applied to the distribution to check whether the distribution was normal; lastly, the results were compared by performing an analysis of variance (ANOVA). For all the tests, the robot's gait settings consisted of a height of 5 cm, a period of 0.5 seconds, a resolution of 25 points, $P_T$ = 0.66, and $P_N$ = 0.33. For each test type, 10 samples were collected.
 
-  \begin{figure}[!htb]
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[htbp]{0.24\textwidth}
     \centering
-    \includegraphics[width=0.48\textwidth]{moving_body.png}
-    \caption{Movimentação do corpo do robô.}
-    Fonte: autores.
-    \label{fig:moving_body}
-  \end{figure}
-
-  A seguir, foi avaliada a performance do controlador de angulação do corpo. Os gráficos da figura \ref{fig:grafico_controlling} ilustram o comportamento do sistema à variação dos \textit{setpoints} de orientação em \textit{roll} e em \textit{pitch} para o corpo do robô ao longo do tempo. As curvas em azul representam os \textit{setpoints} aplicados como sinais degrau, enquanto que as curvas em vermelho ilustram o comportamento do sistema. Nota-se a capacidade que o protótipo tem de se adaptar rapidamente aos novos valores desejados de orientação em \textit{roll} e \textit{pitch}, simultaneamente.
-
-  \begin{figure}
+    \includegraphics[width=1.0\textwidth]{terreno_plano.jpeg}
+    \caption{Flat.}
+    \label{fig:terreno_plano}
+  \end{subfigure}
+  \begin{subfigure}[htbp]{0.24\textwidth}
     \centering
-    \begin{subfigure}[t]{0.48\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{grafico_controlling_X.png}
-      \caption{\textit{Roll.}}
-      \label{fig:controlling_roll}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.48\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{grafico_controlling_Y.png}
-      \caption{\textit{Pitch.}}
-      \label{fig:controlling_pitch}
-    \end{subfigure}
-    \caption{Respostas dos controles de angulação.}
-    Fonte: autores.
-    \label{fig:grafico_controlling}
-  \end{figure}
+    \includegraphics[width=1.0\textwidth]{terreno_irregular.jpeg}
+    \caption{Irregular.}
+    \label{fig:terreno_irregular}
+  \end{subfigure}
+  \vfill
+  \caption{Terrains used for the experiment}
+  \label{fig:terrenos}
+\end{figure}
 
-  O último teste preliminar teve o objetivo de analisar o tempo de execução da trajetória, as coordenadas finais $(x_{final}, y_{final})$ da pata e a altura máxima $z_{max}$ atingida durante o passo, comparando-os com os valores esperados para cada um desses parâmetros. A tabela \ref{tab:trajetoria} mostra as médias e desvios padrões encontradas para cada um desses parâmetros, durante a realização do teste.
+\begin{table}[!htb]
+  \centering
+  \begin{tabular}{ccccc}
+    \hline
+    \textbf{Test}             & \textbf{1}   & \textbf{2}  & \textbf{3}   & \textbf{4}   \\ \hline
+    Ter.                       & Flat        & Flat       & Irreg.       & Irreg.       \\ \hline
+    \begin{tabular}[c]{@{}c@{}}S. C. \end{tabular} & No          & Yes         & No          & Yes          \\ \hline
+    \begin{tabular}[c]{@{}c@{}}Vel. \\ $(cm/s)$ \end{tabular} & 2.15         & 3.68        & 2.03         & 2.39         \\ \hline
+    \begin{tabular}[c]{@{}c@{}} $\sigma_{Vel}$  \\ $(cm/s)$ \end{tabular} & 0.040        & 0.075       & 0.016        & 0.047        \\ \hline
+    \begin{tabular}[c]{@{}c@{}} $\Delta_{Roll}$ \end{tabular} & 12.59\degree & 8.81\degree & 13.37\degree & 11.13\degree \\\hline
+    \begin{tabular}[c]{@{}c@{}} $\sigma_{Roll}$ \end{tabular} & 2.54\degree  & 2.36\degree & 0.78\degree  & 1.47\degree  \\ \hline
+    \begin{tabular}[c]{@{}c@{}} $\Delta_{Pitch}$ \end{tabular} & 11.55\degree & 8.31\degree & 15.19\degree & 12.09\degree \\ \hline
+    \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular} & 1.89\degree  & 2.63\degree & 1.44\degree  & 1.66\degree  \\ \hline
+  \end{tabular}
 
-  \begin{table}[!htb]
-    \centering
-    \begin{tabular}{ccc}
-      \hline
-      \textbf{Teste} & \textbf{1}      & \textbf{2}  \\
-      \hline
-      $\bar{tempo} (s)$         & 0,557  & 0,557 \\
-      \hline
-      $\sigma_{tempo} (s)$       & 0,008  & 0,008 \\
-      \hline
-      $\bar{x}_{final} (cm)$     & 5,034  & 3,024 \\
-      \hline
-      $\sigma_{x_{final}} (cm)$  & 0,009  & 0,013 \\
-      \hline
-      $\bar{y}_{final} (cm)$     & 2,924  & 4,915 \\      
-      \hline
-      $\sigma_{y_{final}} (cm)$  & 0,013  & 0,004 \\      
-      \hline
-      $\bar{z}_{max} (cm)$       & 4,760  & 4,755 \\      
-      \hline
-      $\sigma_{z_{max}} (cm)$    & 0,023  & 0,028 \\
-      \hline   
-    \end{tabular}
+  \caption{Velocity and stability results}
+  \label{tab:vel_stab}
+\end{table}
 
-    \caption{Resultados dos teste da trajetória da pata.}
-    Fonte: autores.
-    \vspace{-\baselineskip}
-    \label{tab:trajetoria}
-  \end{table}
-  
+Table \ref{tab:vel_stab} summarizes the collected results. The robot did not reach a velocity of 0.05 m/s in any test. This result is due to errors in the final position of each leg during the swing phase: the legs could not reach the desired $(x,y)$ position required to maintain the desired velocity. The fact that the final position of one leg is a function of its motors' final orientation, indicates that the motors did not reach their desired orientation. Prior to the experiment, the gait movement was tested with the legs off the ground (almost no load), and no significant errors were noted. Since the errors only appeared while walking, it is perhaps caused by the fact that the motors were not powerful enough to support the robot's weight appropriately while walking. 
 
-  Inicialmente, foram removidos os \textit{outliers} (valores do conjunto de dados acima ou abaixo dos limites superior e inferior, respectivamente) das amostras, valores que fogem da normalidade e podem prejudicar a análise dos dados. Em seguida, a fim de avaliar a normalidade dos dados, foram aplicados testes de Shapiro-Wilk nos dados de tempo e altura máxima de ambos os testes, os quais obtiveram $p_{valor} > 0,05$ em todos os casos. Isso indica que as amostras de ambos os testes estão semelhantes a uma distribuição normal para um nível de confiança de $95\%$. Posteriormente, foram realizados dois testes de análise de variância (ANOVA) unilaterais: o primeiro relacionando o tempo de execução da trajetória nos testes 1 e 2, e o segundo a altura máxima alcançada. O objetivo foi verificar se os resultados se alteraram para diferentes valores de $(x, y)$ requisitados. O resultado da ANOVA indica um $p_{valor}$ de aproximadamente $0,7212$ referente ao tempo, e de $0,5070$ referente à altura máxima alcançada durante o passo. Ambos os valores são superiores a $0,05$, indicando que não há uma diferença significativa entre as médias de cada teste, considerando um nível de confiança de $95\%$. Ou seja, diferentes pontos de destino em $(x, y)$ não interferiram no tempo de execução do passo, tampouco na altura máxima alcançada pela pata.
-
-  O gráfico da figura \ref{fig:grafico_trajetoria_xyz} representa uma das amostras coletada para o primeiro teste ($x=0,05m$, $y=0,03m$), correspondente à trajetória em $z$ (altura do passo). Nota-se que, como esperado pela análise da tabela \ref{tab:trajetoria}, há um atraso na execução da trajetória (neste caso específico, de aproximadamente $54ms$), e a altura máxima alcançada é levemente inferior à desejada (alcançando, neste caso, um valor próximo a $0,0476m$).
-  
-  \begin{figure}[!htb]
-    \centering
-    % \includegraphics[width=0.48\textwidth]{grafico_trajetoria_xy.png}
-    \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
-    \caption{Trajetórias realizadas pelas patas.}
-    Fonte: autores.
-    \label{fig:grafico_trajetoria_xyz}
-  \end{figure}
-
-  A distribuição das amostras de tempo e de altura máxima da pata em ambos os testes pode ser percebida pelos gráficos de \textit{box plot}, apresentados na figura \ref{fig:time_zmax_traj}. Nestes gráficos, é observado a proximidade entre as medianas dos testes e a similaridade na distribuição dos seus quartis, enfatizando a semelhança entre os resultados dos testes 1 e 2.
-
-  \begin{figure}[!htb]
-    \centering
-    \caption{Tempo e altura da pata durante um passo.}
-    \includegraphics[width=0.48\textwidth]{tempo_zmax_traj.png}
-    Fonte: autores.
-    \label{fig:time_zmax_traj}
-  \end{figure}
-
-  \begin{figure}[!htb]
-    \centering
-    \begin{subfigure}[t]{0.49\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{plane_boxplot.png}
-      \caption{Terreno plano.}
-      \label{fig:imu_test_plane}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.49\textwidth}
-      \centering
-      \includegraphics[width=1.0\textwidth]{irregular_boxplot.png}
-      \caption{Terreno irregular.}
-      \label{fig:imu_test_irregular}
-    \end{subfigure}
-    \caption{Oscilação do corpo em ambos os tipos de terreno.}
-    Fonte: autores.
-    \label{fig:imu_test}
-  \end{figure}
-
-  \subsection{Experimentos}
-  A seguir, serão apresentados os resultados dos experimentos de locomoção descritos na seção \ref{sec:method_results_analysis}. Esses experimentos tiveram o objetivo de avaliar se o robô consegue se mover em uma velocidade desejada e o quão estável ele se mantém durante a caminhada. Foram coletados dados de velocidade média do robô (inferida com base no tempo que o robô levou para percorrer $1,5m$) e a oscilação máxima do corpo em \textit{roll} e \textit{pitch}. As médias e desvios padrões de cada variável para cada teste estão apresentadas na tabela \ref{tab:vel_stab}. 
-  
-  \begin{table}[!htb]
-    \centering
-    \begin{tabular}{ccccc}
-      \hline
-      \textbf{Teste} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} \\ \hline
-      Ter. & Plano & Plano & Irreg. & Irreg. \\ \hline
-      \begin{tabular}[c]{@{}c@{}}C. R.\end{tabular} & Não & Sim & Não & Sim \\ \hline
-      \begin{tabular}[c]{@{}c@{}}Vel. \\ $(cm/s)$ \end{tabular} &   2,15   &  3,68  &   2,03  & 2,39  \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\sigma_{Vel}$  \\ $(cm/s)$ \end{tabular} & 0,040 & 0,075 & 0,016 & 0,047 \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\Delta_{Roll}$ \end{tabular} & 12,59\degree & 8,81\degree & 13,37\degree & 11,13\degree \\\hline
-      \begin{tabular}[c]{@{}c@{}} $\sigma_{Roll}$ \end{tabular}  & 2,54\degree & 2,36\degree & 0,78\degree & 1,47\degree \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\Delta_{Pitch}$ \end{tabular} & 11,55\degree & 8,31\degree & 15,19\degree & 12,09\degree \\ \hline
-      \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular}  & 1,89\degree & 2,63\degree & 1,44\degree & 1,66\degree \\ \hline
-
-    \end{tabular}
-    
-    \caption{Resultados da análise da velocidade e estabilidade.}
-    Fonte: autores.
-    \label{tab:vel_stab}
-  \end{table}
-
-  A partir desses dados, foi observado que o robô não alcançou a velocidade desejada de $0,05 m/s$ em nenhum dos testes, alcançando apenas $74\%$ desse valor para a média de velocidades do teste feito em terreno plano com controle de estabilidade ativo. É possível justificar essa diferença pelo acúmulo de erros nas coordenadas finais $(x_f, y_f)$ das patas a cada passo, nesse cenário em que os atuadores do robô operam com carga. Isto é, ao operar sustentando o peso do robô, o sistema de controle não foi capaz de seguir fielmente a trajetória do passo, percorrendo com a pata uma distância menor do que a necessária para alcançar uma velocidade média de $0,05 m/s$. Esse resultado é diferente do que foi mostrado na seção \ref{subsec:testes_preliminares}, onde os motores foram avaliados em um cenário sem carga significativa.
-  
-  A tabela \ref{tab:vel_stab} também mostra que as oscilações médias em \textit{roll} e \textit{pitch} foram menores quando o controle de estabilidade estava ativo tanto no terreno plano quanto no irregular. A fim de comprovar que o controle de estabilidade contribuiu efetivamente para diminuir as oscilações do robô em ambos os tipos de terreno, o mesmo procedimento de análise do experimento anterior foi seguido. Primeiramente, foram removidos os \textit{outliers} das amostras e aplicado o teste de normalidade de Shapiro-Wilk, o qual indicou um $p_{valor} > 0,05$ para todos os casos. Em seguida, foi aplicado o teste ANOVA para comparar a oscilação em \textit{roll} e em \textit{pitch} dos testes 1 e 2. O mesmo processo foi repetido para os testes 3 e 4. O resultado da análise apontou que as distribuições de oscilação em \textit{roll} e \textit{pitch} são significativamente diferentes tanto no terreno plano quanto no terreno irregular, uma vez que o $p_{valor}$ de todos os testes foi inferior a $0,05$. Os gráficos da figura \ref{fig:imu_test} ilustram com mais detalhes a distribuição dos dados. Nota-se que com o controle de estabilidade, a oscilação foi mais dispersa na maioria dos testes, o que pode ser comprovado analisando os desvios padrões apresentados na tabela \ref{tab:vel_stab}. No entanto, exceto quanto à oscilação em \textit{roll} no terreno plano, o terceiro quartil está abaixo do primeiro quartil das distribuições de oscilação sem o controle de estabilidade, mostrando que o controlador diminuiu a oscilação do corpo do robô em \textit{roll} ou em \textit{pitch} em pelo menos $75\%$ das amostras coletadas.
+In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value > 0.05, which indicates that all the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2. The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the test without it, which proves that it indeed lowered the robot's body oscillations in both terrain types. Figure \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in $75\%$ of collected test samples.
 
 
 \section{Conclusão}
 
-Este trabalho abordou os conceitos utilizados para locomoção de robôs quadrúpedes e buscou aplicá-los no desenvolvimento de um robô real. O Caramelo foi desenvolvido para fins de educação e pesquisa na área de robôs com pernas, mais especificamente quadrúpedes. Trata-se de um projeto \textit{open source}, cujo código fonte está disponível publicamente no \textit{GitHub} \cite{CaramelRepo}. 
-  
+Este trabalho abordou os conceitos utilizados para locomoção de robôs quadrúpedes e buscou aplicá-los no desenvolvimento de um robô real. O Caramelo foi desenvolvido para fins de educação e pesquisa na área de robôs com pernas, mais especificamente quadrúpedes. Trata-se de um projeto \textit{open source}, cujo código fonte está disponível publicamente no \textit{GitHub} \cite{CaramelRepo}.
+
 Os testes e experimentos realizados buscaram avaliar a performance da locomoção do robô no espaço tridimensional. Os testes preliminares indicaram que o robô possui a capacidade de mover o corpo em 6 GDL e controlar sua orientação em $roll$ e $pitch$. Além disso, pôde-se concluir que a pata é capaz de seguir uma trajetória até um ponto requisitado em $x$ e $y$ no cenário sem carga. Não foram constatadas diferenças significativas no tempo total e na altura máxima da trajetória nos dois testes realizados. Contudo, foi observado um atraso no tempo de execução trajetória, relacionado ao atraso na resposta dos motores.
- 
+
 Os experimentos de locomoção mostraram que o robô não alcançou a velocidade desejada em nenhum dos testes, estando  a velocidade média do teste no terreno plano com o controle de angulação ativo a mais próxima deste valor. Essa diferença pode estar relacionada com o fato de que o sistema de controle não conseguiu operar de forma adequada quando sustentando o peso do robô. Como o controle da trajetória é feito em malha aberta (apenas os controladores individuais das juntas possuem malha fechada), não há compensação, e a pata não alcança a distância esperada. Ademais, também pôde-se observar que o controle de angulação resultou numa maior estabilidade do robô em ambos os terrenos.
 
 \section{Considerações Finais}
@@ -558,40 +413,40 @@ Para trabalhos futuros, recomenda-se a revisão dos atuadores usados no robô. A
 
 \section*{Acknowledgment}
 
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
+The preferred spelling of the word ``acknowledgment'' in America is without
+an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B.
+G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor
 acknowledgments in the unnumbered footnote on the first page.
 
 \section*{References}
 
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
+Please number citations consecutively within brackets \cite{b1}. The
+sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference
+number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at
 the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
 
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
+Number footnotes separately in superscripts. Place the actual footnote at
+the bottom of the column in which it was cited. Do not put footnotes in the
 abstract or reference list. Use letters for table footnotes.
 
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
+Unless there are six authors or more give all authors' names; do not use
+``et al.''. Papers that have not been published, even if they have been
+submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers
+that have been accepted for publication should be cited as ``in press'' \cite{b5}.
+Capitalize only the first word in a paper title, except for proper nouns and
 element symbols.
 
-For papers published in translation journals, please give the English 
+For papers published in translation journals, please give the English
 citation first, followed by the original foreign-language citation \cite{b6}.
 
 \begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
+  \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
+  \bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
+  \bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
+  \bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
+  \bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
+  \bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
+  \bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
 \end{thebibliography}
 \vspace{12pt}
 \color{red}
