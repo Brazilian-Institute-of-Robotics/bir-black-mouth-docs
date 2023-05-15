@@ -46,7 +46,7 @@ should not be used}
 \maketitle
 
 \begin{abstract}
-  With the growth of robotics, mobile robots are increasingly becoming a common aspect in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot capable of walking when teleoperated and assess its locomotion performance based on experiments. The first part of the methodology was dedicated to research and the definition of the robot's concept. The following stage involved the development of the robot's software, simulation, and, in parallel, the design, fabrication and assembly of the prototype. After both stages were done, the software was integrated into the prototype. After the integration stage, the locomotion experiments were conducted. Based on these experiments, it was possible to conclude that the robot was able to perform gaits of different sizes and walk in both plane and irregular terrains. Furthermore, it was observed that the body's rotation PID controller contributed to reducing the oscillation of the robot's body in both roll and pitch during walking in both terrains.
+  With the growth of robotics, mobile robots are increasingly becoming a common aspect in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot capable of walking when teleoperated and assess its locomotion performance based on experiments. The first part of the methodology was dedicated to research and the definition of the robot's concept. The following stage involved the development of the robot's software, simulation, and, in parallel, the design, fabrication and assembly of the prototype. After both stages were done, the software was integrated into the prototype. After the integration stage, the locomotion experiments were conducted. Based on these experiments, it was possible to conclude that the robot was able to perform gaits of different sizes and walk in both plane and uneven terrains. Furthermore, it was observed that the body's rotation PID controller contributed to reducing the oscillation of the robot's body in both roll and pitch during walking in both terrains.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -54,11 +54,11 @@ should not be used}
 \end{IEEEkeywords}
 
 \section{Introduction}
-Com o avanço da robótica, robôs móveis estão cada vez mais ganhando espaço em setores chave da economia como o comercial, industrial e militar. Os robôs terrestres que se locomovem com pernas têm se mostrado mais eficientes para se locomover em terrenos irregulares, inclinados e escorregadios, e também para superar obstáculos \cite{X.134}. Quando comparados com robôs com rodas, robôs com pernas ainda possuem melhor mobilidade e manobrabilidade em ambientes complexos, o que possibilita transitar por caminhos não necessariamente contínuos. Entre os robôs com pernas, os quadrúpedes vêm ganhando destaque por apresentarem maior estabilidade e uma estrutura mais simples quando comparados aos bípedes e hexápodes \cite{Shi2021}.
+Com o avanço da robótica, robôs móveis estão cada vez mais ganhando espaço em setores chave da economia como o comercial, industrial e militar. Os robôs terrestres que se locomovem com pernas têm se mostrado mais eficientes para se locomover em terrenos unevenes, inclinados e escorregadios, e também para superar obstáculos \cite{X.134}. Quando comparados com robôs com rodas, robôs com pernas ainda possuem melhor mobilidade e manobrabilidade em ambientes complexos, o que possibilita transitar por caminhos não necessariamente contínuos. Entre os robôs com pernas, os quadrúpedes vêm ganhando destaque por apresentarem maior estabilidade e uma estrutura mais simples quando comparados aos bípedes e hexápodes \cite{Shi2021}.
 
 O uso de uma plataforma com quatro pernas requer um sistema de locomoção robusto que envolve o controle de equilíbrio da plataforma, o controle das juntas do robô e o planejamento de marchas. Para poder aplicar todos esses conceitos e desenvolver aplicações reais com robôs quadrúpedes, é fundamental estudar sua estrutura física, os tipos de marcha que eles podem realizar e os métodos de controle de locomoção que são utilizados nesses robôs.
 
-O objetivo deste trabalho é desenvolver um sistema robótico do tipo quadrúpede capaz de se locomover de forma estável quando teleoperado. Serão estudados aspectos construtivos, de locomoção e de controle desse tipo robô. Além disso, será projetado um protótipo que será simulado e fabricado, a fim de testar os algoritmos de locomoção não apenas em um ambiente virtual, mas também na prática. Por fim, serão realizados experimentos de performance de locomoção com o protótipo físico, os quais analisarão a estabilidade do robô em ambientes de terreno plano e irregular.
+O objetivo deste trabalho é desenvolver um sistema robótico do tipo quadrúpede capaz de se locomover de forma estável quando teleoperado. Serão estudados aspectos construtivos, de locomoção e de controle desse tipo robô. Além disso, será projetado um protótipo que será simulado e fabricado, a fim de testar os algoritmos de locomoção não apenas em um ambiente virtual, mas também na prática. Por fim, serão realizados experimentos de performance de locomoção com o protótipo físico, os quais analisarão a estabilidade do robô em ambientes de terreno plano e uneven.
 
 A seção \ref{sec:the_quadruped_robot} tratará dos conceitos estudados para o desenvolvimento do robô. A seção \ref{sec:methodology} explicará a metodologia utilizada durante o projeto. Na seção \ref{sec:the_caramel}, será apresentado o Caramelo, o robô desenvolvido para essa pesquisa. A seção \ref{sec:results} apresentará os resultados dos testes e experimentos realizados, ao passo que a seção \ref{sec:conclusion}, as conclusões feitas a partir dos resultados. Por fim, a seção \ref{sec:final_points} apresentará as considerações finais e as sugestões dos autores para trabalhos futuros.
 
@@ -123,7 +123,7 @@ A massa do robô quadrúpede deve ser a menor possível. Quanto mais leve for o 
 \subsection{Movimentação por marchas}
 Robôs quadrúpedes se movimentam conforme uma sequência de movimentos coordenados de suas pernas que compõem uma marcha. Uma marcha é definida pelo tempo e local de colocação e levantamento de cada pata, coordenado com o movimento do corpo em seus seis graus de liberdade, para mover o corpo de um lugar para outro  \cite{Song1989}.
 
-A marcha é um aspecto fundamental para garantir que um robô com pernas caminhe de forma eficiente e estável, especialmente em terrenos irregulares \cite{X.129}. Para tanto, é necessário levar em consideração suas etapas e, consequentemente, seu tipo.
+A marcha é um aspecto fundamental para garantir que um robô com pernas caminhe de forma eficiente e estável, especialmente em terrenos unevenes \cite{X.129}. Para tanto, é necessário levar em consideração suas etapas e, consequentemente, seu tipo.
 
 Marchas são divididas em duas etapas: \textit{stance} e \textit{swing}. Durante a fase \textit{stance}, as pernas estão no solo e impulsionam o robô para frente. Na etapa de \textit{swing}, as pernas são erguidas para deslocar a pata até o próximo ponto de apoio. É importante ressaltar que as fases de \textit{stance} e \textit{swing} não ocorrem em todas as pernas simultaneamente. A depender do tipo de marcha, algumas pernas podem estar em \textit{swing} enquanto outras estarão em \textit{stance}.
 
@@ -145,7 +145,7 @@ Essa estratégia de controle em três etapas foi responsável por locomover rob�
 
 O modo como cada perna se comporta durante as etapas de \textit{stance} e \textit{swing} pode variar em diversos aspectos, mas ainda é possível elencar semelhanças gerais. No início da etapa de \textit{swing}, calcula-se o local do próximo ponto de apoio das patas com base na velocidade desejada para o robô e uma trajetória de passo até esse ponto. Essa trajetória pode ter o formato de uma curva senoidal \cite{X.118}, triangular \cite{StanfordPupper}, de Bezier \cite{HackadayQuadruped}, cicloidal \cite{Shi2021} \cite{X.58}, entre outras. Uma consideração que pode ser feita a fim de simplificar o sistema de controle é de que a movimentação das pernas durante a fase de \textit{swing} não interfere no movimento do corpo do robô. Para que isto seja válido, é necessário controlar a força com que a pata toca o solo, a fim de diminuir os distúrbios causados no corpo do robô. A força de contato entre as patas e o solo é um ponto-chave para a estabilidade do quadrúpede \cite{X.118}. Nesse sentido, a trajetória cicloidal ganha destaque por conta de sua primeira derivada nula no momento em que se aproxima do seu ponto mínimo.
 
-Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio, além de deslocar o corpo na direção desejada de locomoção. Para isso, alguns robôs utilizam trajetórias para as patas com um formato pré-determinado, assim como na fase de \textit{swing}, não necessariamente repetindo o mesmo formato de curva \cite{X.118, X.58}. Além disso, controladores de equilíbrio também podem ser implementados nessa etapa. Esses controladores visam estabilizar os ângulos de \textit{pitch} e \textit{roll} do robô \cite{Shi2021, StanfordPupper, HackadayQuadruped, Notspot} ou ainda outros graus de liberdade \cite{X.134, Chen2020140736, Zhang2016284}. Eles podem controlar diretamente a angulação do corpo do robô (com o auxílio de um sensor inercial) e/ou a força de contato com o solo em cada perna, por exemplo. No entanto, alguns trabalhos se baseiam apenas no controle individual de cada junta para manter o robô em equilíbrio, o que é uma abordagem mais simples, mas que pode falhar, especialmente em terrenos irregulares.
+Já na fase de \textit{stance}, as pernas devem manter o robô em equilíbrio, além de deslocar o corpo na direção desejada de locomoção. Para isso, alguns robôs utilizam trajetórias para as patas com um formato pré-determinado, assim como na fase de \textit{swing}, não necessariamente repetindo o mesmo formato de curva \cite{X.118, X.58}. Além disso, controladores de equilíbrio também podem ser implementados nessa etapa. Esses controladores visam estabilizar os ângulos de \textit{pitch} e \textit{roll} do robô \cite{Shi2021, StanfordPupper, HackadayQuadruped, Notspot} ou ainda outros graus de liberdade \cite{X.134, Chen2020140736, Zhang2016284}. Eles podem controlar diretamente a angulação do corpo do robô (com o auxílio de um sensor inercial) e/ou a força de contato com o solo em cada perna, por exemplo. No entanto, alguns trabalhos se baseiam apenas no controle individual de cada junta para manter o robô em equilíbrio, o que é uma abordagem mais simples, mas que pode falhar, especialmente em terrenos unevenes.
 
 \section{O Robô Caramelo}
 
@@ -353,7 +353,7 @@ Além da altura, distâncias em $x$ e $y$ e período, o planejador de trajetóri
 
 \section{Results}
 
-To assess the robot's locomotion performance with the implemented stabilization controller, the robot's capability of following a forward velocity setpoint and the oscillation of its body while walking were evaluated. An experiment was conducted, in which the robot should walk in a straight line of 1.5 meters in both flat and irregular terrain, with and without the stabilization controller, totalizing four tests. The flat terrain consisted of a cement floor and the irregular terrain, a ground formed by small loose stones. Both are illustrated in Figures \ref{fig:terreno_plano} and \ref{fig:terreno_irregular}, respectively. For each test, the robot received a forward velocity command of 0.05 m/s, and its mean velocity, as well as its pitch and roll oscillation, were recorded. The mean velocity was calculated based on the time it took to travel 1.5 meters and the oscillation is the difference between the maximum and minimum readings of the IMU. The calculated velocity was compared to the desired velocity sent to the robot and the stability data was analyzed statistically: first, the Shapiro-Wilk test was applied to the distribution to check whether the distribution was normal; lastly, the results were compared by performing an analysis of variance (ANOVA). For all the tests, the robot's gait settings consisted of a height of 5 cm, a period of 0.5 seconds, a resolution of 25 points, $P_T$ = 0.66, and $P_N$ = 0.33. For each test type, 10 samples were collected.
+To assess the robot's locomotion performance with the implemented stabilization controller, the robot's capability of following a forward velocity setpoint and the oscillation of its body while walking were evaluated. An experiment was conducted, in which the robot should walk in a straight line of 1.5 meters in both flat and uneven terrain, with and without the stabilization controller, totalizing four tests. The flat terrain consisted of a cement floor and the uneven terrain, a ground formed by small loose stones. Both are illustrated in Fig. \ref{fig:terreno_plano} and \ref{fig:terreno_uneven}, respectively.
 
 \begin{figure}[htbp]
   \centering
@@ -366,21 +366,29 @@ To assess the robot's locomotion performance with the implemented stabilization 
   \begin{subfigure}[htbp]{0.24\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{terreno_irregular.jpeg}
-    \caption{Irregular.}
-    \label{fig:terreno_irregular}
+    \caption{Uneven.}
+    \label{fig:terreno_uneven}
   \end{subfigure}
   \vfill
   \caption{Terrains used for the experiment}
   \label{fig:terrenos}
 \end{figure}
 
+For each test, the robot received a forward velocity command of 0.05 m/s, and its mean velocity, as well as its pitch and roll oscillation, were recorded. The mean velocity was calculated based on the time it took to travel 1.5 meters and the oscillation is the difference between the maximum and minimum readings of the IMU. The calculated velocity was compared to the desired velocity sent to the robot and the stability data was analyzed statistically: first, the Shapiro-Wilk test \cite{leotti2005comparaccao} was applied to the distribution to check whether the distribution was normal; lastly, the results were compared by performing an Analysis of Variance (ANOVA) \cite{cano2012six}.
+
+For all the tests, the robot's gait settings consisted of a height of 5 cm, a period of 0.5 seconds, a resolution of 25 points, $P_T$ = 0.66, and $P_N$ = 0.33. For each test type, 10 samples were collected.
+
+%TODO incluir descrição da tabela
+Table \ref{tab:vel_stab} summarizes the collected results. The robot did not reach a velocity of 0.05 m/s in any test. This result is due to errors in the final position of each leg during the swing phase: the legs could not reach the desired $(x,y)$ position required to maintain the desired velocity. The fact that the final position of one foot is a function of its motors' final orientation indicates that the motors did not reach their desired orientation. Before the experiment, the gait movement was tested with the legs off the ground (almost no load), and no significant errors were noted. Since the errors only appeared while walking, it is perhaps caused by the fact that the motors were not powerful enough to support the robot's weight appropriately while walking.
+
 \begin{table}[!htb]
   \centering
+  \caption{Velocity and stability results}
   \begin{tabular}{ccccc}
     \hline
-    \textbf{Test}             & \textbf{1}   & \textbf{2}  & \textbf{3}   & \textbf{4}   \\ \hline
-    Ter.                       & Flat        & Flat       & Irreg.       & Irreg.       \\ \hline
-    \begin{tabular}[c]{@{}c@{}}S. C. \end{tabular} & No          & Yes         & No          & Yes          \\ \hline
+    \textbf{Test}              & \textbf{1}   & \textbf{2}  & \textbf{3}   & \textbf{4}   \\ \hline
+    Ter.                       & Flat         & Flat        & Uneven       & Uneven       \\ \hline
+    \begin{tabular}[c]{@{}c@{}}S. C. \end{tabular} & No           & Yes         & No           & Yes          \\ \hline
     \begin{tabular}[c]{@{}c@{}}Vel. \\ $(cm/s)$ \end{tabular} & 2.15         & 3.68        & 2.03         & 2.39         \\ \hline
     \begin{tabular}[c]{@{}c@{}} $\sigma_{Vel}$  \\ $(cm/s)$ \end{tabular} & 0.040        & 0.075       & 0.016        & 0.047        \\ \hline
     \begin{tabular}[c]{@{}c@{}} $\Delta_{Roll}$ \end{tabular} & 12.59\degree & 8.81\degree & 13.37\degree & 11.13\degree \\\hline
@@ -388,18 +396,33 @@ To assess the robot's locomotion performance with the implemented stabilization 
     \begin{tabular}[c]{@{}c@{}} $\Delta_{Pitch}$ \end{tabular} & 11.55\degree & 8.31\degree & 15.19\degree & 12.09\degree \\ \hline
     \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular} & 1.89\degree  & 2.63\degree & 1.44\degree  & 1.66\degree  \\ \hline
   \end{tabular}
-
-  \caption{Velocity and stability results}
   \label{tab:vel_stab}
 \end{table}
 
-Table \ref{tab:vel_stab} summarizes the collected results. The robot did not reach a velocity of 0.05 m/s in any test. This result is due to errors in the final position of each leg during the swing phase: the legs could not reach the desired $(x,y)$ position required to maintain the desired velocity. The fact that the final position of one foot is a function of its motors' final orientation, indicates that the motors did not reach their desired orientation. Before the experiment, the gait movement was tested with the legs off the ground (almost no load), and no significant errors were noted. Since the errors only appeared while walking, it is perhaps caused by the fact that the motors were not powerful enough to support the robot's weight appropriately while walking.
+In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a $\text{p-value} > 0.05$, which indicates that all the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2. The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the test without it, which proves that it indeed lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in $75\%$ of the collected test samples.
 
-In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value > 0.05, which indicates that all the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2. The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the test without it, which proves that it indeed lowered the robot's body oscillations in both terrain types. Figure \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in $75\%$ of collected test samples.
+\begin{figure}[!htb]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{plane_boxplot.png}
+    \caption{Terreno plano.}
+    \label{fig:imu_test_plane}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=1.0\textwidth]{irregular_boxplot.png}
+    \caption{Terreno irregular.}
+    \label{fig:imu_test_irregular}
+  \end{subfigure}
+  \caption{Oscilação do corpo em ambos os tipos de terreno.}
+  Fonte: autores.
+  \label{fig:imu_test}
+\end{figure}
 
 \section{Conclusion}
 
-This paper addressed the design, prototyping and testing of a quadruped robot. An experiment was held to assess the robot's walking performance. The results showed that the robot did not reach the desired velocity in any of the tests. This was due to errors during the gait's swing phase, likely caused by the external disturbances caused by the robot's weight. These disturbances were not compensated, because the gait trajectory tracking is open-loop (only the individual joint's controllers are closed-loop). In addition to that, it was possible to conclude that the implemented stabilization controller was able to lower the robot's body oscillations while walking in pitch and roll in both flat and irregular terrains.
+This paper addressed the design, prototyping and testing of a quadruped robot. An experiment was held to assess the robot's walking performance. The results showed that the robot did not reach the desired velocity in any of the tests. This was due to errors during the gait's swing phase, which indicates that the motors were unable to support the robot's weight while walking. These errors were not compensated, because the gait's trajectory tracking is open-loop (only the individual joint's controllers are closed-loop). In addition to that, it was possible to conclude that the implemented stabilization controller was able to lower the robot's body oscillations in pitch and roll while walking in both flat and uneven terrains.
 
 Reviewing the robot's actuators is recommended for future work. Perhaps a model with more torque is required for more precise control performance.
 
