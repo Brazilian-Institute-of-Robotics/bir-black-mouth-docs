@@ -18,10 +18,10 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Conference Paper Title*\\
-{\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
-should not be used}
-\thanks{Identify applicable funding agency here. If none, delete this.}
+\title{Conference Paper Title\\
+% {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
+% should not be used}
+% \thanks{Identify applicable funding agency here. If none, delete this.}
 }
 
 \author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
@@ -54,13 +54,12 @@ should not be used}
 \end{IEEEkeywords}
 
 \section{Introduction}
-Com o avanço da robótica, robôs móveis estão cada vez mais ganhando espaço em setores chave da economia como o comercial, industrial e militar. Os robôs terrestres que se locomovem com pernas têm se mostrado mais eficientes para se locomover em terrenos unevenes, inclinados e escorregadios, e também para superar obstáculos \cite{X.134}. Quando comparados com robôs com rodas, robôs com pernas ainda possuem melhor mobilidade e manobrabilidade em ambientes complexos, o que possibilita transitar por caminhos não necessariamente contínuos. Entre os robôs com pernas, os quadrúpedes vêm ganhando destaque por apresentarem maior estabilidade e uma estrutura mais simples quando comparados aos bípedes e hexápodes \cite{Shi2021}.
 
-O uso de uma plataforma com quatro pernas requer um sistema de locomoção robusto que envolve o controle de equilíbrio da plataforma, o controle das juntas do robô e o planejamento de marchas. Para poder aplicar todos esses conceitos e desenvolver aplicações reais com robôs quadrúpedes, é fundamental estudar sua estrutura física, os tipos de marcha que eles podem realizar e os métodos de controle de locomoção que são utilizados nesses robôs.
+As robotics advances, mobile robots are gaining ground in key economic sectors such as commercial, industrial, and military. Bio-inspired robots that move with legs have proven to be more efficient at moving over uneven, sloping, and slippery terrains, as well as overcoming obstacles \cite{X.134}. Compared to wheeled robots, robots with legs still have better mobility and maneuverability in complex environments, which makes it possible to move along paths that are not necessarily continuous. Among legged robots, quadrupeds are gaining prominence due to their greater stability and simple structure when compared to bipeds and hexapods.
 
-O objetivo deste trabalho é desenvolver um sistema robótico do tipo quadrúpede capaz de se locomover de forma estável quando teleoperado. Serão estudados aspectos construtivos, de locomoção e de controle desse tipo robô. Além disso, será projetado um protótipo que será simulado e fabricado, a fim de testar os algoritmos de locomoção não apenas em um ambiente virtual, mas também na prática. Por fim, serão realizados experimentos de performance de locomoção com o protótipo físico, os quais analisarão a estabilidade do robô em ambientes de terreno plano e uneven.
+This work aims to prototype a quadruped robot platform for research: develop its kinematic, control, and locomotion algorithms, manufactory and test. Through experiments and statistical analysis, the prototype locomotion performance and stability will be evaluated, both on flat and uneven terrains, to check the efficacy of a PID-based stabilization controller.
 
-A seção \ref{sec:the_quadruped_robot} tratará dos conceitos estudados para o desenvolvimento do robô. A seção \ref{sec:methodology} explicará a metodologia utilizada durante o projeto. Na seção \ref{sec:the_caramel}, será apresentado o Caramelo, o robô desenvolvido para essa pesquisa. A seção \ref{sec:results} apresentará os resultados dos testes e experimentos realizados, ao passo que a seção \ref{sec:conclusion}, as conclusões feitas a partir dos resultados. Por fim, a seção \ref{sec:final_points} apresentará as considerações finais e as sugestões dos autores para trabalhos futuros.
+This paper is divided as follows: section X presents the development of the robot, focusing on the gait planner, the kinematic model, the stabilization control and the trajectory planner implementations. In section X, the experiments conducted to evaluate and validate the effectiveness of the designed controller through statistical analysis are explained. Finally, section X presents the conclusions and suggestions for future work.
 
 \section{Robot Development}
 
@@ -71,16 +70,15 @@ IMAGEM DO ROBO
 
 The robot's structure is mammal-type, which is characterized by the presence of two joints in the sagittal plane, similar to animals such as dogs and horses.  The robot’s legs follow a configuration called full-elbow, in which the four legs are oriented backward, as shown in Fig. X. Furthermore, it features 3 degrees of freedom (DoF) per leg, providing the legs with substantial freedom of movement. The robot was designed to favor the mass balance between the body and the robot's legs, that is, the majority of its mass is in located in the body or as close to it as possible. Lighter legs can move quickly without significantly changing the center of gravity of the robot, which increases the stability and requires less control complexity.  On the other hand, the legs should be strong enough to support the robot's weight and the impact with the ground. 
 
-The internal components, which include sensors, processing unit, and the communication interface with the actuators were arranged symmetrically in the robot's body. The actuators (components that contribute with most of the system's mass) were positioned as close as possible to the body. The motor that acts on the tibia joint was placed in the upper part of the femur, in order to reduce the moment of inertia of the leg. This choice required the addition of a transmission system between the engine and the tibia link, consisting of a rigid metal rod with a ball joint at each edge.
+The internal components, which include sensors, the processing unit, and the communication interface with the actuators were arranged symmetrically in the robot's body. The actuators (components that contribute with most of the system's mass) were positioned as close as possible to the body. The motor that acts on the tibia joint was placed in the upper part of the femur, in order to reduce the moment of inertia of the leg. This choice required the addition of a transmission system between the engine and the tibia link, consisting of a rigid metal rod with a ball joint at each edge.
 
 Quadruped robots move according to a gait pattern. The gait implemented for the robot follows the sequence of phases demonstrated in Fig. \ref{fig:trot_pattern}, in which the white rectangles represent the  swing phase and the gray rectangles represent the stance phase. During the stance phase, the legs are on the ground and push the robot in the desired direction.  In the swing phase, the legs are raised and moved to the next support point. This gait pattern is called a trot, and is based on the concept of periodic and symmetrical gaits. The periodic gaits are characterized by the continuous repetition of the movements in the same instants. The symmetry is a characteristic of gaits that move a pair of legs together, leaving and returning to the ground in a synchronized way. Although the structure of the robot makes it possible to perform other types of gaits, in this work, only the trot was considered. In order to reduce the control complexity, a discontinuous gait was adopted, that is, the robot's body moves only when all the legs are on the ground, resulting in an intermittent movement. In Fig. \ref{fig:trot_pattern}, it is noticeable that the same pair of diagonal legs always move at the same instant. Between two consecutive swing phases, there is a moment when all legs are in stance, which is when the robot body is displaced in the desired direction of locomotion.
 
 \begin{figure}[!htb]
   \centering
-  \caption{Padrão de movimentação da marcha para cada perna.}
+  \caption{Gait pattern diagram}
   \includegraphics[width=0.45\textwidth]{trot_pattern.png}
   \vfill
-  Fonte: autores.
   % \vspace{-\baselineskip}
   \label{fig:trot_pattern}
 \end{figure}
@@ -94,10 +92,13 @@ The gait planner sends the points at which each foot must be at a frequency of $
 
 % TODO ref nyquist
 
-\subsection{Modelo cinemático do Caramelo}
+\subsection{Kinematic model}
 \label{sec:detail_inv_kinematics}
 
-Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinemática inversa e a cinemática direta do robô. Para a cinemática direta, foi utilizado o pacote \textit{tf2}, um recurso disponível no \textit{ROS2} que facilita o gerenciamento de transformações entre eixos de coordenadas. A cinemática inversa, por outro lado, foi feita com base em uma análise geométrica. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô e são calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B} em função da posição $(x_{IK}, y_{IK}, z_{IK})$ desejada para a pata e dos comprimentos $L_1$, $L_2$ e $L_3$ (figura \ref{fig:caramel_tfs}).
+The kinematic model of a quadruped robot describes the relationship between the position of the foot in the three-dimensional space and the rotation of each joint of its corresponding leg. This model is used to solve the forward kinematics, which provides the position $(x, y, z)$ of the foot as a function of the leg joint's angles, and the inverse kinematics, which provides the rotation of each joint to achieve the desired $(x, y, z)$ position of the foot. Moreover, this model can be extended to encompass the kinematics of the quadruped's body.
+
+The \textit{tf2} package, an available \textit{ROS2} feature that can manage transformations between coordinate axes, was used to solve the robot's forward kinematics, and the inverse kinematics was solved based on geometric analysis. The variables $\theta_1$, $\theta_2$ and $\theta_3$ express the angular position of each robot leg joint (angles of hip, femur and tibia, respectively), and they can be calculated with the help of (\ref{eq:theta1}) to (\ref{eq:B}), as a function of the desired position $(x_{IK}, y_{IK}, z_{IK})$ of the foot and the lengths $L_1$, $L_2$ and $L_3$ (Fig. \ref{fig:caramel_tfs}).
+
 \begin{equation}
   \label{eq:theta1}
   \theta_1 = \arctan{(\frac{x_{IK}}{y_{IK}})} - \arctan{(\frac{L_1}{a})}
@@ -126,58 +127,24 @@ Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinem
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.4\textwidth]{caramel_tfs.png}
-
-  \caption{Links da perna do robô.}
-  Fonte: autores.
+  
+  \caption{Links from the robot leg.}
   \label{fig:caramel_tfs}
 \end{figure}
 
-Essas equações são úteis para o cálculo da posição de uma única perna, mas são insuficientes para realizar a cinemática do corpo do robô. Desta forma, um \textit{frame} central, chamado de \textit{base\_link} (figura \ref{fig:caramel_body}), é utilizado como referência, e uma matriz $T_M$ (eqs. \ref{eq:Tm} e \ref{eq:Rxyz}) é utilizada para realizar a cinemática do corpo, a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas, sendo possível controlar cada um dos 6 graus de liberdade. Para tanto, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros (\textit{hip\_links}) em relação ao \textit{base\_link} são necessárias.
-\begin{equation}
-  \label{eq:Tm}
-  T_M =
-  \begin{bmatrix}
-      &         &   & x_c \\
-      & R_{xyz} &   & y_c \\
-      &         &   & z_c \\
-    0 & 0       & 0 & 1
-  \end{bmatrix}
-\end{equation}
-\begin{equation}
-  \label{eq:Rxyz}
-  \begin{split}
-    R_{xyz} =
-    \begin{bmatrix}
-      1 & 0          & 0           \\
-      0 & \cos\alpha & -\sin\alpha \\
-      0 & \sin\alpha & \cos\alpha
-    \end{bmatrix}
-    \\.
-    \begin{bmatrix}
-      \cos\beta  & 0 & \sin\beta \\
-      0          & 1 & 0         \\
-      -\sin\beta & 0 & \cos\beta
-    \end{bmatrix}
-    \\.
-    \begin{bmatrix}
-      \cos\gamma & -\sin\gamma & 0 \\
-      \sin\gamma & \cos\gamma  & 0 \\
-      0          & 0           & 1
-    \end{bmatrix}
-  \end{split}
-\end{equation}
+These equations are useful for calculating only one foot's position but are insufficient for the robot's body kinematics. For that, a center frame called base\_link (Fig. \ref{fig:caramel_body}) is taken as a reference. The transformation matrix $T_M$ is created with the desired body translations $(x_c, y_c, z_c)$ and rotations $(\alpha, \beta, \gamma)$. The transformations $T_{FR}$, $T_{FL}$, $T_{BL}$ and $T_{BR}$ of each of the shoulders (hip\_links) with respect to the base\_link are also required.
 
 \begin{figure}[htbp]
   \centering
   \vspace{-0.75cm}
   \includegraphics[width=0.35\textwidth]{caramel_body.drawio.png}
-
-  \caption{Eixos do robô em posição de repouso.}
-  Fonte: autores.
+  
+  \caption{Robot axes in resting position.}
   \label{fig:caramel_body}
 \end{figure}
 
-O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{IK}, y_{IK}, z_{IK})$ resultantes de cada uma das transformações, conforme a equação \ref{eq:xyzik}. O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$.
+The calculation of the joints' angles of each leg is then done using as inputs the values resulting from each of the transformations, according to (\ref{eq:xyzik}). While $[x, y, z, 1]^\top$ in the right-hand side of (\ref{eq:xyzik}) represents the foot position relative to the robot's $base\_link$, $[x_{IK}, y_{IK}, z_{IK}, 1]^\top$ on the left-hand side represents the same position relative to the leg's hip\_link, which can be used as input in equations (\ref{eq:theta1}) to (\ref{eq:B}). 
+
 \begin{equation}
   \label{eq:xyzik}
   \begin{bmatrix}
@@ -194,37 +161,20 @@ O cálculo das angulações de cada perna então é feito utilizando como entrad
   \end{bmatrix}
 \end{equation}
 
-Desta forma, a cinemática inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos, é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu \textit{foot\_link} quando o robô está em seu estado de repouso (figura \ref{fig:caramel_body}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
-\begin{equation}
-  \label{eq:xyzik_foot}
-  \begin{bmatrix}
-    x_{ik} \\
-    y_{ik} \\
-    z_{ik} \\
-    1
-  \end{bmatrix}= (T_M.T_{FR})^{-1}.
-  (F_{FR}.
-  \begin{bmatrix}
-    x \\
-    y \\
-    z \\
-    1
-  \end{bmatrix})
-\end{equation}
+The same calculation can be done for the other legs, using $T_{FL}$, $T_{BL}$, and $T_{BR}$. In this way, the equation (\ref{eq:xyzik}) allows computing the angles $\theta_1$, $\theta_2$ and $\theta_3$ of each leg from the desired position of each foot and the desired translations and rotations of the body, using the same frame as reference (base\_link). It means one can control all the six DoFs of the body together with the positions of the feet at the same time.
 
-\subsection{Controle de angulação}
+\subsection{Stabilization control}
 
-Os controladores de angulação são dois controladores PID em paralelo, responsáveis por controlar a rotação de \textit{roll} e \textit{pitch} do corpo do robô. Eles atuam de forma independente, controlando a rotação do corpo em ambos os eixos simultaneamente. Ambos os controladores são iguais e foram implementados seguindo o modelo apresentado no diagrama de blocos da figura \ref{fig:pid}.
+Two identical PID controllers were employed to control the \textit{roll} and \textit{pitch} rotation of the robot's body. They act independently, stabilizing the rotation in each axis simultaneously. Both controllers are identical and were implemented following the block diagram in Fig. \ref{fig:pid}.
 
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.48\textwidth]{PID.drawio.png}
-  \caption{Controlador PID projetado.}
-  Fonte: autores.
+  \caption{Designed PID controller.}
   \label{fig:pid}
 \end{figure}
 
-O IMU é o sensor responsável por medir a rotação do corpo do robô, possibilitando a realimentação das saídas do sistema. O limitador foi adicionado para evitar que sejam enviados valores que extrapolam os limites de rotação das juntas do robô. Os esforços de controle são enviados para o planejador de marchas que, por sua vez, envia os comandos de movimentação para os controladores das juntas.
+The IMU sensor is responsible for measuring the rotation of the robot's body, providing feedback on the system's outputs. The limiter was added to avoid body rotations that exceed the limits of the joints. The stabilization controller's outputs are sent to the gait planner.
 
 \subsection{Trajectory planner}
 
