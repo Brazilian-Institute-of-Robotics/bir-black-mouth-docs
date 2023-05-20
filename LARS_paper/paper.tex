@@ -293,6 +293,7 @@ Desta forma, a cinemática inversa é capaz de computar as angulações  $\theta
 \subsection{Controle de angulação}
 
 Os controladores de angulação são dois controladores PID em paralelo, responsáveis por controlar a rotação de \textit{roll} e \textit{pitch} do corpo do robô. Eles atuam de forma independente, controlando a rotação do corpo em ambos os eixos simultaneamente. Ambos os controladores são iguais e foram implementados seguindo o modelo apresentado no diagrama de blocos da figura \ref{fig:pid}.
+
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.48\textwidth]{PID.drawio.png}
@@ -306,7 +307,6 @@ O IMU é o sensor responsável por medir a rotação do corpo do robô, possibil
 \subsection{Trajectory planner}
 
 The trajectory planner is responsible for calculating the trajectory that each foot must perform, both in the \textit{stance} and \textit{swing} phases. For Caramel, the trajectory is a cycloidal curve in both stages. As shown in \cite{Shi2021}, a cycloidal curve can be defined in the three-dimensional space between the points $(x_o, y_o, z_o)$ and $(x_f, y_f, z_f)$ as a function of time, $t$, by equations (\ref{eq:traj_x}) to (\ref{eq:traj_k}), with $H$ the step height and $T$ the period.
-% O planejador de trajetória é responsável por calcular a trajetória que cada pata deve realizar, tanto na fase de \textit{stance} quanto na fase de \textit{swing}. Para o Caramelo, a trajetória é uma curva cicloidal em ambas as etapas. Como apresentado em \cite{Shi2021}, uma curva cicloidal pode ser definida no espaço tridimensional entre os pontos $(x_o, y_o, z_o)$ e $(x_f, y_f, z_f)$ em função do tempo $t$ pelas equações (\ref{eq:traj_x}) a (\ref{eq:traj_k}), sendo $H$ a altura do passo e $T$ o período.
 \begin{equation}
   x = (x_f - x_o) \frac{K - \sin{(K)}}{2 \pi} + x_o
   \label{eq:traj_x}
@@ -325,7 +325,6 @@ The trajectory planner is responsible for calculating the trajectory that each f
 \end{equation}
 
 The graph of a cycloidal curve in 3D space is shown in figure \ref{fig:traj_space}. The same trajectory is illustrated in figure \ref{fig:traj_time} as a function of time. It is possible to notice that the curve has the first null derivative at the time when the foot touches the ground, which is favorable to open loop control, since the softer the landing of the foot, the fewer disturbances are caused in the system.
-% O gráfico de uma curva cicloidal no espaço 3D pode ser vista na figura \ref{fig:traj_space}. A mesma trajetória é ilustrada na figura \ref{fig:traj_time} em função do tempo. É possível perceber que a curva possui a primeira derivada nula no momento em que a pata toca o solo, o que é favorável ao controle de malha aberta, uma vez que quanto mais suave a aterrissagem, menos distúrbios são causados no sistema.
 
 \begin{figure*}[h]
   \centering
@@ -353,8 +352,6 @@ The graph of a cycloidal curve in 3D space is shown in figure \ref{fig:traj_spac
   \label{fig:traj_curve}
 \end{figure*}
 In addition to height, the distances in $x$ e $y$, and period, the robot's trajectory planner also counts upon two parameters in order to further improve the control of the force with which the foot touches the ground. Since the robot’s actuators are position-controlled servo motors, the torque is proportional to the displacement it must perform between the points of the trajectory. That is, the higher the resolution of the trajectory, the smoother the movement. However, the resolution of the $N$ trajectory is fixed, given as a function of the step period and the frequency control of the gait planner ($\SI{50}{\hertz}$) $N = 50T$. Therefore, the strategy adopted is to space the same amount of points unevenly throughout the step period, so that there are more points near the moment the foot lands on the ground and less points near the moment the foot is erected. The $P_T$ parameter is a fraction of the total step period, and the $P_N$ is the fraction of the total number of points that should be between the $0$ and $P_T cdot T$. In other words, if $P_T = 0,66$ e $P_N = 0,33$, $33\%$ of $N$ will be in the first two-thirds of the period, while the remaining $67\%$ will be in the final one-third. The trajectory, considering these parameters, is illustrated in figure \ref{fig:traj_time_modified}.
-
-% Além da altura, distâncias em $x$ e $y$ e período, o planejador de trajetória do Caramelo também conta com dois parâmetros que têm como objetivo melhorar ainda mais o controle da força com que a pata toca o chão. Como os atuadores do robô são servomotores controlados por posição, o torque é proporcional ao deslocamento que este deve realizar entre os pontos da trajetória. Ou seja, quanto maior a resolução da trajetória, mais suave será o movimento. No entanto, a resolução da trajetória $N$ é fixa, dada em função do período do passo e da frequência de controle do planejador de marchas ($\SI{50}{\hertz}$) $N = 50T$. Logo, a estratégia adotada é a de espaçar a mesma quantidade de pontos de forma desigual ao longo do período do passo, de forma que haja mais pontos próximos ao momento em que a pata aterrissa no solo, e menos pontos próximos ao momento em que ela é erguida. O parâmetro $P_T$ é uma fração do período total do passo, e o parâmetro $P_N$, a fração do número total de pontos do passo que deve se encontrar entre o tempo $0$ e $P_T \cdot T$. Em outras palavras, se $P_T = 0,66$ e $P_N = 0,33$, $33\%$ de $N$ estará nos primeiros dois terços do período, enquanto os $67\%$ restantes estarão no um terço final. A trajetória, considerando esses parâmetros, está ilustrada na figura \ref{fig:traj_time_modified}.
 
 \section{Results}
 
