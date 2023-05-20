@@ -59,7 +59,7 @@ As robotics advances, mobile robots are gaining ground in key economic sectors s
 
 This work aims to prototype a quadruped robot platform for research: develop its kinematic, control, and locomotion algorithms, manufactory and test. Through experiments and statistical analysis, the prototype locomotion performance and stability will be evaluated, both on flat and uneven terrains, to check the efficacy of a PID-based stabilization controller.
 
-This paper is divided as follows: section X presents the development of the robot, focusing on the gait planner, the kinematic model, the stability control and the trajectory planner implementations. In section X, we conducted some experiments to evaluate and validate the effectiveness of the designed controller through statistical analysis. Finally, section X brings some considerations and conclusions about the research and suggestions for future work.
+This paper is divided as follows: section X presents the development of the robot, focusing on the gait planner, the kinematic model, the stabilization control and the trajectory planner implementations. In section X, the experiments conducted to evaluate and validate the effectiveness of the designed controller through statistical analysis are explained. Finally, section X presents the conclusions and suggestions for future work.
 
 \section{O Robô Quadrúpede}
 
@@ -257,7 +257,7 @@ The \textit{tf2} package, an available \textit{ROS2} feature that can manage tra
   \label{fig:caramel_tfs}
 \end{figure}
 
-These equations are useful for calculating only one foot's position but are insufficient to realize the robot's body kinematics. For that, a center frame called \textit{base\_link} (Fig. \ref{fig:caramel_body}) is taken as reference. The transformation matrix $T_M$ is created with the desired body translations $(x_c, y_c, z_c)$ and rotations $(\alpha, \beta, \gamma)$. The transformations $T_{FR}$, $T_{FL}$, $T_{BL}$ and $T_{BR}$ of each of the shoulders (\textit{hip\_links}) with respect to the \textit{base\_link} are also required.
+These equations are useful for calculating only one foot's position but are insufficient for the robot's body kinematics. For that, a center frame called base\_link (Fig. \ref{fig:caramel_body}) is taken as a reference. The transformation matrix $T_M$ is created with the desired body translations $(x_c, y_c, z_c)$ and rotations $(\alpha, \beta, \gamma)$. The transformations $T_{FR}$, $T_{FL}$, $T_{BL}$ and $T_{BR}$ of each of the shoulders (hip\_links) with respect to the base\_link are also required.
 
 \begin{figure}[htbp]
   \centering
@@ -268,7 +268,7 @@ These equations are useful for calculating only one foot's position but are insu
   \label{fig:caramel_body}
 \end{figure}
 
-The calculation of the joints' angles of each leg is then done using as input the values resulting from each of the transformations, according to (\ref{eq:xyzik}). While $(x, y, z)$ represents the foot position relative to the robot's $base\_link$, $(x_{IK}, y_{IK}, z_{IK})$ is relative to the leg's \textit{hip\_link}, which can be used as input in equations (\ref{eq:theta1}) to (\ref{eq:B}). 
+The calculation of the joints' angles of each leg is then done using as inputs the values resulting from each of the transformations, according to (\ref{eq:xyzik}). While $[x, y, z, 1]^\top$ in the right-hand side of (\ref{eq:xyzik}) represents the foot position relative to the robot's $base\_link$, $[x_{IK}, y_{IK}, z_{IK}, 1]^\top$ on the left-hand side represents the same position relative to the leg's hip\_link, which can be used as input in equations (\ref{eq:theta1}) to (\ref{eq:B}). 
 
 \begin{equation}
   \label{eq:xyzik}
@@ -286,7 +286,7 @@ The calculation of the joints' angles of each leg is then done using as input th
   \end{bmatrix}
 \end{equation}
 
-The same calculation can be done for the other legs, using $T_{FL}$, $T_{BL}$, and $T_{BR}$. In this way, the equation (\ref{eq:xyzik}) allows inverse kinematic to compute the angles $\theta_1$, $\theta_2$ and $\theta_3$ of each leg from the desired position of each foot and the desired translations and rotations of the body, using the same frame as reference (\textit{base\_link}). It means you can control all six degrees of freedom of the body together with the positions of the feet.
+The same calculation can be done for the other legs, using $T_{FL}$, $T_{BL}$, and $T_{BR}$. In this way, the equation (\ref{eq:xyzik}) allows computing the angles $\theta_1$, $\theta_2$ and $\theta_3$ of each leg from the desired position of each foot and the desired translations and rotations of the body, using the same frame as reference (base\_link). It means one can control all the six DoFs of the body together with the positions of the feet at the same time.
 
 \subsection{Stabilization control}
 
