@@ -230,9 +230,9 @@ A seguir, será apresentado o desenvolvimento do modelo cinemático, dos control
 \subsection{Kinematic model}
 \label{sec:detail_inv_kinematics}
 
-The kinematic model of a quadruped robot describes the relationship between the position of the paw in the three-dimensional space with the rotation of each joint of its corresponding leg. This model is used to solve the forward kinematics, which provides the position $(x, y, z)$ of the paw as a function of leg joint angles, and inverse kinematics, responsible for giving the rotation of each joint to achieve the desired paw's position in space. Moreover, this model can be extended to encompass the kinematics of the quadruped's body.
+The kinematic model of a quadruped robot describes the relationship between the position of the foot in the three-dimensional space and the rotation of each joint of its corresponding leg. This model is used to solve the forward kinematics, which provides the position $(x, y, z)$ of the foot as a function of the leg joint's angles, and the inverse kinematics, which provides the rotation of each joint to achieve the desired $(x, y, z)$ position of the foot. Moreover, this model can be extended to encompass the kinematics of the quadruped's body.
 
-The \textit{tf2} package, an available \textit{ROS2} feature that can manage transformations between coordinate axes, was used to solve the robot's forward kinematics. The inverse kinematics, otherwise, have been done based on geometric analysis. The variables $\theta_1$, $\theta_2$ and $\theta_3$ express the angular position of each robot leg joint, and they can be calculated with the help of (\ref{eq:theta1}) to (\ref{eq:B}), as a function of the desired position $(x_{IK}, y_{IK}, z_{IK})$ for the paw and the lengths $L_1$, $L_2$ and $L_3$ (Fig. \ref{fig:caramel_tfs}).
+The \textit{tf2} package, an available \textit{ROS2} feature that can manage transformations between coordinate axes, was used to solve the robot's forward kinematics, and the inverse kinematics was solved based on geometric analysis. The variables $\theta_1$, $\theta_2$ and $\theta_3$ express the angular position of each robot leg joint (angles of hip, femur and tibia, respectively), and they can be calculated with the help of (\ref{eq:theta1}) to (\ref{eq:B}), as a function of the desired position $(x_{IK}, y_{IK}, z_{IK})$ of the foot and the lengths $L_1$, $L_2$ and $L_3$ (Fig. \ref{fig:caramel_tfs}).
 
 % Como dito anteriormente, o modelo cinemático é utilizado para resolver a cinemática inversa e a cinemática direta do robô. Para a cinemática direta, foi utilizado o pacote \textit{tf2}, um recurso disponível no \textit{ROS2} que facilita o gerenciamento de transformações entre eixos de coordenadas. A cinemática inversa, por outro lado, foi feita com base em uma análise geométrica. As variáveis $\theta_1$, $\theta_2$ e $\theta_3$ expressam a posição angular de cada uma das juntas de uma perna do robô e são calculadas com auxílio das equações \ref{eq:theta1} a \ref{eq:B} em função da posição $(x_{IK}, y_{IK}, z_{IK})$ desejada para a pata e dos comprimentos $L_1$, $L_2$ e $L_3$ (figura \ref{fig:caramel_tfs}).
 \begin{equation}
@@ -268,7 +268,7 @@ The \textit{tf2} package, an available \textit{ROS2} feature that can manage tra
   \label{fig:caramel_tfs}
 \end{figure}
 
-These equations are useful for calculating only one paw's position but are insufficient to realize the robot's body kinematics. For that, a center frame called \textit{base\_link} (Fig. \ref{fig:caramel_body}) is taken as reference. The transformation matrix $T_M$ is created from the desired body translations $(x_c, y_c, z_c)$ and rotations $(\alpha, \beta, \gamma)$. The transformations $T_{FR}$, $T_{FL}$, $T_{BL}$ and $T_{BR}$ of each of the shoulders (\textit{hip\_links}) with respect to the \textit{base\_link} are also required.
+These equations are useful for calculating only one foot's position but are insufficient to realize the robot's body kinematics. For that, a center frame called \textit{base\_link} (Fig. \ref{fig:caramel_body}) is taken as reference. The transformation matrix $T_M$ is created with the desired body translations $(x_c, y_c, z_c)$ and rotations $(\alpha, \beta, \gamma)$. The transformations $T_{FR}$, $T_{FL}$, $T_{BL}$ and $T_{BR}$ of each of the shoulders (\textit{hip\_links}) with respect to the \textit{base\_link} are also required.
 
 % Essas equações são úteis para o cálculo da posição de uma única pata, mas são insuficientes para realizar a cinemática do corpo do robô. Desta forma, um \textit{frame} central, chamado de \textit{base\_link} (figura \ref{fig:caramel_body}), é utilizado como referência, e é criada uma matriz de transformação $T_M$ a partir das translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo, sendo possível controlar cada um dos 6 graus de liberdade. Para tanto, as transformações $T_{FR}$, $T_{FL}$, $T_{BL}$ e $T_{BR}$ de cada um dos ombros (\textit{hip\_links}) em relação ao \textit{base\_link} são necessárias.
 
@@ -315,7 +315,9 @@ These equations are useful for calculating only one paw's position but are insuf
   \label{fig:caramel_body}
 \end{figure}
 
-The calculation of joints angles of each robot's leg is then done using as input the $(x_{IK}, y_{IK}, z_{IK})$ values resulting from each of the transformations, according to (\ref{eq:xyzik}). The same calculation is done for the other legs, using $T_{FL}$, $T_{BL}$ and $T_{BR}$. In this way, inverse kinematics can compute the angulations $\theta_1$, $\theta_2$ e $\theta_3$ of each leg from the desired position of each paw and the desired translations and rotations of the body, making it possible to control it in each of the six degrees of freedom.
+% The calculation of the joints' angles of each leg is then done using as input the $(x_{IK}, y_{IK}, z_{IK})$ values resulting from each of the transformations, according to (\ref{eq:xyzik}). The same calculation is done for the other legs, using $T_{FL}$, $T_{BL}$ and $T_{BR}$. In this way, inverse kinematics can compute the angulations $\theta_1$, $\theta_2$ e $\theta_3$ of each leg from the desired position of each foot and the desired translations and rotations of the body, making it possible to control it in each of the six degrees of freedom.
+
+The calculation of the joints' angles of each leg is then done using as input the values resulting from each of the transformations, according to (\ref{eq:xyzik}). While $(x, y, z)$ represents the foot position relative to the robot's $base\_link$, $(x_{IK}, y_{IK}, z_{IK})$ is relative to the leg's \textit{hip\_link}, which can be used as input in equations (\ref{eq:theta1}) to (\ref{eq:B}). 
 
 % O cálculo das angulações de cada perna então é feito utilizando como entrada os valores $(x_{IK}, y_{IK}, z_{IK})$ resultantes de cada uma das transformações, conforme (\ref{eq:xyzik}). O mesmo cálculo é feito para as demais pernas, utilizando  $T_{FL}$, $T_{BL}$ e $T_{BR}$. Desta forma, a cinemática inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo.
 
@@ -335,6 +337,8 @@ The calculation of joints angles of each robot's leg is then done using as input
   \end{bmatrix}
 \end{equation}
 
+The same calculation can be done for the other legs, using $T_{FL}$, $T_{BL}$, and $T_{BR}$. In this way, the equation (\ref{eq:xyzik}) allows inverse kinematic to compute the angles $\theta_1$, $\theta_2$ and $\theta_3$ of each leg from the desired position of each foot and the desired translations and rotations of the body, using the same frame as reference (\textit{base\_link}). It means you can control all six degrees of freedom of the body together with the positions of the feet.
+
 % Desta forma, a cinemática inversa é capaz de computar as angulações  $\theta_1$, $\theta_2$ e $\theta_3$ de cada uma das pernas a partir da posição $(x, y, z)$ das patas em relação ao link central do robô e às translações $(x_c, y_c, z_c)$ e rotações $(\alpha, \beta, \gamma)$ desejadas para o corpo. Entretanto, em muitos casos, é mais conveniente realizar o cálculo dos ângulos passando como entrada as posições $(x, y, z)$ das patas em relação à sua posição \textit{default}, ou seja, a posição do seu \textit{foot\_link} quando o robô está em seu estado de repouso (figura \ref{fig:caramel_body}). Para isso, é possível realizar, previamente ao cálculo das angulações, mais uma transformação, desta vez do \textit{base\_link} para cada uma das posições \textit{default} das patas (equação \ref{eq:xyzik_foot}).
 % \begin{equation}
 %   \label{eq:xyzik_foot}
@@ -353,9 +357,9 @@ The calculation of joints angles of each robot's leg is then done using as input
 %   \end{bmatrix})
 % \end{equation}
 
-\subsection{Body rotation control}
+\subsection{Stabilization control}
 
-Two identical PID controllers were employed to control the \textit{roll} and \textit{pitch} rotation of the robot body. They act independently, stabilizing the angulation in each axis simultaneously. Both controllers are identical and were implemented following the model shown in the block diagram in Fig. \ref{fig:pid}.
+Two identical PID controllers were employed to control the \textit{roll} and \textit{pitch} rotation of the robot's body. They act independently, stabilizing the rotation in each axis simultaneously. Both controllers are identical and were implemented following the block diagram in Fig. \ref{fig:pid}.
 
 % Os controladores de angulação são dois controladores PID em paralelo, responsáveis por controlar a rotação de \textit{roll} e \textit{pitch} do corpo do robô. Eles atuam de forma independente, controlando a rotação do corpo em ambos os eixos simultaneamente. Ambos os controladores são iguais e foram implementados seguindo o modelo apresentado no diagrama de blocos da figura \ref{fig:pid}.
 \begin{figure}[htbp]
@@ -365,7 +369,7 @@ Two identical PID controllers were employed to control the \textit{roll} and \te
   \label{fig:pid}
 \end{figure}
 
-The IMU sensor is responsible for measuring the rotation of the robot body, enabling the feedback of the system outputs. The limiter was added to avoid sending values that exceed the rotation limits of the robot joints. The control efforts are sent to the gait planner, which, in turn, sends the movement commands to the joint controllers.
+The IMU sensor is responsible for measuring the rotation of the robot's body, providing feedback on the system's outputs. The limiter was added to avoid body rotations that exceed the limits of the joints. The stabilization controller's outputs are sent to the gait planner.
 
 % O IMU é o sensor responsável por medir a rotação do corpo do robô, possibilitando a realimentação das saídas do sistema. O limitador foi adicionado para evitar que sejam enviados valores que extrapolam os limites de rotação das juntas do robô. Os esforços de controle são enviados para o planejador de marchas que, por sua vez, envia os comandos de movimentação para os controladores das juntas.
 
@@ -428,7 +432,7 @@ A seguir, serão apresentados os resultados preliminares e os experimentos reali
   Os resultados preliminares referem-se aos resultados obtidos com as funcionalidades básicas do robô: capacidade de movimentação do corpo a partir do modelo cinemático, capacidade de controle da orientação do corpo com o controlador de angulação, e capacidade de seguir uma trajetória de passo calculada.
 
   No primeiro teste preliminar, foi avaliada a movimentação do corpo a partir do modelo cinemático. Foi observado que o sistema não só é capaz de realizar a cinemática de cada uma das pernas individualmente, como também do seu corpo em todos os 6 graus de liberdade (translações em $x$, $y$ e $z$ e rotações em $roll$, $pitch$ e $yaw$). A figura \ref{fig:moving_body} ilustra o movimento do corpo do robô em cada um desses graus de liberdade.
-
+              
   \begin{figure}[!htb]
     \centering
     \includegraphics[width=0.48\textwidth]{moving_body.png}
