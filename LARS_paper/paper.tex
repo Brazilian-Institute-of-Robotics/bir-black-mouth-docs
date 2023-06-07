@@ -236,9 +236,51 @@ The IMU sensor is responsible for measuring the rotation of the robot's body, pr
 
 \section{Results}
 
-<COLOCAR OUTRO EXPERIMENTO>
+To assess the robot's locomotion performance, two experiments were conducted. The first experiment aimed to test the trajectory tracking of one single leg in a no-load scenario, a more ideal case. The second experiment evaluated the robot's capability of following a forward velocity setpoint and the amplitude of its body oscillations' while walking, i.e. stability. Therefore, in the first experiment, the fundamental functionality of performing a gait with one leg was tested, while in the second the system was submitted to a realistic operation scenario where the gait planner must manage the movement of all legs and the body.
 
-To assess the robot's locomotion performance with the implemented stabilization controller, the robot's capability of following a forward velocity setpoint and the oscillation of its body while walking were evaluated. An experiment was conducted, in which the robot should walk in a straight line of 1.5 meters in both flat and uneven terrain, with and without the stabilization controller, totalizing four tests. The flat terrain consisted of a cement floor and the uneven terrain, a ground formed by small loose stones. Both are illustrated in Fig. \ref{fig:terreno_plano} and \ref{fig:terreno_uneven}, respectively.
+For the first experiment, the robot's body was supported on a platform so that its leg would not touch the floor, lowering the load applied to the motors. The experiment consisted of sending gait trajectories to a single leg and evaluating how precise the leg could follow it. The trajectories were cycloidal curves with a height of 0.05 cm, a period of 0.5 seconds and a resolution of 25 equally distributed points ($P_T = P_N = 1.0$). The distances in the x and y directions were (5.0, 3.0) and (3.0, 5.0) cm, and, for each distance pair, 30 samples were collected. Table \ref{tab:trajetoria} shows the average and standard deviation of the time taken to complete the trajectory, the height, and the distance reached by the leg in the x and y direction. Test 1 refers to the trajectories of the first distance pair and Test 2 to the second. Fig. \ref{fig:grafico_trajetoria_xyz} shows the z-axis (height) tracking of one sample. 
+
+\begin{table}[!htb]
+  \centering
+  \caption{Results of the gait trajectory tracking experiment.}
+  \scalebox{1.3}{
+  \begin{tabular}{ccc}
+    \hline
+    \textbf{Test} & \textbf{1}      & \textbf{2}  \\
+    \hline
+    $\bar{time} (s)$         & 0,557  & 0,557 \\
+    \hline
+    $\sigma_{time} (s)$       & 0,008  & 0,008 \\
+    \hline
+    $\bar{z}_{max} (cm)$       & 4,760  & 4,755 \\      
+    \hline
+    $\sigma_{z_{max}} (cm)$    & 0,023  & 0,028 \\
+    \hline
+    $\bar{x}_{final} (cm)$     & 5,034  & 3,024 \\
+    \hline
+    $\sigma_{x_{final}} (cm)$  & 0,009  & 0,013 \\
+    \hline
+    $\bar{y}_{final} (cm)$     & 2,924  & 4,915 \\      
+    \hline
+    $\sigma_{y_{final}} (cm)$  & 0,013  & 0,004 \\      
+    \hline   
+  \end{tabular}
+  }
+  \vspace{-\baselineskip}
+  \label{tab:trajetoria}
+\end{table}
+
+\begin{figure}[!htb]
+  \centering
+  \caption{Trajetórias realizadas pelas patas.}
+  \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
+  \label{fig:grafico_trajetoria_xyz}
+\end{figure}
+\vspace{-\baselineskip}
+
+It is noticeable that there was a delay of approximately 57 ms in the execution time and that the final height was off by approximately 0.25 cm in both tests. To confirm that the system's performance during Test 1 and 2 was similar, i.e. the difference in x and y distance did not affect the overall performance, two ANOVA \cite{cano2012six} tests were conducted comparing the execution time and gait height distributions of both tests. Before the ANOVA, however, the outliers of these distributions were removed and the Shapiro-Wilk \cite{leotti2005comparaccao} test was used to check the data normality. The result of the later was a p-value greater than 0.05 for all distributions, which indicates that they followed a normal curve. The ANOVA tests were, then, conducted and showed a p-value of 0.7212 for the execution time comparison and 0.5070 for the gait height comparison, which means that de difference in the x and y distance did not affect the trajectory tracking performance. In addition to that, the final average error for x and y was less than 0.1 cm and the standard deviation was small, meaning the gait distance was followed correctly and that this result was consistent throughout all samples.
+
+For the second experiment, the robot should walk in a straight line of 1.5 meters in both flat and uneven terrain, with and without the stabilization controller, totalizing four tests. The flat terrain consisted of a cement floor and the uneven terrain, a ground formed by small loose stones. Both are illustrated in Fig. \ref{fig:terreno_plano} and \ref{fig:terreno_uneven}, respectively.
 
 \begin{figure}[htbp]
   \centering
@@ -259,16 +301,16 @@ To assess the robot's locomotion performance with the implemented stabilization 
   \label{fig:terrenos}
 \end{figure}
 
-For each test, the robot received a forward velocity command of 0.05 m/s, and its mean velocity, as well as its pitch and roll oscillation, were recorded. The mean velocity was calculated based on the time it took to travel 1.5 meters and the oscillation is the difference between the maximum and minimum readings of the IMU. The calculated velocity was compared to the desired velocity sent to the robot and the stability data was analyzed statistically: first, the Shapiro-Wilk test \cite{leotti2005comparaccao} was applied to the distribution to check whether the distribution was normal; lastly, the results were compared by performing an Analysis of Variance (ANOVA) \cite{cano2012six}.
+For each test, the robot received a forward velocity command of 0.05 m/s. Its mean velocity, as well as its pitch and roll oscillation, were recorded. The mean velocity was calculated based on the time it took to travel 1.5 meters and the oscillation is the difference between the maximum and minimum readings of the IMU. The calculated velocity was compared to the desired velocity sent to the robot and the oscillation data was analyzed statistically following the same procedure of the trajectory tracking experiment.
 
 For all the tests, the robot's gait settings consisted of a height of 5 cm, a period of 0.5 seconds, a resolution of 25 points, $P_T$ = 0.66, and $P_N$ = 0.33. For each test type, 10 samples were collected.
 
-%TODO incluir descrição da tabela
-Table \ref{tab:vel_stab} summarizes the collected results. The robot did not reach a velocity of 0.05 m/s in any test. This result is due to errors in the final position of each leg during the swing phase: the legs could not reach the desired $(x,y)$ position required to maintain the desired velocity. The fact that the final position of one foot is a function of its motors' final orientation indicates that the motors did not reach their desired orientation. Before the experiment, the gait movement was tested with the legs off the ground (almost no load), and no significant errors were noted. Since the errors only appeared while walking, it is perhaps caused by the fact that the motors were not powerful enough to support the robot's weight appropriately while walking.
+Table \ref{tab:vel_stab} summarizes the collected results. The robot did not reach a velocity of 0.05 m/s in any test. This result is due to steady state errors in the final position of each leg during the swing phase: the legs could not reach the desired (x,y) position required to maintain the desired velocity. The fact that the final position of one foot is a function of its motors' final orientation indicates that the motors did not reach their desired orientation. And since no significant errors were noted during the previous experiment (a more ideal situation), they were perhaps caused due to lack of power from the motors, which were not able to support the robot's weight appropriately while walking.
 
 \begin{table}[!htb]
   \centering
   \caption{Velocity and stability results}
+  \scalebox{1.3}{
   \begin{tabular}{ccccc}
     \hline
     \textbf{Test}              & \textbf{1}   & \textbf{2}  & \textbf{3}   & \textbf{4}   \\ \hline
@@ -281,10 +323,11 @@ Table \ref{tab:vel_stab} summarizes the collected results. The robot did not rea
     \begin{tabular}[c]{@{}c@{}} $\Delta_{Pitch}$ \end{tabular} & 11.55\degree & 8.31\degree & 15.19\degree & 12.09\degree \\ \hline
     \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular} & 1.89\degree  & 2.63\degree & 1.44\degree  & 1.66\degree  \\ \hline
   \end{tabular}
+  }
   \label{tab:vel_stab}
 \end{table}
 
-In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a $\text{p-value} > 0.05$, which indicates that all the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2. The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the test without it, which proves that it indeed lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in $75\%$ of the collected test samples.
+In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value greater than 0.05, which indicates that the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2 (flat terrain). The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the tests without it, indicating that the stabilization controller lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in at least 75\% of the collected test samples.
 
 \begin{figure}[!htb]
   \centering
