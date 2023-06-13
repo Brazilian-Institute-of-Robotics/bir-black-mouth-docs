@@ -46,7 +46,7 @@
 \maketitle
 
 \begin{abstract}
-  With the growth of robotics, mobile robots are increasingly becoming a common aspect in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot capable of walking when teleoperated and assess its locomotion performance based on experiments. The first part of the methodology was dedicated to research and the definition of the robot's concept. The following stage involved the development of the robot's software, simulation, and, in parallel, the design, fabrication and assembly of the prototype. After both stages were done, the software was integrated into the prototype. After the integration stage, the locomotion experiments were conducted. Based on these experiments, it was possible to conclude that the robot was able to perform gaits of different sizes and walk in both plane and uneven terrains. Furthermore, it was observed that the body's rotation PID controller contributed to reducing the oscillation of the robot's body in both roll and pitch during walking in both terrains.
+  With the growth of robotics, mobile robots are increasingly becoming common in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot and a PID  stabilization controller to compensate for the body oscillation during the walk. This work presents the development of the mobile robot platform, including the prototype, the gait planner, the kinematic model, and the control subsystem. Finally, locomotion experiments were conducted to assess the robot's locomotion performance when using the stabilization controller. The experiments were realized in terrains flat and uneven. Therefore, it was observed that the stabilization controller contributed to reducing the oscillation of the robot's body in both roll and pitch during walking in both terrains.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -59,20 +59,26 @@ As robotics advances, mobile robots are gaining ground in key economic sectors s
 
 This work aims to prototype a quadruped robot platform for research: develop its kinematic, control, and locomotion algorithms, manufactory and test. Through experiments and statistical analysis, the prototype locomotion performance and stability will be evaluated, both on flat and uneven terrains, to check the efficacy of a PID-based stabilization controller.
 
-This paper is divided as follows: section X presents the development of the robot, focusing on the gait planner, the kinematic model, the stabilization control and the trajectory planner implementations. In section X, the experiments conducted to evaluate and validate the effectiveness of the designed controller through statistical analysis are explained. Finally, section X presents the conclusions and suggestions for future work.
+This paper is divided as follows: section \ref{development} presents the development of the robot, focusing on the gait planner, the kinematic model, the stabilization control and the trajectory planner implementations. In section \ref{results}, the experiments conducted to evaluate and validate the effectiveness of the designed controller through statistical analysis are explained. Finally, section \ref{conclusion} presents the conclusions and suggestions for future work.
 
-\section{Robot Development}
+\section{Robot Development} \label{development}
 
-INTRO
+The robot platform designed and developed for this research is presented in the Fig. \ref{fig:robot}.
+
+\begin{figure}[!htb]
+  \centering
+  \caption{The quadruped robot developed for this research}
+  \includegraphics[width=0.25\textwidth]{robot.jpeg}
+  \vfill
+  % \vspace{-\baselineskip}
+  \label{fig:robot}
+\end{figure}
 
 \subsection{Prototype}
 
-A small quadruped was designed and developed for research (Fig. X).
 During the prototyping phase, the hardware architecture and physics structure was designed. Following that, the structure of the robot was printed and integrated with the hardware components. The robot's actuators are servo motors of the model dynamixel MX-28, and a Raspberry Pi 4 was chosen as the processing unit. Furthermore, it contains an inertial sensor, model MPU6050. All the software was developed with the Robot Operating System 2 Humble (ROS 2) \cite{ROS2Humble}.
 
-IMAGEM DO ROBO
-
-The robot's structure is mammal-type, which is characterized by the presence of two joints in the sagittal plane, similar to animals such as dogs and horses.  The robot's legs follow a configuration called full-elbow, in which the four legs are oriented backward, as shown in Fig. X. Furthermore, it features 3 degrees of freedom (DoF) per leg, providing the legs with substantial freedom of movement. The robot was designed to favor the mass balance between the body and the robot's legs, that is, the majority of its mass is located in the body or as close to it as possible. Lighter legs can move quickly without significantly changing the center of gravity of the robot, which increases stability and requires less control complexity.  On the other hand, the legs should be strong enough to support the robot's weight and the impact on the ground. 
+The robot's structure is mammal-type, which is characterized by the presence of two joints in the sagittal plane, similar to animals such as dogs and horses.  The robot's legs follow a configuration called full-elbow, in which the four legs are oriented backward, as shown in \ref{fig:robot}. Furthermore, it features 3 degrees of freedom (DoF) per leg, providing the legs with substantial freedom of movement. The robot was designed to favor the mass balance between the body and the robot's legs, that is, the majority of its mass is located in the body or as close to it as possible. Lighter legs can move quickly without significantly changing the center of gravity of the robot, which increases stability and requires less control complexity.  On the other hand, the legs should be strong enough to support the robot's weight and the impact on the ground. 
 
 The internal components, which include sensors, the processing unit, and the communication interface with the actuators were arranged symmetrically in the robot's body. The actuators (components that contribute to most of the system's mass) were positioned as close as possible to the body. The motor that acts on the tibia joint was placed in the upper part of the femur, to reduce the moment of inertia of the leg. This choice required the addition of a transmission system between the engine and the tibia link, consisting of a rigid metal rod with a ball joint at each edge.
 
@@ -89,11 +95,7 @@ Quadruped robots move according to a gait pattern. The gait implemented for the 
   \label{fig:trot_pattern}
 \end{figure}
 
-<REESTRUTURAR ESSE PARAGRAFO>
-
-The gait planner is responsible for controlling each leg and the robot's body. It defines where each foot will step and where the body should move based on the desired velocity command. Through a trajectory planner, it calculates the trajectory each foot and body should follow based on the velocity command. The gait planner then reads the pitch and roll angles of the body from the stabilization controller 
-
-The gait planner then sends commands to each joint based on the planned trajectories and the control efforts from the stabilization controller of the body at a frequency of $\SI{50}{\hertz}$. To convert both trajectories' points and the control efforts into the angles of the joints, a kinematic model is used, which is responsible for mapping the three-dimensional position of one foot to the joints' angles of its respective leg.
+For the robot to move according to the adopted gait pattern, there is a gait planner responsible for commanding the robot's legs. The gait planner defines where each foot will step and where the body should move based on the velocity command. Through a trajectory planner, it calculates the trajectory each foot and body should follow. Then, the gait planner reads, from the stabilization controller, the corrections in pitch and roll angles and applies them before sending the commands to each joint, at a frequency of $\SI{50}{\hertz}$. To convert both trajectories' points and the control efforts into the angles of the joints, a kinematic model is used, which is responsible for mapping the three-dimensional position of one foot to the joints' angles of its respective leg.
 
 \subsection{Trajectory Planner}
 
@@ -123,23 +125,23 @@ The graph of a cycloidal curve in 3D space is shown in Fig. \ref{fig:traj_space}
   \begin{subfigure}[t]{0.32\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{Cycloid_space.png}
-    \caption{Curva no espaço 3D.}
+    \caption{The cycloidal curve in 3D space.}
     \label{fig:traj_space}
   \end{subfigure}
   \begin{subfigure}[t]{0.32\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{Cycloid_time.png}
-    \caption{Curva no tempo.}
+    \caption{The cycloidal curve in the time.}
     \label{fig:traj_time}
   \end{subfigure}
   \begin{subfigure}[t]{0.32\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{Cycloid_modified.png}
-    \caption{Curva com disposição de pontos modificada.}
+    \caption{The curve with the distribution of points modified.}
     \label{fig:traj_time_modified}
   \end{subfigure}
   \vfill
-  \caption{Trajetórias cicloidais para o passo de robô.}
+  \caption{Cycloidal trajectories by the trajectory planner.}
   Fonte: autores.
   \label{fig:traj_curve}
 \end{figure*}
@@ -219,9 +221,9 @@ The same calculation can be done for the other legs, using $T_{FL}$, $T_{BL}$, a
 
 \subsection{Control Subsystem}
 
-The control subsystem of the robot is composed of two main components: the joints' controllers, and the body's stabilization controller. The joints' controllers, each one a PID, are responsible for controlling each joint of the robot independently. Meanwhile, the body's stabilization controller is responsible for controlling the pitch and roll angles of the robot, maintaining it at 0 degrees.  
+The control subsystem of the robot is composed of two main components: the joints' controllers, and the body's stabilization controller. The joints' controllers are responsible for controlling each joint of the robot independently. Meanwhile, the body's stabilization controller is responsible for controlling the pitch and roll angles of the robot, maintaining it at 0 degrees.  
 
-<APROFUNDAR JOINT CONTROLLER>
+The joints' controllers is the Joint Trajectory Controller, a controller of ROS which executes joint-space trajectories on a group of joints. According to REF, trajectories are specified as a set of waypoints to be reached at specific time instants, which the controller attempts to execute as well as the mechanism allows. In this work, the waypoints consist of positions and are reached using PID controllers loop-closed.
 
 The stabilization controller is formed by two PID controllers for the roll and pitch rotation of the robot's body. They act independently, stabilizing the rotation in each axis simultaneously. Both controllers are identical and were implemented following the block diagram in Fig. \ref{fig:pid}.
 
@@ -234,7 +236,7 @@ The stabilization controller is formed by two PID controllers for the roll and p
 
 The IMU sensor is responsible for measuring the rotation of the robot's body, providing feedback on the system's outputs. The limiter was added to avoid body rotations that exceed the limits of the joints.
 
-\section{Results}
+\section{Results} \label{results}
 
 <COLOCAR OUTRO EXPERIMENTO>
 
@@ -291,21 +293,22 @@ In addition to the velocity results, the pitch and roll oscillations were compar
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{plane_boxplot.png}
-    \caption{Terreno plano.}
+    \caption{Flat terrain.}
     \label{fig:imu_test_plane}
   \end{subfigure}
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
     \includegraphics[width=1.0\textwidth]{irregular_boxplot.png}
-    \caption{Terreno irregular.}
+    \caption{Uneven terrain.}
     \label{fig:imu_test_irregular}
   \end{subfigure}
-  \caption{Oscilação do corpo em ambos os tipos de terreno.}
+  \caption{Robot body's oscillation in both terrains
+  Oscilação do corpo em ambos os tipos de terreno.}
   Fonte: autores.
   \label{fig:imu_test}
 \end{figure}
 
-\section{Conclusion}
+\section{Conclusion} \label{conclusion}
 
 This paper addressed the design, prototyping and testing of a quadruped robot. An experiment was held to assess the robot's walking performance. The results showed that the robot did not reach the desired velocity in any of the tests. This was due to errors during the gait's swing phase, which indicates that the motors were unable to support the robot's weight while walking. These errors were not compensated, because the gait's trajectory tracking is open-loop (only the individual joint's controllers are closed-loop). In addition to that, it was possible to conclude that the implemented stabilization controller was able to lower the robot's body oscillations in pitch and roll while walking in both flat and uneven terrains.
 
