@@ -222,7 +222,7 @@ The same calculation can be done for the other legs, using $T_{FL}$, $T_{BL}$, a
 
 The control subsystem of the robot is composed of two main components: the joints' controllers, and the body's stabilization controller. The joints' controllers are responsible for controlling each joint of the robot independently. Meanwhile, the body's stabilization controller is responsible for controlling the pitch and roll angles of the robot \cite{Shi2021} \cite{Shi2021}\cite{StanfordQuadruped}, maintaining it at 0 degrees.  
 
-The joints' controllers is the Joint Trajectory Controller, a controller of ROS which executes joint-space trajectories on a group of joints. According to \cite{joint-trajectory}, trajectories are specified as a set of waypoints to be reached at specific time instants, which the controller attempts to execute as well as the mechanism allows. In this work, the waypoints consist of positions and are reached using PID controllers loop-closed.
+The joints' controllers is the Joint Trajectory Controller, a controller of ROS which executes joint-space trajectories on a group of joints. According to \cite{JointTrajectory}, trajectories are specified as a set of waypoints to be reached at specific time instants, which the controller attempts to execute as well as the mechanism allows. In this work, the waypoints consist of positions and are reached using PID controllers loop-closed.
 
 The stabilization controller is formed by two PID controllers for the roll and pitch rotation of the robot's body. They act independently, stabilizing the rotation in each axis simultaneously. Both controllers are identical and were implemented following the block diagram in Fig. \ref{fig:pid}.
 
@@ -348,11 +348,13 @@ The robot's project is open source and is available on GitHub \cite{CaramelRepo}
   \bibitem{Shi2021} Y. Shi, S. Li, M. Guo, Y. Yang, D. Xia, and X. Luo, ‘Structural design, simulation and experiment of quadruped robot’, Applied Sciences (Switzerland), vol. 11, 2021.
   \bibitem{leotti2005comparaccao} V. B. Leotti, A. R. Birck, and J. Riboldi, ‘Comparação dos Testes de Aderência à Normalidade Kolmogorov-smirnov, Anderson-Darling, Cramer--Von Mises e Shapiro-Wilk por Simulação’, Anais do 11\textordmasculine Simpósio de Estatística Aplicada à Experimentação Agronômica, 2005.
   \bibitem{cano2012six} E. L. Cano, J. M. Moguerza, and A. Redchuk, Six sigma with R: statistical engineering for process improvement, vol. 36. Springer Science \& Business Media, 2012.
-  \bibitem{CaramelRepo} B. S. de Alencar, F. M. S. M. Barreto, and L. L. Souza (2022), ‘Caramel’, [Source Code]. https://github.com/Brazilian-Institute-of-Robotics/bir-black-mouth.
+  \bibitem{CaramelRepo} B. S. de Alencar, F. M. S. M. Barreto, and L. L. Souza (2022), ‘Caramel’. Github.com. https://github.com/Brazilian-Institute-of-Robotics/bir-black-mouth. (Accessed Jun. 13, 2023).
   \bibitem{Kitano2016} S. Kitano, S. Hirose, A. Horigome, and G. Endo, ‘TITAN-XIII: sprawling-type quadruped robot with ability of fast and energy-efficient walking’, ROBOMECH Journal, vol. 3, pp. 1–16, 2016.
   \bibitem{Zhong2019} Y. Zhong, R. Wang, H. Feng, and Y. Chen, ‘Analysis and research of quadruped robot’s legs: A comprehensive review’, International Journal of Advanced Robotic Systems, vol. 16, 3 2019.
-  \bibitem{de2006quadrupedal} P. G. De Santos, E. Garcia, and J. Estremera, Quadrupedal locomotion: an introduction to the control of four-legged robots, vol. 1. Springer, 2006.
-  \bibitem{StanfordQuadruped} N. Kau, A. Z. Schultz, and M. Bowers, Stanford Quadruped (2021), [Source Code]. https://github.com/stanfordroboticsclub/StanfordQuadruped.
+  \bibitem{de2006quadrupedal} P. G. De Santos, E. Garcia, and J. Estremera, ‘Quadrupedal locomotion: an introduction to the control of four-legged robots’, vol. 1. Springer, 2006.
+  \bibitem{StanfordQuadruped} N. Kau, A. Z. Schultz, and M. Bowers, ‘Stanford Quadruped’. Github.com. https://github.com/stanfordroboticsclub/StanfordQuadruped. (Accessed Jun. 13, 2023).
+  \bibitem{JointTrajectory} ros2\_control Development Team. ‘Joint Trajectory Controller’. Control.ros.org. https://control.ros.org/foxy/doc/ros2\_controllers/joint\_trajectory\_contro
+  ller/doc/userdoc.html. (Accessed Jun. 13, 2023).
 
   % 14   STANFORD Quadruped. Dispon ́ıvel em:〈https://github.com/stanfordroboticsclub/StanfordQuadruped〉. Acesso: 24 de nov de 2022.15   DIY hobby servos quadruped robot.Dispon ́ıvel em:〈https://hackaday.io/project/171456-diy-hobby-servos-quadruped-robot〉.Acesso: 24 de nov de 2022.
   % 15   DIY hobby servos quadruped robot.Dispon ́ıvel em:〈https://hackaday.io/project/171456-diy-hobby-servos-quadruped-robot〉.Acesso: 24 de nov de 2022.
