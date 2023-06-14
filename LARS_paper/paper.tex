@@ -46,7 +46,7 @@
 \maketitle
 
 \begin{abstract}
-  With the growth of robotics, mobile robots are increasingly becoming common in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot and a PID  stabilization controller to compensate for the body oscillation during the walk. This work presents the development of the mobile robot platform, including the prototype, the gait planner, the kinematic model, and the control subsystem. Finally, locomotion experiments were conducted to assess the robot's locomotion performance when using the stabilization controller. The experiments were realized in terrains flat and uneven. Therefore, it was observed that the stabilization controller contributed to reducing the oscillation of the robot's body in both roll and pitch during walking in both terrains.
+  With the growth of robotics, mobile robots are increasingly becoming common in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot and a PID  stabilization controller to compensate for the body oscillation during the walk, for that, the gait planner and the kinematic model algorithm were implemented. Finally, locomotion experiments were conducted to assess the robot's locomotion performance when using the stabilization controller. The experiments were realized in flat and uneven terrains. It was observed that the stabilization controller contributed to reducing the oscillation of the robot's body in both roll and pitch angles during walking in both terrains.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -59,18 +59,18 @@ As robotics advances, mobile robots are gaining ground in key economic sectors s
 
 This work aims to prototype a quadruped robot platform for research: develop its kinematic, control, and locomotion algorithms, manufactory and test. Through experiments and statistical analysis, the prototype locomotion performance and stability will be evaluated, both on flat and uneven terrains, to check the efficacy of a PID-based stabilization controller.
 
-This paper is divided as follows: section \ref{development} presents the development of the robot, focusing on the gait planner, the kinematic model, the stabilization control and the trajectory planner implementations. In section \ref{results}, the experiments conducted to evaluate and validate the effectiveness of the designed controller through statistical analysis are explained. Finally, section \ref{conclusion} presents the conclusions and suggestions for future work.
+This paper is divided as follows: section \ref{development} presents the development of the robot. In section \ref{results}, the experiments conducted to evaluate and validate the effectiveness of the designed controller through statistical analysis are explained. Finally, section \ref{conclusion} presents the conclusions and suggestions for future work.
 
 \section{Robot Development} \label{development}
 
-The robot platform designed and developed for this research is presented in the Fig. \ref{fig:robot}.
+The robot platform designed for this research is presented in the Fig. \ref{fig:robot}. The development encompassed the prototyping and the implementation of the gait planner, the trajectory planner, the kinematic model, and the control subsystem.
 
 \begin{figure}[!htb]
   \centering
-  \caption{The quadruped robot developed for this research}
   \includegraphics[width=0.25\textwidth]{robot.jpeg}
   \vfill
   % \vspace{-\baselineskip}
+  \caption{The quadruped robot}
   \label{fig:robot}
 \end{figure}
 
@@ -88,10 +88,10 @@ Quadruped robots move according to a gait pattern. The gait implemented for the 
 
 \begin{figure}[!htb]
   \centering
-  \caption{Gait pattern diagram}
   \includegraphics[width=0.45\textwidth]{trot_pattern.png}
   \vfill
   % \vspace{-\baselineskip}
+  \caption{Gait pattern diagram}
   \label{fig:trot_pattern}
 \end{figure}
 
@@ -142,7 +142,6 @@ The graph of a cycloidal curve in 3D space is shown in Fig. \ref{fig:traj_space}
   \end{subfigure}
   \vfill
   \caption{Cycloidal trajectories by the trajectory planner.}
-  Fonte: autores.
   \label{fig:traj_curve}
 \end{figure*}
 
@@ -223,7 +222,7 @@ The same calculation can be done for the other legs, using $T_{FL}$, $T_{BL}$, a
 
 The control subsystem of the robot is composed of two main components: the joints' controllers, and the body's stabilization controller. The joints' controllers are responsible for controlling each joint of the robot independently. Meanwhile, the body's stabilization controller is responsible for controlling the pitch and roll angles of the robot, maintaining it at 0 degrees.  
 
-The joints' controllers is the Joint Trajectory Controller, a controller of ROS which executes joint-space trajectories on a group of joints. According to REF, trajectories are specified as a set of waypoints to be reached at specific time instants, which the controller attempts to execute as well as the mechanism allows. In this work, the waypoints consist of positions and are reached using PID controllers loop-closed.
+The joints' controllers is the Joint Trajectory Controller, a controller of ROS which executes joint-space trajectories on a group of joints. According to \cite{joint-trajectory}, trajectories are specified as a set of waypoints to be reached at specific time instants, which the controller attempts to execute as well as the mechanism allows. In this work, the waypoints consist of positions and are reached using PID controllers loop-closed.
 
 The stabilization controller is formed by two PID controllers for the roll and pitch rotation of the robot's body. They act independently, stabilizing the rotation in each axis simultaneously. Both controllers are identical and were implemented following the block diagram in Fig. \ref{fig:pid}.
 
@@ -302,9 +301,7 @@ In addition to the velocity results, the pitch and roll oscillations were compar
     \caption{Uneven terrain.}
     \label{fig:imu_test_irregular}
   \end{subfigure}
-  \caption{Robot body's oscillation in both terrains
-  Oscilação do corpo em ambos os tipos de terreno.}
-  Fonte: autores.
+  \caption{Robot body's oscillation in both terrains.}
   \label{fig:imu_test}
 \end{figure}
 
