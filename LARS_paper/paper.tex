@@ -224,10 +224,7 @@ The same calculation can be done for the other legs, by substituting $T_{FR}$ by
 
 \subsection{Control Subsystem}
 
-The control subsystem of the robot is composed of two main components: the joints' controllers, and the body's stabilization controller. The joints' controllers are responsible for controlling each joint of the robot independently. Meanwhile, the body's stabilization controller is responsible for controlling the pitch and roll angles of the robot \cite{Shi2021, StanfordQuadruped}, maintaining it at 0 degrees.  
-
-%TODO refazer focando no controlador dos dynamixels
-The joints' controller is the Joint Trajectory Controller, a controller of ROS which executes joint-space trajectories on a group of joints. According to \cite{JointTrajectory}, trajectories are specified as a set of waypoints to be reached at specific time instants, which the controller attempts to execute as well as the mechanism allows. In this work, the waypoints consist of positions and are reached using PID controllers loop-closed.
+The control subsystem of the robot is composed of two main components: the joints' controllers, and the body's stabilization controller. The joints' controllers are the built-in Dynamixel position PID controllers, and they control each joint of the robot independently. Meanwhile, the body's stabilization controller is responsible for controlling the pitch and roll angles of the robot \cite{Shi2021, StanfordPupper}, maintaining it at 0 degrees.  
 
 The stabilization controller is formed by two PID controllers: for the roll and pitch rotation of the robot's body. They act independently, stabilizing the rotation in each axis simultaneously. Both controllers are identical and were implemented following the block diagram in Fig. \ref{fig:pid} (the output of the "IMU Sensor" block is either roll or pitch).
 
@@ -388,34 +385,38 @@ The authors' acknowledgments.
 
 % For papers published in translation journals, please give the English
 % citation first, followed by the original foreign-language citation \cite{b6}.
+%----------------------------------------------------------
+\bibliographystyle{IEEEtran}
+\bibliography{Bibliography}
+%CRITICAL: do not change the above two lines!!!
+%----------------------------------------------------------
 
+% \begin{thebibliography}{00}
+%   \bibitem{X.134} X. Zhang, L. Lang, J. Wang, and H. Ma, ‘The quadruped robot locomotion based on force control’, Proceedings of the 2015 27th Chinese Control and Decision Conference, CCDC 2015, pp. 5440–5445, 2015.
+%   \bibitem{ROS2Humble} S. Macenski, T. Foote, B. Gerkey, C. Lalancette, and W. Woodall, ‘Robot Operating System 2: Design, architecture, and uses in the wild’, Science Robotics, vol. 7, no. 66, p. eabm6074, 2022.
+%   \bibitem{Kitano2016} S. Kitano, S. Hirose, A. Horigome, and G. Endo, ‘TITAN-XIII: sprawling-type quadruped robot with ability of fast and energy-efficient walking’, ROBOMECH Journal, vol. 3, pp. 1–16, 2016.
+%   \bibitem{Zhong2019} Y. Zhong, R. Wang, H. Feng, and Y. Chen, ‘Analysis and research of quadruped robot’s legs: A comprehensive review’, International Journal of Advanced Robotic Systems, vol. 16, 3 2019.
+%   \bibitem{de2006quadrupedal} P. G. De Santos, E. Garcia, and J. Estremera, ‘Quadrupedal locomotion: an introduction to the control of four-legged robots’, vol. 1. Springer, 2006.
+%   \bibitem{Shi2021} Y. Shi, S. Li, M. Guo, Y. Yang, D. Xia, and X. Luo, ‘Structural design, simulation and experiment of quadruped robot’, Applied Sciences (Switzerland), vol. 11, 2021.
+%   \bibitem{StanfordQuadruped} N. Kau, A. Z. Schultz, and M. Bowers, ‘Stanford Quadruped’. Github.com. https://github.com/stanfordroboticsclub/StanfordQuadruped. (Accessed Jun. 13, 2023).
+%   \bibitem{JointTrajectory} ros2\_control Development Team. ‘Joint Trajectory Controller’. Control.ros.org. https://control.ros.org/foxy/doc/ros2\_controllers/joint\_trajectory\_contro
+%   ller/doc/userdoc.html. (Accessed Jun. 13, 2023).
+%   \bibitem{cano2012six} E. L. Cano, J. M. Moguerza, and A. Redchuk, Six sigma with R: statistical engineering for process improvement, vol. 36. Springer Science \& Business Media, 2012.
+%   \bibitem{leotti2005comparaccao} V. B. Leotti, A. R. Birck, and J. Riboldi, ‘Comparação dos Testes de Aderência à Normalidade Kolmogorov-smirnov, Anderson-Darling, Cramer--Von Mises e Shapiro-Wilk por Simulação’, Anais do 11\textordmasculine Simpósio de Estatística Aplicada à Experimentação Agronômica, 2005.
+%   \bibitem{CaramelRepo} B. S. de Alencar, F. M. S. M. Barreto, and L. L. Souza (2022), ‘Caramel’. Github.com. https://github.com/Brazilian-Institute-of-Robotics/bir-black-mouth. (Accessed Jun. 13, 2023).
 
-\begin{thebibliography}{00}
-  \bibitem{X.134} X. Zhang, L. Lang, J. Wang, and H. Ma, ‘The quadruped robot locomotion based on force control’, Proceedings of the 2015 27th Chinese Control and Decision Conference, CCDC 2015, pp. 5440–5445, 2015.
-  \bibitem{ROS2Humble} S. Macenski, T. Foote, B. Gerkey, C. Lalancette, and W. Woodall, ‘Robot Operating System 2: Design, architecture, and uses in the wild’, Science Robotics, vol. 7, no. 66, p. eabm6074, 2022.
-  \bibitem{Kitano2016} S. Kitano, S. Hirose, A. Horigome, and G. Endo, ‘TITAN-XIII: sprawling-type quadruped robot with ability of fast and energy-efficient walking’, ROBOMECH Journal, vol. 3, pp. 1–16, 2016.
-  \bibitem{Zhong2019} Y. Zhong, R. Wang, H. Feng, and Y. Chen, ‘Analysis and research of quadruped robot’s legs: A comprehensive review’, International Journal of Advanced Robotic Systems, vol. 16, 3 2019.
-  \bibitem{de2006quadrupedal} P. G. De Santos, E. Garcia, and J. Estremera, ‘Quadrupedal locomotion: an introduction to the control of four-legged robots’, vol. 1. Springer, 2006.
-  \bibitem{Shi2021} Y. Shi, S. Li, M. Guo, Y. Yang, D. Xia, and X. Luo, ‘Structural design, simulation and experiment of quadruped robot’, Applied Sciences (Switzerland), vol. 11, 2021.
-  \bibitem{StanfordQuadruped} N. Kau, A. Z. Schultz, and M. Bowers, ‘Stanford Quadruped’. Github.com. https://github.com/stanfordroboticsclub/StanfordQuadruped. (Accessed Jun. 13, 2023).
-  \bibitem{JointTrajectory} ros2\_control Development Team. ‘Joint Trajectory Controller’. Control.ros.org. https://control.ros.org/foxy/doc/ros2\_controllers/joint\_trajectory\_contro
-  ller/doc/userdoc.html. (Accessed Jun. 13, 2023).
-  \bibitem{cano2012six} E. L. Cano, J. M. Moguerza, and A. Redchuk, Six sigma with R: statistical engineering for process improvement, vol. 36. Springer Science \& Business Media, 2012.
-  \bibitem{leotti2005comparaccao} V. B. Leotti, A. R. Birck, and J. Riboldi, ‘Comparação dos Testes de Aderência à Normalidade Kolmogorov-smirnov, Anderson-Darling, Cramer--Von Mises e Shapiro-Wilk por Simulação’, Anais do 11\textordmasculine Simpósio de Estatística Aplicada à Experimentação Agronômica, 2005.
-  \bibitem{CaramelRepo} B. S. de Alencar, F. M. S. M. Barreto, and L. L. Souza (2022), ‘Caramel’. Github.com. https://github.com/Brazilian-Institute-of-Robotics/bir-black-mouth. (Accessed Jun. 13, 2023).
+%   % 14   STANFORD Quadruped. Dispon ́ıvel em:〈https://github.com/stanfordroboticsclub/StanfordQuadruped〉. Acesso: 24 de nov de 2022.15   DIY hobby servos quadruped robot.Dispon ́ıvel em:〈https://hackaday.io/project/171456-diy-hobby-servos-quadruped-robot〉.Acesso: 24 de nov de 2022.
+%   % 15   DIY hobby servos quadruped robot.Dispon ́ıvel em:〈https://hackaday.io/project/171456-diy-hobby-servos-quadruped-robot〉.Acesso: 24 de nov de 2022.
+%   % 17   NOTSPOT robot simulation. Dispon ́ıvelem:〈https://github.com/lnotspotl/notspot_sim_cpp〉. Acesso: 24 de nov de 2022.
 
-  % 14   STANFORD Quadruped. Dispon ́ıvel em:〈https://github.com/stanfordroboticsclub/StanfordQuadruped〉. Acesso: 24 de nov de 2022.15   DIY hobby servos quadruped robot.Dispon ́ıvel em:〈https://hackaday.io/project/171456-diy-hobby-servos-quadruped-robot〉.Acesso: 24 de nov de 2022.
-  % 15   DIY hobby servos quadruped robot.Dispon ́ıvel em:〈https://hackaday.io/project/171456-diy-hobby-servos-quadruped-robot〉.Acesso: 24 de nov de 2022.
-  % 17   NOTSPOT robot simulation. Dispon ́ıvelem:〈https://github.com/lnotspotl/notspot_sim_cpp〉. Acesso: 24 de nov de 2022.
-
-  % \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-  % \bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-  % \bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-  % \bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-  % \bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-  % \bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-  % \bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
-\end{thebibliography}
+%   % \bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
+%   % \bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
+%   % \bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
+%   % \bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
+%   % \bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
+%   % \bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
+%   % \bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
+% \end{thebibliography}
 % \vspace{12pt}
 % \color{red}
 % IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
