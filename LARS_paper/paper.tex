@@ -65,7 +65,7 @@ This paper is divided as follows: section \ref{development} presents the develop
 
 The robot platform designed for this research is presented in Fig. \ref{fig:robot}. The development encompassed the prototyping and the implementation of the gait planner, the trajectory planner, the kinematic model, and the control subsystem.
 
-\begin{figure}[!htb]
+\begin{figure}[!tb]
   \centering
   \includegraphics[width=0.4\textwidth]{robot.jpeg}
   \vfill
@@ -86,7 +86,7 @@ The internal components, which include sensors, the processing unit, and the com
 
 Quadruped robots move according to a gait pattern. The gait implemented for the robot follows the sequence of phases demonstrated in Fig. \ref{fig:trot_pattern}, in which the white rectangles represent the swing phase and the gray rectangles represent the stance phase. During the stance phase, the legs are on the ground and push the robot's body in the desired direction. In the swing phase, the legs are raised and moved to the next support point. The gait pattern illustrated in Fig. \ref{fig:trot_pattern} is called trot and is based on the concept of periodic and symmetrical gaits. The periodic gaits are characterized by the continuous repetition of the movements in the same instants. Symmetry is a characteristic of gaits that move a pair of legs together, leaving and returning to the ground in a synchronized way \cite{de2006quadrupedal}. Although the structure of the robot makes it possible to perform other types of gaits, in this work, only the trot was considered. To reduce the control complexity, a discontinuous gait was adopted, that is, the robot's body moves only when all the legs are on the ground, resulting in intermittent movement. In Fig. \ref{fig:trot_pattern}, it is noticeable that the same pair of diagonal legs always move at the same instant. Between two consecutive swing phases, there is a moment when all legs are in the stance phase, which is when the robot body is displaced in the desired direction of locomotion.
 
-\begin{figure}[!htb]
+\begin{figure}[!b]
   \centering
   \includegraphics[width=0.45\textwidth]{trot_pattern.png}
   \vfill
@@ -180,7 +180,7 @@ The package tf2, an available ROS 2 feature that can manage transformations betw
   B = \frac{a^2+z_{IK}^2-L_2^2-L_3^2}{2L_2L_3}
 \end{equation}
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=0.4\textwidth]{caramel_tfs.png}
   
@@ -190,7 +190,7 @@ The package tf2, an available ROS 2 feature that can manage transformations betw
 
 These equations are useful for calculating only one foot's position but are insufficient for the robot's body kinematics. For that, a center frame called base\_link (Fig. \ref{fig:caramel_body}) is taken as a reference. The transformation matrix $T_M$ is created with the desired body translations $(x_c, y_c, z_c)$ and rotations $(\alpha, \beta, \gamma)$. The transformations $T_{FR}$, $T_{FL}$, $T_{BL}$ and $T_{BR}$ of each of the shoulders (hip\_links) with respect to the base\_link are also required.
 
-\begin{figure}[htbp]
+\begin{figure}[tb]
   \centering
   \vspace{-0.75cm}
   \includegraphics[width=0.35\textwidth]{caramel_body.drawio.png}
@@ -228,7 +228,7 @@ The joints' controller is the Joint Trajectory Controller, a controller of ROS w
 
 The stabilization controller is formed by two PID controllers: for the roll and pitch rotation of the robot's body. They act independently, stabilizing the rotation in each axis simultaneously. Both controllers are identical and were implemented following the block diagram in Fig. \ref{fig:pid} (the output of the "IMU Sensor" block is either roll or pitch).
 
-\begin{figure}[htbp]
+\begin{figure}[b]
   \centering
   \includegraphics[width=0.48\textwidth]{PID.drawio.png}
   \caption{Designed PID controller.}
@@ -243,7 +243,7 @@ To assess the robot's locomotion performance, two experiments were conducted. Th
 
 For the first experiment, the robot's body was supported on a platform so that its leg would not touch the floor, lowering the load applied to the motors. The experiment consisted of sending gait trajectories to a single leg and evaluating how precise the leg could follow it. The trajectories were cycloidal curves with a height of 0.05 cm, a period of 0.5 seconds and a resolution of 25 equally distributed points ($P_T = P_N = 1.0$). The distances in the (x, y) directions were (5.0, 3.0) and (3.0, 5.0) cm, and, for each distance pair, 30 samples were collected. Table \ref{tab:trajetoria} shows the average and standard deviation of the time taken to complete the trajectory, the height, and the distance reached by the leg in the (x, y) direction. Test 1 refers to the trajectories of the first distance pair and Test 2 to the second. Fig. \ref{fig:grafico_trajetoria_xyz} shows the z-axis (height) tracking of one sample. 
 
-\begin{table}[!htb]
+\begin{table}[!b]
   \centering
   \caption{Results of the gait trajectory tracking experiment.}
   \scalebox{1.3}{
@@ -273,7 +273,7 @@ For the first experiment, the robot's body was supported on a platform so that i
   \label{tab:trajetoria}
 \end{table}
 
-\begin{figure}[!htb]
+\begin{figure}[!b]
   \centering
   \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
   \caption{Trajectory executed by the foot.}
@@ -285,7 +285,7 @@ It is noticeable that there was a delay of approximately 57 milliseconds in the 
 
 For the second experiment, the robot should walk in a straight line of 1.5 meters in both flat and uneven terrain, with and without the stabilization controller, totalizing four tests. The flat terrain consisted of a cement floor and the uneven terrain, a ground formed by small loose stones. Both are illustrated in Fig. \ref{fig:terreno_plano} and \ref{fig:terreno_uneven}, respectively.
 
-\begin{figure}[htbp]
+\begin{figure}[b]
   \centering
   \begin{subfigure}[htbp]{0.24\textwidth}
     \centering
@@ -332,7 +332,7 @@ Table \ref{tab:vel_stab} summarizes the collected results. The robot did not rea
 
 In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value greater than 0.05, which indicates that the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2 (flat terrain). The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the tests without it, indicating that the stabilization controller lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in at least 75\% of the collected test samples.
 
-\begin{figure}[!htb]
+\begin{figure}[!tb]
   \centering
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
@@ -390,16 +390,16 @@ The robot's project is open source and is available on GitHub \cite{CaramelRepo}
 \begin{thebibliography}{00}
   \bibitem{X.134} X. Zhang, L. Lang, J. Wang, and H. Ma, ‘The quadruped robot locomotion based on force control’, Proceedings of the 2015 27th Chinese Control and Decision Conference, CCDC 2015, pp. 5440–5445, 2015.
   \bibitem{ROS2Humble} S. Macenski, T. Foote, B. Gerkey, C. Lalancette, and W. Woodall, ‘Robot Operating System 2: Design, architecture, and uses in the wild’, Science Robotics, vol. 7, no. 66, p. eabm6074, 2022.
-  \bibitem{Shi2021} Y. Shi, S. Li, M. Guo, Y. Yang, D. Xia, and X. Luo, ‘Structural design, simulation and experiment of quadruped robot’, Applied Sciences (Switzerland), vol. 11, 2021.
-  \bibitem{leotti2005comparaccao} V. B. Leotti, A. R. Birck, and J. Riboldi, ‘Comparação dos Testes de Aderência à Normalidade Kolmogorov-smirnov, Anderson-Darling, Cramer--Von Mises e Shapiro-Wilk por Simulação’, Anais do 11\textordmasculine Simpósio de Estatística Aplicada à Experimentação Agronômica, 2005.
-  \bibitem{cano2012six} E. L. Cano, J. M. Moguerza, and A. Redchuk, Six sigma with R: statistical engineering for process improvement, vol. 36. Springer Science \& Business Media, 2012.
-  \bibitem{CaramelRepo} B. S. de Alencar, F. M. S. M. Barreto, and L. L. Souza (2022), ‘Caramel’. Github.com. https://github.com/Brazilian-Institute-of-Robotics/bir-black-mouth. (Accessed Jun. 13, 2023).
   \bibitem{Kitano2016} S. Kitano, S. Hirose, A. Horigome, and G. Endo, ‘TITAN-XIII: sprawling-type quadruped robot with ability of fast and energy-efficient walking’, ROBOMECH Journal, vol. 3, pp. 1–16, 2016.
   \bibitem{Zhong2019} Y. Zhong, R. Wang, H. Feng, and Y. Chen, ‘Analysis and research of quadruped robot’s legs: A comprehensive review’, International Journal of Advanced Robotic Systems, vol. 16, 3 2019.
   \bibitem{de2006quadrupedal} P. G. De Santos, E. Garcia, and J. Estremera, ‘Quadrupedal locomotion: an introduction to the control of four-legged robots’, vol. 1. Springer, 2006.
+  \bibitem{Shi2021} Y. Shi, S. Li, M. Guo, Y. Yang, D. Xia, and X. Luo, ‘Structural design, simulation and experiment of quadruped robot’, Applied Sciences (Switzerland), vol. 11, 2021.
   \bibitem{StanfordQuadruped} N. Kau, A. Z. Schultz, and M. Bowers, ‘Stanford Quadruped’. Github.com. https://github.com/stanfordroboticsclub/StanfordQuadruped. (Accessed Jun. 13, 2023).
   \bibitem{JointTrajectory} ros2\_control Development Team. ‘Joint Trajectory Controller’. Control.ros.org. https://control.ros.org/foxy/doc/ros2\_controllers/joint\_trajectory\_contro
   ller/doc/userdoc.html. (Accessed Jun. 13, 2023).
+  \bibitem{cano2012six} E. L. Cano, J. M. Moguerza, and A. Redchuk, Six sigma with R: statistical engineering for process improvement, vol. 36. Springer Science \& Business Media, 2012.
+  \bibitem{leotti2005comparaccao} V. B. Leotti, A. R. Birck, and J. Riboldi, ‘Comparação dos Testes de Aderência à Normalidade Kolmogorov-smirnov, Anderson-Darling, Cramer--Von Mises e Shapiro-Wilk por Simulação’, Anais do 11\textordmasculine Simpósio de Estatística Aplicada à Experimentação Agronômica, 2005.
+  \bibitem{CaramelRepo} B. S. de Alencar, F. M. S. M. Barreto, and L. L. Souza (2022), ‘Caramel’. Github.com. https://github.com/Brazilian-Institute-of-Robotics/bir-black-mouth. (Accessed Jun. 13, 2023).
 
   % 14   STANFORD Quadruped. Dispon ́ıvel em:〈https://github.com/stanfordroboticsclub/StanfordQuadruped〉. Acesso: 24 de nov de 2022.15   DIY hobby servos quadruped robot.Dispon ́ıvel em:〈https://hackaday.io/project/171456-diy-hobby-servos-quadruped-robot〉.Acesso: 24 de nov de 2022.
   % 15   DIY hobby servos quadruped robot.Dispon ́ıvel em:〈https://hackaday.io/project/171456-diy-hobby-servos-quadruped-robot〉.Acesso: 24 de nov de 2022.
