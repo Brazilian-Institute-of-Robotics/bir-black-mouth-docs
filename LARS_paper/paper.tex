@@ -63,14 +63,14 @@ This paper is divided as follows: section \ref{development} presents the develop
 
 \section{Robot Development} \label{development}
 
-The robot platform designed for this research is presented in the Fig. \ref{fig:robot}. The development encompassed the prototyping and the implementation of the gait planner, the trajectory planner, the kinematic model, and the control subsystem.
+The robot platform designed for this research is presented in Fig. \ref{fig:robot}. The development encompassed the prototyping and the implementation of the gait planner, the trajectory planner, the kinematic model, and the control subsystem.
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=0.25\textwidth]{robot.jpeg}
+  \includegraphics[width=0.4\textwidth]{robot.jpeg}
   \vfill
   % \vspace{-\baselineskip}
-  \caption{The quadruped robot}
+  \caption{The quadruped robot.}
   \label{fig:robot}
 \end{figure}
 
@@ -91,7 +91,7 @@ Quadruped robots move according to a gait pattern. The gait implemented for the 
   \includegraphics[width=0.45\textwidth]{trot_pattern.png}
   \vfill
   % \vspace{-\baselineskip}
-  \caption{Gait pattern diagram}
+  \caption{Gait pattern diagram.}
   \label{fig:trot_pattern}
 \end{figure}
 
@@ -249,21 +249,21 @@ For the first experiment, the robot's body was supported on a platform so that i
     \hline
     \textbf{Test} & \textbf{1}      & \textbf{2}  \\
     \hline
-    $\bar{time} (s)$         & 0,557  & 0,557 \\
+    $\bar{time} (s)$         & 0.557  & 0.557 \\
     \hline
-    $\sigma_{time} (s)$       & 0,008  & 0,008 \\
+    $\sigma_{time} (s)$       & 0.008  & 0.008 \\
     \hline
-    $\bar{z}_{max} (cm)$       & 4,760  & 4,755 \\      
+    $\bar{z}_{max} (cm)$       & 4.760  & 4.755 \\      
     \hline
-    $\sigma_{z_{max}} (cm)$    & 0,023  & 0,028 \\
+    $\sigma_{z_{max}} (cm)$    & 0.023  & 0.028 \\
     \hline
-    $\bar{x}_{final} (cm)$     & 5,034  & 3,024 \\
+    $\bar{x}_{final} (cm)$     & 5.034  & 3.024 \\
     \hline
-    $\sigma_{x_{final}} (cm)$  & 0,009  & 0,013 \\
+    $\sigma_{x_{final}} (cm)$  & 0.009  & 0.013 \\
     \hline
-    $\bar{y}_{final} (cm)$     & 2,924  & 4,915 \\      
+    $\bar{y}_{final} (cm)$     & 2.924  & 4.915 \\      
     \hline
-    $\sigma_{y_{final}} (cm)$  & 0,013  & 0,004 \\      
+    $\sigma_{y_{final}} (cm)$  & 0.013  & 0.004 \\      
     \hline   
   \end{tabular}
   }
@@ -273,13 +273,13 @@ For the first experiment, the robot's body was supported on a platform so that i
 
 \begin{figure}[!htb]
   \centering
-  \caption{Trajetórias realizadas pelas patas.}
   \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
+  \caption{Trajectory executed by the foot.}
   \label{fig:grafico_trajetoria_xyz}
 \end{figure}
 \vspace{-\baselineskip}
 
-It is noticeable that there was a delay of approximately 57 ms in the execution time and that the final height was off by approximately 0.25 cm in both tests. To confirm that the system's performance during Test 1 and 2 was similar, i.e. the difference in x and y distance did not affect the overall performance, two ANOVA \cite{cano2012six} tests were conducted comparing the execution time and gait height distributions of both tests. Before the ANOVA, however, the outliers of these distributions were removed and the Shapiro-Wilk \cite{leotti2005comparaccao} test was used to check the data normality. The result of the later was a p-value greater than 0.05 for all distributions, which indicates that they followed a normal curve. The ANOVA tests were, then, conducted and showed a p-value of 0.7212 for the execution time comparison and 0.5070 for the gait height comparison, which means that de difference in the x and y distance did not affect the trajectory tracking performance. In addition to that, the final average error for x and y was less than 0.1 cm and the standard deviation was small, meaning the gait distance was followed correctly and that this result was consistent throughout all samples.
+It is noticeable that there was a delay of approximately 57 ms in the execution time and that the final height was off by approximately 0.25 cm in both tests. To confirm that the system's performance during Test 1 and 2 was similar, i.e. the difference in x and y distance did not affect the overall performance, two ANOVA \cite{cano2012six} tests were conducted comparing the execution time and gait height distributions of both tests. Before the ANOVA, however, the outliers of these distributions were removed and the Shapiro-Wilk \cite{leotti2005comparaccao} test was used to check the data normality. The result of the latter was a p-value greater than 0.05 for all distributions, which indicates that they followed a normal curve. The ANOVA tests were, then, conducted and showed a p-value of 0.7212 for the execution time comparison and 0.5070 for the gait height comparison, which means that de difference in the x and y distance did not affect the trajectory tracking performance. In addition to that, the final average error for x and y was less than 0.1 cm and the standard deviation was small, meaning the gait distance was followed correctly and that this result was consistent throughout all samples.
 
 For the second experiment, the robot should walk in a straight line of 1.5 meters in both flat and uneven terrain, with and without the stabilization controller, totalizing four tests. The flat terrain consisted of a cement floor and the uneven terrain, a ground formed by small loose stones. Both are illustrated in Fig. \ref{fig:terreno_plano} and \ref{fig:terreno_uneven}, respectively.
 
@@ -298,7 +298,7 @@ For the second experiment, the robot should walk in a straight line of 1.5 meter
     \label{fig:terreno_uneven}
   \end{subfigure}
   \vfill
-  \caption{Terrains used for the experiment}
+  \caption{Terrains used for the experiment.}
   \label{fig:terrenos}
 \end{figure}
 
@@ -310,7 +310,7 @@ Table \ref{tab:vel_stab} summarizes the collected results. The robot did not rea
 
 \begin{table}[!htb]
   \centering
-  \caption{Velocity and stability results}
+  \caption{Velocity and stability results.}
   \scalebox{1.3}{
   \begin{tabular}{ccccc}
     \hline
