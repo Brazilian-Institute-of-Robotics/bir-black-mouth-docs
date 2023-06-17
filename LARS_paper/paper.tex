@@ -18,7 +18,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Conference Paper Title\\
+\title{Analysis, Prototyping and Locomotion Control of a Quadruped Robot\\
 % {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
 % should not be used}
 % \thanks{Identify applicable funding agency here. If none, delete this.}
@@ -86,11 +86,11 @@ The internal components, which include sensors, the processing unit, and the com
 
 Quadruped robots move according to a gait pattern. The gait implemented for the robot follows the sequence of phases demonstrated in Fig. \ref{fig:trot_pattern}, in which the white rectangles represent the swing phase and the gray rectangles represent the stance phase. During the stance phase, the legs are on the ground and push the robot's body in the desired direction. In the swing phase, the legs are raised and moved to the next support point. The gait pattern illustrated in Fig. \ref{fig:trot_pattern} is called trot and is based on the concept of periodic and symmetrical gaits. The periodic gaits are characterized by the continuous repetition of the movements in the same instants. Symmetry is a characteristic of gaits that move a pair of legs together, leaving and returning to the ground in a synchronized way \cite{de2006quadrupedal}. Although the structure of the robot makes it possible to perform other types of gaits, in this work, only the trot was considered. To reduce the control complexity, a discontinuous gait was adopted, that is, the robot's body moves only when all the legs are on the ground, resulting in intermittent movement. In Fig. \ref{fig:trot_pattern}, it is noticeable that the same pair of diagonal legs always move at the same instant. Between two consecutive swing phases, there is a moment when all legs are in the stance phase, which is when the robot body is displaced in the desired direction of locomotion.
 
-\begin{figure}[!b]
+\begin{figure}[b]
+  \vspace{-\baselineskip}
   \centering
   \includegraphics[width=0.45\textwidth]{trot_pattern.png}
   \vfill
-  % \vspace{-\baselineskip}
   \caption{Gait pattern diagram.}
   \label{fig:trot_pattern}
 \end{figure}
@@ -101,6 +101,7 @@ For the robot to move according to the adopted gait pattern, there is a gait pla
 
 The trajectory planner is responsible for calculating the trajectory that each foot must perform. For both the stance and swing phases, a cycloidal curve was adopted. As shown in \cite{Shi2021}, a cycloidal curve can be defined in the three-dimensional space by (\ref{eq:traj_x}) to (\ref{eq:traj_k})
 between the points $(x_o, y_o, z_o)$ and $(x_f, y_f, z_f)$ as a function of time $t$, step height $H$, and period $T$.
+
 \begin{equation}
   x = (x_f - x_o) \frac{K - \sin{(K)}}{2 \pi} + x_o
   \label{eq:traj_x}
@@ -143,6 +144,7 @@ The plot of a cycloidal curve in 3D space is shown in Fig. \ref{fig:traj_space}.
   \vfill
   \caption{Cycloidal trajectories by the trajectory planner.}
   \label{fig:traj_curve}
+  \vspace{-\baselineskip}
 \end{figure*}
 
 In addition to the step height, the $x$ and $y$ translations, and the period, the robot's trajectory planner also considers two parameters to make the landing of the foot even smoother. Since the robot’s actuators are servo motors controlled by position, the torque is proportional to the displacement it must perform between the points of the trajectory. Therefore, the higher the resolution of the trajectory, the smoother the movement. However, the resolution $N$ of the trajectory is fixed, given as a function of the step period and the frequency of the gait planner ($\SI{50}{\hertz}$) $N = 50T$. Thus, the strategy adopted is to distribute the $N$ points unevenly throughout the step period, so that there are more points near the moment the foot lands on the ground and fewer points near the moment the foot takes off. The $P_T$ parameter is a fraction of the total step period, and the $P_N$ is the fraction of the total number of points that should be between $0$ and $P_T \cdot T$. In other words, if $P_T = 0.66$ and $P_N = 0.33$, then 33\% of $N$ will be in the first two-thirds of the period, while the remaining $67\%$ will be in the final one-third. The trajectory, considering these parameters, is illustrated in Fig. \ref{fig:traj_time_modified}.
@@ -197,6 +199,7 @@ These equations are useful for calculating only one foot's position but are insu
   
   \caption{Robot axes in resting position.}
   \label{fig:caramel_body}
+  \vspace{-1.3\baselineskip}
 \end{figure}
 
 The calculation of the joints' angles of each leg is then performed using as inputs the values resulting from each of the transformations, according to (\ref{eq:xyzik}). While $[x, y, z, 1]^\top$ in the right-hand side of (\ref{eq:xyzik}) represents the foot position relative to the base\_link, $[x_{IK}, y_{IK}, z_{IK}, 1]^\top$ on the left-hand side represents the same position relative to the leg's hip\_link, which can be used as input in equations (\ref{eq:theta1}) to (\ref{eq:B}). 
@@ -229,6 +232,7 @@ The joints' controller is the Joint Trajectory Controller, a controller of ROS w
 The stabilization controller is formed by two PID controllers: for the roll and pitch rotation of the robot's body. They act independently, stabilizing the rotation in each axis simultaneously. Both controllers are identical and were implemented following the block diagram in Fig. \ref{fig:pid} (the output of the "IMU Sensor" block is either roll or pitch).
 
 \begin{figure}[b]
+  \vspace{-\baselineskip}
   \centering
   \includegraphics[width=0.48\textwidth]{PID.drawio.png}
   \caption{Designed PID controller.}
@@ -244,6 +248,7 @@ To assess the robot's locomotion performance, two experiments were conducted. Th
 For the first experiment, the robot's body was supported on a platform so that its leg would not touch the floor, lowering the load applied to the motors. The experiment consisted of sending gait trajectories to a single leg and evaluating how precise the leg could follow it. The trajectories were cycloidal curves with a height of 0.05 cm, a period of 0.5 seconds and a resolution of 25 equally distributed points ($P_T = P_N = 1.0$). The distances in the (x, y) directions were (5.0, 3.0) and (3.0, 5.0) cm, and, for each distance pair, 30 samples were collected. Table \ref{tab:trajetoria} shows the average and standard deviation of the time taken to complete the trajectory, the height, and the distance reached by the leg in the (x, y) direction. Test 1 refers to the trajectories of the first distance pair and Test 2 to the second. Fig. \ref{fig:grafico_trajetoria_xyz} shows the z-axis (height) tracking of one sample. 
 
 \begin{table}[!b]
+  \vspace{-\baselineskip}
   \centering
   \caption{Results of the gait trajectory tracking experiment.}
   \scalebox{1.3}{
@@ -269,7 +274,6 @@ For the first experiment, the robot's body was supported on a platform so that i
     \hline   
   \end{tabular}
   }
-  \vspace{-\baselineskip}
   \label{tab:trajetoria}
 \end{table}
 
@@ -278,8 +282,8 @@ For the first experiment, the robot's body was supported on a platform so that i
   \includegraphics[width=0.48\textwidth]{grafico_trajetoria_z.png}
   \caption{Trajectory executed by the foot.}
   \label{fig:grafico_trajetoria_xyz}
+  \vspace{-\baselineskip}
 \end{figure}
-\vspace{-\baselineskip}
 
 It is noticeable that there was a delay of approximately 57 milliseconds in the execution time and that the final height was off by approximately 0.25 centimeters in both tests. To confirm that the system's performance during Test 1 and 2 was similar, i.e. the difference in (x, y) distance did not affect the overall performance, two ANOVA \cite{cano2012six} tests were conducted comparing the execution time and gait height distributions of both tests. Before the ANOVA, the outliers of these distributions were removed and the Shapiro-Wilk \cite{leotti2005comparaccao} test was used to check the data normality. The result of the latter was a p-value greater than 0.05 for all distributions, which indicates that they followed a normal curve. The ANOVA tests were, then, conducted and showed a p-value of 0.7212 for the execution time comparison and 0.5070 for the gait height comparison, which means that de difference in the (x, y) distance did not affect the trajectory tracking performance. In addition to that, the final average error for x and y was less than 0.1 centimeters and the standard deviation was small, meaning the gait distance was followed correctly and that this result was consistent throughout all samples.
 
@@ -328,9 +332,11 @@ Table \ref{tab:vel_stab} summarizes the collected results. The robot did not rea
   \end{tabular}
   }
   \label{tab:vel_stab}
+  \vspace{-\baselineskip}
 \end{table}
 
 In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value greater than 0.05, which indicates that the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2 (flat terrain). The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the tests without it, indicating that the stabilization controller lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in at least 75\% of the collected test samples.
+\vspace{0.1\baselineskip}
 
 \begin{figure}[!tb]
   \centering
@@ -358,12 +364,9 @@ Reviewing the robot's actuators is recommended for future work. Perhaps a model 
 
 The robot's project is open source and is available on GitHub \cite{CaramelRepo}.
 
-% \section*{Acknowledgment}
+\section*{Acknowledgment}
 
-% The preferred spelling of the word ``acknowledgment'' in America is without
-% an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B.
-% G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor
-% acknowledgments in the unnumbered footnote on the first page.
+The authors' acknowledgments.
 
 % \section*{References}
 
