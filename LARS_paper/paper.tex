@@ -24,24 +24,24 @@
 % \thanks{Identify applicable funding agency here. If none, delete this.}
 }
 
-\author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-    \textit{name of organization (of Aff.)}\\
-    City, Country \\
-    email address or ORCID}
-  \and
-  \IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-    \textit{name of organization (of Aff.)}\\
-    City, Country \\
-    email address or ORCID}
-  \and
-  \IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-    \textit{name of organization (of Aff.)}\\
-    City, Country \\
-    email address or ORCID}
-}
+% \author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
+%   \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%     \textit{name of organization (of Aff.)}\\
+%     City, Country \\
+%     email address or ORCID}
+%   \and
+%   \IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+%   \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%     \textit{name of organization (of Aff.)}\\
+%     City, Country \\
+%     email address or ORCID}
+%   \and
+%   \IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
+%   \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+%     \textit{name of organization (of Aff.)}\\
+%     City, Country \\
+%     email address or ORCID}
+% }
 
 \maketitle
 
@@ -84,7 +84,7 @@ The internal components, which include sensors, the processing unit, and the com
 
 \subsection{Gait Planner}
 
-Quadruped robots move according to a gait pattern. The gait implemented for the robot follows the sequence of phases demonstrated in Fig. \ref{fig:trot_pattern}, in which the white rectangles represent the swing phase and the gray rectangles represent the stance phase. During the stance phase, the legs are on the ground and push the robot's body in the desired direction. In the swing phase, the legs are raised and moved to the next support point. The gait pattern illustrated in Fig. \ref{fig:trot_pattern} is called trot and is based on the concept of periodic and symmetrical gaits. The periodic gaits are characterized by the continuous repetition of the movements in the same instants. Symmetry is a characteristic of gaits that move a pair of legs together, leaving and returning to the ground in a synchronized way \cite{de2006quadrupedal}. Although the structure of the robot makes it possible to perform other types of gaits, in this work, only the trot was considered. To reduce the control complexity, a discontinuous gait was adopted, that is, the robot's body moves only when all the legs are on the ground, resulting in intermittent movement. In Fig. \ref{fig:trot_pattern}, it is noticeable that the same pair of diagonal legs always move at the same instant. Between two consecutive swing phases, there is a moment when all legs are in the stance phase, which is when the robot body is displaced in the desired direction of locomotion.
+Quadruped robots move according to a gait pattern. The gait implemented for the robot follows the sequence of phases demonstrated in Fig. \ref{fig:trot_pattern}, in which the white rectangles represent the swing phase and the gray rectangles represent the stance phase. During the stance phase, the legs are on the ground and push the robot's body in the desired direction. In the swing phase, the legs are raised and moved to the next support point. The gait pattern illustrated in Fig. \ref{fig:trot_pattern} is called trot and is based on the concept of periodic and symmetrical gaits. The periodic gaits are characterized by the continuous repetition of the movements in the same instants. Symmetry is a characteristic of gaits that move a pair of legs together, leaving and returning to the ground in a synchronized way \cite{de2006quadrupedal}. Although the structure of the robot makes it possible to perform other types of gaits, in this work, only the trot was considered. To reduce the control complexity, a discontinuous gait was adopted, that is, the robot's body moves only when all the legs are on the ground, resulting in intermittent movement. In Fig. \ref{fig:trot_pattern}, it is noticeable that the same pair of diagonal legs always move at the same instant. Between two consecutive swing phases, there is a moment when all legs are in the stance phase, which is when the robot body is displaced in the desired direction of motion.
 
 \begin{figure}[b]
   \vspace{-\baselineskip}
@@ -119,7 +119,7 @@ between the points $(x_o, y_o, z_o)$ and $(x_f, y_f, z_f)$ as a function of time
   \label{eq:traj_k}
 \end{equation}
 
-The plot of a cycloidal curve in 3D space is shown in Fig. \ref{fig:traj_space}. The same trajectory is illustrated in Fig. \ref{fig:traj_time} as a function of time. It is noticeable that the curve has the first null derivative when the foot touches the ground, which is favorable to open loop control, since the smoother the landing, the fewer disturbances are caused in the system.
+The plot of a cycloidal curve in 3D space is shown in Fig. \ref{fig:traj_space}. The same trajectory is illustrated in Fig. \ref{fig:traj_time} as a function of time. It is noticeable that the curve has a null first derivative when the foot touches the ground, which is favorable to open loop control, since the smoother the landing, the fewer disturbances are caused in the system.
 
 \begin{figure*}[h]
   \centering
@@ -147,7 +147,7 @@ The plot of a cycloidal curve in 3D space is shown in Fig. \ref{fig:traj_space}.
   \vspace{-\baselineskip}
 \end{figure*}
 
-In addition to the step height, the $x$ and $y$ translations, and the period, the robot's trajectory planner also considers two parameters to make the landing of the foot even smoother. Since the robot’s actuators are servo motors controlled by position, the torque is proportional to the displacement it must perform between the points of the trajectory. Therefore, the higher the resolution of the trajectory, the smoother the movement. However, the resolution $N$ of the trajectory is fixed, given as a function of the step period and the frequency of the gait planner ($\SI{50}{\hertz}$) $N = 50T$. Thus, the strategy adopted is to distribute the $N$ points unevenly throughout the step period, so that there are more points near the moment the foot lands on the ground and fewer points near the moment the foot takes off. The $P_T$ parameter is a fraction of the total step period, and the $P_N$ is the fraction of the total number of points that should be between $0$ and $P_T \cdot T$. In other words, if $P_T = 0.66$ and $P_N = 0.33$, then 33\% of $N$ will be in the first two-thirds of the period, while the remaining $67\%$ will be in the final one-third. The trajectory, considering these parameters, is illustrated in Fig. \ref{fig:traj_time_modified}.
+In addition to the step height, the (x, y) translations, and the period, the robot's trajectory planner also considers two parameters to make the landing of the foot even smoother. Since the robot’s actuators are servo motors controlled by position, the torque is proportional to the displacement it must perform between the points of the trajectory. Therefore, the higher the resolution of the trajectory, the smoother the movement. However, the resolution $N$ of the trajectory is fixed, given as a function of the step period and the frequency of the gait planner ($\SI{50}{\hertz}$) $N = 50T$. Thus, the strategy adopted is to distribute the $N$ points unevenly throughout the step period, so that there are more points near the moment the foot lands on the ground and fewer points near the moment the foot takes off. The $P_T$ parameter is a fraction of the total step period, and the $P_N$ is the fraction of the total number of points that should be between $0$ and $P_T \cdot T$. In other words, if $P_T = 0.66$ and $P_N = 0.33$, then 33\% of $N$ will be in the first two-thirds of the period, while the remaining $67\%$ will be in the final one-third. The trajectory, considering these parameters, is illustrated in Fig. \ref{fig:traj_time_modified}.
 
 \subsection{Kinematic Model}
 \label{sec:detail_inv_kinematics}
@@ -189,7 +189,7 @@ The package tf2 \cite{tf2}, an available ROS 2 feature that can manage transform
   \label{fig:caramel_tfs}
 \end{figure}
 
-These equations are useful for calculating only one foot's position but are insufficient for the robot's body kinematics. For that, a center frame called base\_link (Fig. \ref{fig:caramel_body}) is taken as a reference. The transformation matrix $T_M$ is created with the desired body translations $(x_c, y_c, z_c)$ and rotations $(\alpha, \beta, \gamma)$. The transformations $T_{FR}$, $T_{FL}$, $T_{BL}$ and $T_{BR}$ of each of the shoulders (hip\_links) with respect to the base\_link are also required.
+These equations are useful for calculating only one foot's position but are insufficient for the robot's body kinematics. For that, a center frame called base\_link (Fig. \ref{fig:caramel_body}) is taken as a reference. The transformation matrix $T_M$ is created with the desired body translations $(x_c, y_c, z_c)$ and rotations $(\alpha, \beta, \gamma)$. The transformations $T_{FR}$, $T_{FL}$, $T_{BL}$ and $T_{BR}$ of each of the four hip\_links with respect to the base\_link are also required.
 
 \begin{figure}[tb]
   \centering
@@ -239,9 +239,9 @@ The IMU sensor is responsible for measuring the rotation of the robot's body, pr
 
 \section{Results} \label{results}
 
-To assess the robot's locomotion performance, two experiments were conducted. The first experiment aimed to test the trajectory tracking of one single leg in a no-load scenario, a more ideal case. The second experiment evaluated the robot's capability of following a forward velocity setpoint and the amplitude of its body oscillations' while walking, i.e. stability. Therefore, in the first experiment, the fundamental functionality of performing a gait with one leg was tested, while in the second the system was submitted to a realistic operation scenario where the gait planner must manage the movement of all legs and the body.
+To assess the robot's locomotion performance, two experiments were conducted. The first experiment aimed to test the trajectory tracking of one single leg in a no-load scenario, a more ideal case. The second experiment evaluated the robot's capability of following a forward velocity setpoint and the amplitude of its body oscillations' while walking, i.e. stability. Therefore, in the first experiment, the fundamental functionality of performing one gait step with one leg was tested, while in the second the system was submitted to a realistic operation scenario where the gait planner must manage the movement of all legs and the body.
 
-For the first experiment, the robot's body was supported on a platform so that its leg would not touch the floor, lowering the load applied to the motors. The experiment consisted of sending gait trajectories to a single leg and evaluating how precise the leg could follow it. The trajectories were cycloidal curves with a height of 0.05 cm, a period of 0.5 seconds and a resolution of 25 equally distributed points ($P_T = P_N = 1.0$). The distances in the (x, y) directions were (5.0, 3.0) and (3.0, 5.0) cm, and, for each distance pair, 30 samples were collected. Table \ref{tab:trajetoria} shows the average and standard deviation of the time taken to complete the trajectory, the height, and the distance reached by the leg in the (x, y) direction. Test 1 refers to the trajectories of the first distance pair and Test 2 to the second. Fig. \ref{fig:grafico_trajetoria_xyz} shows the z-axis (height) tracking of one sample. 
+For the first experiment, the robot's body was supported on a platform so that its leg would not touch the floor, lowering the load applied to the motors. The experiment consisted of sending gait trajectories to a single leg and evaluating how precise the leg could follow it. The trajectories were cycloidal curves with a height of 0.05 cm, a period of 0.5 seconds and a resolution of 25 equally distributed points ($P_T = P_N = 1.0$). The distances in the (x, y) directions were (5.0, 3.0) and (3.0, 5.0) cm, and, for each distance pair, 30 samples were collected. Table \ref{tab:trajetoria} shows the average and standard deviation of the time taken to complete the trajectory, the height, and the distance reached by the leg in the (x, y) direction. Test 1 refers to the trajectories of the first distance pair and Test 2 to the second. Fig. \ref{fig:grafico_trajetoria_xyz} shows the z-axis (height) tracking of one sample, where the blue curve is the trajectory commands (in meters) over time (in seconds) and the red curve is trajectory performed by the foot.
 
 \begin{table}[!b]
   \vspace{-\baselineskip}
@@ -309,9 +309,9 @@ For each test, the robot received a forward velocity command of 0.05 m/s. Its me
 
 For all the tests, the robot's gait settings consisted of a height of 5 centimeters, a period of 0.5 seconds, a resolution of 25 points, $P_T$ = 0.66, and $P_N$ = 0.33. For each test type, 10 samples were collected.
 
-Table \ref{tab:vel_stab} summarizes the collected results. The robot did not reach a velocity of 0.05 m/s in any test. This result is due to steady state errors in the final position of each leg during the swing phase: the legs could not reach the desired (x,y) position required to maintain the desired velocity. The fact that the final position of one foot is a function of its motors' final orientation indicates that the motors did not reach their desired orientation. And since no significant errors were noted during the previous experiment (a more ideal situation), they were perhaps caused by a lack of power from the motors, which were not able to support the robot's weight appropriately while walking.
+Table \ref{tab:vel_stab} summarizes the collected results. The robot did not reach a velocity of 0.05 m/s in any test. This result is due to steady state errors in the final position of each leg during the swing phase: the legs could not reach the desired (x, y) position required during the gait period, to maintain the desired velocity. The fact that the final position of one foot is a function of its motors' final orientation indicates that the motors did not reach their desired orientation. And since no significant errors were noted during the previous experiment (a more ideal situation), they were perhaps caused by a lack of power from the motors, which were not able to support the robot's weight appropriately while walking.
 
-\begin{table}[!htb]
+\begin{table}[b]
   \centering
   \caption{Velocity and stability results.}
   \scalebox{1.3}{
@@ -332,7 +332,7 @@ Table \ref{tab:vel_stab} summarizes the collected results. The robot did not rea
   % \vspace{-\baselineskip}
 \end{table}
 
-In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value greater than 0.05, which indicates that the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2 (flat terrain). The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the tests without it, indicating that the stabilization controller lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in at least 75\% of the collected test samples.
+In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value greater than 0.05, which indicates that the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2 (flat terrain). The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the oscillations in both axes of the tests with stabilization control was less than the mean value of the tests without it, indicating that the stabilization controller lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in at least 75\% of the collected test samples.
 \vspace{0.1\baselineskip}
 
 \begin{figure}[!b]
@@ -362,9 +362,9 @@ Reviewing the robot's actuators is recommended for future work. Perhaps a model 
 
 The robot's project is open source and is available on GitHub [Blinded reference]. % \cite{CaramelRepo}.
 
-\section*{Acknowledgment}
+% \section*{Acknowledgment}
 
-The authors' acknowledgments.
+% The authors' acknowledgments.
 
 % \section*{References}
 
