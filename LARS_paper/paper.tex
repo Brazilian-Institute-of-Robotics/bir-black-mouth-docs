@@ -154,8 +154,7 @@ In addition to the step height, the $x$ and $y$ translations, and the period, th
 
 The kinematic model of a quadruped robot describes the relationship between the position of the foot in the three-dimensional space and the rotation of each joint of its corresponding leg. This model is used to solve the forward kinematics, which provides the position $(x, y, z)$ of the foot as a function of the leg joint's angles, and the inverse kinematics, which provides the rotation of each joint to achieve the desired $(x, y, z)$ position of the foot. Moreover, this model can be extended to encompass the kinematics of the quadruped's body.
 
-%TODO cite tf2
-The package tf2, an available ROS 2 feature that can manage transformations between coordinate axes, was used to solve the robot's forward kinematics, and the inverse kinematics was solved based on geometric analysis. The variables $\theta_1$, $\theta_2$ and $\theta_3$ express the angular position of each leg joint (angles of hip, femur and tibia, respectively), and they can be calculated with the help of \eqref{eq:theta1} to \eqref{eq:B}, as a function of the desired position of the foot w.r.t. to the hip link $(x_{IK}, y_{IK}, z_{IK})$ and the lengths $L_1$, $L_2$ and $L_3$ (Fig. \ref{fig:caramel_tfs}).
+The package tf2 \cite{tf2}, an available ROS 2 feature that can manage transformations between coordinate axes, was used to solve the robot's forward kinematics, and the inverse kinematics was solved based on geometric analysis. The variables $\theta_1$, $\theta_2$ and $\theta_3$ express the angular position of each leg joint (angles of hip, femur and tibia, respectively), and they can be calculated with the help of \eqref{eq:theta1} to \eqref{eq:B}, as a function of the desired position of the foot w.r.t. to the hip link $(x_{IK}, y_{IK}, z_{IK})$ and the lengths $L_1$, $L_2$ and $L_3$ (Fig. \ref{fig:caramel_tfs}).
 
 \begin{equation}
   \label{eq:theta1}
@@ -286,7 +285,7 @@ It is noticeable that there was a delay of approximately 57 milliseconds in the 
 
 For the second experiment, the robot should walk in a straight line of 1.5 meters in both flat and uneven terrain, with and without the stabilization controller, totalizing four tests. The flat terrain consisted of a cement floor and the uneven terrain, a ground formed by small loose stones. Both are illustrated in Fig. \ref{fig:terreno_plano} and \ref{fig:terreno_uneven}, respectively.
 
-\begin{figure}[b]
+\begin{figure}[tb]
   \centering
   \begin{subfigure}[htbp]{0.24\textwidth}
     \centering
@@ -303,6 +302,7 @@ For the second experiment, the robot should walk in a straight line of 1.5 meter
   \vfill
   \caption{Terrains used for the experiment.}
   \label{fig:terrenos}
+  \vspace{-\baselineskip}
 \end{figure}
 
 For each test, the robot received a forward velocity command of 0.05 m/s. Its mean velocity, as well as its pitch and roll oscillation, were recorded. The mean velocity was calculated based on the time it took to travel 1.5 meters and the oscillation is the difference between the maximum and minimum readings of the IMU. The calculated velocity was compared to the desired velocity sent to the robot and the oscillation data was analyzed statistically following the same procedure of the trajectory tracking experiment.
@@ -329,13 +329,13 @@ Table \ref{tab:vel_stab} summarizes the collected results. The robot did not rea
   \end{tabular}
   }
   \label{tab:vel_stab}
-  \vspace{-\baselineskip}
+  % \vspace{-\baselineskip}
 \end{table}
 
 In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value greater than 0.05, which indicates that the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2 (flat terrain). The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the tests with stabilization control was less than the mean value of the tests without it, indicating that the stabilization controller lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution presented, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in at least 75\% of the collected test samples.
 \vspace{0.1\baselineskip}
 
-\begin{figure}[!tb]
+\begin{figure}[!b]
   \centering
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
@@ -351,6 +351,7 @@ In addition to the velocity results, the pitch and roll oscillations were compar
   \end{subfigure}
   \caption{Robot body's oscillation in both terrains.}
   \label{fig:imu_test}
+  \vspace{-1.5\baselineskip}
 \end{figure}
 
 \section{Conclusion} \label{conclusion}
@@ -359,7 +360,7 @@ This paper addressed the design, prototyping and testing of a quadruped robot. T
 
 Reviewing the robot's actuators is recommended for future work. Perhaps a model with more torque is required for more precise control performance.
 
-The robot's project is open source and is available on GitHub \cite{CaramelRepo}.
+The robot's project is open source and is available on GitHub [Blinded reference]. % \cite{CaramelRepo}.
 
 \section*{Acknowledgment}
 
