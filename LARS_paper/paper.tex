@@ -24,26 +24,30 @@
 % \thanks{Identify applicable funding agency here. If none, delete this.}
 }
 
-% \author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
-%   \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%     \textit{name of organization (of Aff.)}\\
-%     City, Country \\
-%     email address or ORCID}
-%   \and
-%   \IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-%   \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%     \textit{name of organization (of Aff.)}\\
-%     City, Country \\
-%     email address or ORCID}
-%   \and
-%   \IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-%   \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-%     \textit{name of organization (of Aff.)}\\
-%     City, Country \\
-%     email address or ORCID}
-% }
+%TODO
+\author{\IEEEauthorblockN{1\textsuperscript{st} Lucas Souza}
+  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+    \textit{name of organization (of Aff.)}\\
+    Salvador, Brasil \\
+    lucaslinssouza@gmail.com}
+  \and
+  \IEEEauthorblockN{2\textsuperscript{nd} Felipe Mohr}
+  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+    \textit{name of organization (of Aff.)}\\
+    Salvador, Brasil \\
+    email address or ORCID}
+  \and
+  \IEEEauthorblockN{3\textsuperscript{rd} Brenda Alencar}
+  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+    \textit{name of organization (of Aff.)}\\
+     Salvador, Brasil \\
+    brenda.s1602@outlook.com}
+}
 
 \maketitle
+
+\let\thefootnote\relax\footnote{\\979-8-3503-1538-7/23/\$31.00\textcopyright2023
+IEEE}
 
 \begin{abstract}
   With the growth of robotics, mobile robots are increasingly becoming common in key sectors of the economy. When compared to wheeled and tracked robots, legged robots present greater mobility and maneuverability, but less locomotion stability, which in turn demands more complex control systems. This paper aims to develop a quadruped robot with a PID  stabilization controller to compensate for the body oscillation during the walk. For that, the gait planner and the kinematic model algorithm were implemented. After designing and manufacturing the robot, experiments were conducted to assess the robot's locomotion performance when using the stabilization controller in flat and uneven terrains. It was observed that the stabilization controller contributed to reducing the oscillation of the robot's body in both roll and pitch angles in both terrains.
@@ -95,7 +99,7 @@ Quadruped robots move according to a gait pattern. The gait implemented for the 
   \label{fig:trot_pattern}
 \end{figure}
 
-For the robot to move according to the adopted gait pattern, there is a gait planner responsible for commanding the robot's legs. The gait planner defines where each foot will step and where the body should move based on the desired velocity of the robot. Through a trajectory planner, it calculates the trajectory each foot and body should follow. Then, the gait planner reads, from the stabilization controller, the corrections in pitch and roll angles and applies them before sending the commands to each joint, at a frequency of $\SI{50}{\hertz}$. To convert both trajectories' points and the control efforts into the angles of the joints, a kinematic model is used, which is responsible for mapping the three-dimensional position of one foot to the joints' angles of its respective leg.
+For the robot to move according to the adopted gait pattern, there is a gait planner responsible for commanding the robot's legs. The gait planner defines where each foot will step and where the body should move based on the desired velocity of the robot. A trajectory planner calculates the trajectory each foot and body should follow. Then, the gait planner reads, from the stabilization controller, the corrections in pitch and roll angles and applies them before sending the commands to each joint, at a frequency of $\SI{50}{\hertz}$. To convert both trajectories' points and the control efforts into the angles of the joints, a kinematic model is used, which is responsible for mapping the three-dimensional position of one foot to the joints' angles of its respective leg.
 
 \subsection{Trajectory Planner}
 
@@ -239,9 +243,9 @@ The IMU sensor is responsible for measuring the rotation of the robot's body, pr
 
 \section{Results} \label{results}
 
-To assess the robot's locomotion performance, two experiments were conducted. The first experiment aimed to test the trajectory tracking of one single leg in a no-load scenario, a more ideal case. The second experiment evaluated the robot's capability of following a forward velocity setpoint and the amplitude of its body oscillations' while walking, i.e. stability. Therefore, in the first experiment, the fundamental functionality of performing one gait step with one leg was tested, while in the second the system was submitted to a realistic operation scenario where the gait planner must manage the movement of all legs and the body.
+To assess the robot's locomotion performance, three experiments were conducted. The first experiment aimed to test the trajectory tracking of one single leg in a no-load scenario, a more ideal case. The second experiment evaluated the robot's capability of following a forward velocity setpoint and the amplitude of its body oscillations' while walking in a straight line, i.e. stability, in flat and uneven terrain. Therefore, in the first experiment, the fundamental functionality of performing one gait step with one leg was tested, while in the second the system was submitted to a realistic operation scenario where the gait planner must manage the movement of all legs and the body. The third experiment was similar to the second but focused on the yaw motion of the robot and was performed only on uneven terrain.
 
-For the first experiment, the robot's body was supported on a platform so that its leg would not touch the floor, lowering the load applied to the motors. The experiment consisted of sending gait trajectories to a single leg and evaluating how precise the leg could follow it. The trajectories were cycloidal curves with a height of 0.05 cm, a period of 0.5 seconds and a resolution of 25 equally distributed points ($P_T = P_N = 1.0$). The distances in the (x, y) directions were (5.0, 3.0) and (3.0, 5.0) cm, and, for each distance pair, 30 samples were collected. Table \ref{tab:trajetoria} shows the average and standard deviation of the time taken to complete the trajectory, the height, and the distance reached by the leg in the (x, y) direction. Test 1 refers to the trajectories of the first distance pair and Test 2 to the second. Fig. \ref{fig:grafico_trajetoria_xyz} shows the z-axis (height) tracking of one sample, where the blue curve is the trajectory commands (in meters) over time (in seconds) and the red curve is trajectory performed by the foot.
+For the first experiment, the robot's body was supported on a platform so that its leg would not touch the floor, lowering the load applied to the motors. The experiment consisted of sending gait trajectories to a single leg and evaluating how precise the leg could follow it. The trajectories were cycloidal curves with a height of 0.05 cm, a period of 0.5 seconds and a resolution of 25 equally distributed points ($P_T = P_N = 1.0$). The distances in the (x, y) directions were (5.0, 3.0) and (3.0, 5.0) cm, and, for each distance pair, 30 samples were collected. Table \ref{tab:trajetoria} shows the average and standard deviation of the time taken to complete the trajectory, the height, and the distance reached by the leg in the (x, y) direction. Test 1 refers to the trajectories of the first distance pair and Test 2 to the second. Fig. \ref{fig:grafico_trajetoria_xyz} shows the z-axis (height) tracking of one sample, where the blue curve is the trajectory commands (in meters) over time (in seconds) and the red curve is the trajectory performed by the foot.
 
 \begin{table}[!b]
   \vspace{-\baselineskip}
@@ -351,20 +355,53 @@ In addition to the velocity results, the pitch and roll oscillations were compar
   \end{subfigure}
   \caption{Robot body's oscillation in both terrains.}
   \label{fig:imu_test}
-  \vspace{-1.5\baselineskip}
+  % \vspace{-1.5\baselineskip}
+\end{figure}
+
+Finally, in the third experiment, the robot was placed in the same uneven terrain and was commanded to follow a yaw motion of 0.25 rad/s. The experiment was conducted until the robot had completed a full rotation around its z-axis. Again, the time, roll oscillation and pitch oscillation were recorded along 10 samples with and without the stabilization controller. 
+
+Table \ref{tab:ang_vel_stab} summarizes the collected results. The robot did not reach the angular velocity setpoint of 0.25 rad/s but maintained a steady 0.19 rad/s in both tests with a very low standard deviation, suggesting no significant differences. The body rotation analysis was also performed as before. The Shapiro-Wilk test presented a p-value greater than 0.05, which led to the application of the ANOVA test. The ANOVA test between the roll oscillation distributions with and without the stabilization controller resulted in a p-value of approximately 0.5, supporting the thesis that the controller did not affect the yaw motion significantly. The ANOVA test for the pitch oscillation, on the other hand, shows that the pitch oscillation was slightly bigger with the stabilization controller, which explains a much lower p-value, around 0.07. This result, though different from the previous two, still indicates no significant changes in the stabilization controller while the robot performs a yaw movement.
+
+\begin{table}[b]
+  \centering
+  \caption{Angular velocity and stability results.}
+  \scalebox{1.3}{
+  \begin{tabular}{ccc}
+    \hline
+    \textbf{Test}              & \textbf{1}   & \textbf{2}   \\ \hline
+    Ter.                       & Uneven       & Uneven       \\ \hline
+    \begin{tabular}[c]{@{}c@{}}S. C. \end{tabular} & No           & Yes          \\ \hline
+    \begin{tabular}[c]{@{}c@{}}Angular vel. \\ $(rad/s)$ \end{tabular} & 0.19         & 0.19         \\ \hline
+    \begin{tabular}[c]{@{}c@{}} $\sigma_{Ang. Vel.}$  \\ $(rad/s)$ \end{tabular} & 0.006        & 0.007        \\ \hline
+    \begin{tabular}[c]{@{}c@{}} $\Delta_{Roll}$ \end{tabular} & 16.16\degree & 16.84\degree \\\hline
+    \begin{tabular}[c]{@{}c@{}} $\sigma_{Roll}$ \end{tabular} & 1.88\degree  & 2.6\degree  \\ \hline
+    \begin{tabular}[c]{@{}c@{}} $\Delta_{Pitch}$ \end{tabular} & 11.79\degree & 12.89\degree \\ \hline
+    \begin{tabular}[c]{@{}c@{}} $\sigma_{Pitch}$ \end{tabular} & 1.05\degree  & 1.41\degree  \\ \hline
+  \end{tabular}
+  }
+  \label{tab:ang_vel_stab}
+  % \vspace{-\baselineskip}
+\end{table}
+
+\begin{figure}[!b]
+  \centering
+  \includegraphics[width=0.5\textwidth]{ang_vel_boxplot.png}
+  \caption{Robot body's oscillation during yaw motion.}
+  \label{fig:ang_vel_boxplot}
+  % \vspace{-1.5\baselineskip}
 \end{figure}
 
 \section{Conclusion} \label{conclusion}
 
-This paper addressed the design, prototyping and testing of a quadruped robot. Two experiments were held to assess the robot's walking performance. The results showed that the robot did not reach the desired velocity in any of the tests. This was due to errors during the gait's swing phase, which indicates that the motors were unable to support the robot's weight while walking. These errors were not compensated, because the gait's trajectory tracking is open-loop (only the individual joint's controllers are closed-loop). In addition to that, it was possible to conclude that the implemented stabilization controller was able to lower the robot's body oscillations in pitch and roll while walking in both flat and uneven terrains.
+This paper addressed the design, prototyping and testing of a quadruped robot. Two experiments were held to assess the robot's walking performance. The results showed that the robot did not reach the desired velocity in any of the tests. This was due to errors during the gait's swing phase, which indicates that the motors were unable to support the robot's weight while walking. These errors were not compensated, because the gait's trajectory tracking is open-loop (only the individual joint's controllers are closed-loop). In addition to that, it was possible to conclude that the implemented stabilization controller was able to lower the robot's body oscillations in pitch and roll while walking in a straight line in both flat and uneven terrains, but did not affect the yaw motion of the quadruped in uneven terrain.
 
 Reviewing the robot's actuators is recommended for future work. Perhaps a model with more torque is required for more precise control performance.
 
 The robot's project is open source and is available on GitHub [Blinded reference]. % \cite{CaramelRepo}.
 
-% \section*{Acknowledgment}
+\section*{Acknowledgment}
 
-% The authors' acknowledgments.
+The authors' acknowledgments. %TODO
 
 % \section*{References}
 
