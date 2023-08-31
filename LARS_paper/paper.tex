@@ -26,21 +26,21 @@
 
 %TODO
 \author{\IEEEauthorblockN{1\textsuperscript{st} Lucas Souza}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-    \textit{name of organization (of Aff.)}\\
-    Salvador, Brasil \\
+  \IEEEauthorblockA{\textit{Departament of Robotics} \\
+    \textit{SENAI CIMATEC}\\
+    Salvador, Brazil \\
     lucaslinssouza@gmail.com}
   \and
   \IEEEauthorblockN{2\textsuperscript{nd} Felipe Mohr}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-    \textit{name of organization (of Aff.)}\\
-    Salvador, Brasil \\
-    email address or ORCID}
+  \IEEEauthorblockA{\textit{Departament of Robotics} \\
+    \textit{SENAI CIMATEC}\\
+    Salvador, Brazil \\
+    felipe18mohr@gmail.com}
   \and
   \IEEEauthorblockN{3\textsuperscript{rd} Brenda Alencar}
-  \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-    \textit{name of organization (of Aff.)}\\
-     Salvador, Brasil \\
+  \IEEEauthorblockA{\textit{Departament of Robotics} \\
+    \textit{SENAI CIMATEC}\\
+     Salvador, Brazil \\
     brenda.s1602@outlook.com}
 }
 
@@ -339,7 +339,7 @@ Table \ref{tab:vel_stab} summarizes the collected results. The robot did not rea
 In addition to the velocity results, the pitch and roll oscillations were compared to determine whether or not the stabilization controller lowered the robot's body oscillation. The Shapiro-Wilk test was applied to the data from all the tests, after removing outliers, and every test returned a p-value greater than 0.05, which indicates that the distributions followed a normal curve. The ANOVA was, then, applied to compare the roll and pitch oscillations from tests 1 and 2 (flat terrain). The same process was applied to the tests 3 and 4 as well. The ANOVA revealed that the roll and pitch distributions of the tests with and without stabilization control were significantly different. Table \ref{tab:vel_stab} shows that the mean value of the oscillations in both axes of the tests with stabilization control was less than the mean value of the tests without it, indicating that the stabilization controller lowered the robot's body oscillations in both terrain types. Fig. \ref{fig:imu_test} better pictures the data distribution. Despite the more scattered distribution, 3 out of 4 of the tests with stabilization control had its third quartile less than the first quartile of the distribution without the controller for the same terrain type, demonstrating that the controller lowered the oscillations in at least 75\% of the collected test samples.
 \vspace{0.1\baselineskip}
 
-\begin{figure}[!b]
+\begin{figure}[!tb]
   \centering
   \begin{subfigure}[t]{0.49\textwidth}
     \centering
@@ -362,7 +362,7 @@ Finally, in the third experiment, the robot was placed in the same uneven terrai
 
 Table \ref{tab:ang_vel_stab} summarizes the collected results. The robot did not reach the angular velocity setpoint of 0.25 rad/s but maintained a steady 0.19 rad/s in both tests with a very low standard deviation, suggesting no significant differences. The body rotation analysis was also performed as before. The Shapiro-Wilk test presented a p-value greater than 0.05, which led to the application of the ANOVA test. The ANOVA test between the roll oscillation distributions with and without the stabilization controller resulted in a p-value of approximately 0.5, supporting the thesis that the controller did not affect the yaw motion significantly. The ANOVA test for the pitch oscillation, on the other hand, shows that the pitch oscillation was slightly bigger with the stabilization controller, which explains a much lower p-value, around 0.07. This result, though different from the previous two, still indicates no significant changes in the stabilization controller while the robot performs a yaw movement.
 
-\begin{table}[b]
+\begin{table}[tb]
   \centering
   \caption{Angular velocity and stability results.}
   \scalebox{1.3}{
@@ -383,13 +383,13 @@ Table \ref{tab:ang_vel_stab} summarizes the collected results. The robot did not
   % \vspace{-\baselineskip}
 \end{table}
 
-\begin{figure}[!b]
-  \centering
-  \includegraphics[width=0.5\textwidth]{ang_vel_boxplot.png}
-  \caption{Robot body's oscillation during yaw motion.}
-  \label{fig:ang_vel_boxplot}
-  % \vspace{-1.5\baselineskip}
-\end{figure}
+% \begin{figure}[!tb]
+%   \centering
+%   \includegraphics[width=0.5\textwidth]{ang_vel_boxplot.png}
+%   \caption{Robot body's oscillation during yaw motion.}
+%   \label{fig:ang_vel_boxplot}
+%   % \vspace{-1.5\baselineskip}
+% \end{figure}
 
 \section{Conclusion} \label{conclusion}
 
@@ -397,7 +397,7 @@ This paper addressed the design, prototyping and testing of a quadruped robot. T
 
 Reviewing the robot's actuators is recommended for future work. Perhaps a model with more torque is required for more precise control performance.
 
-The robot's project is open source and is available on GitHub [Blinded reference]. % \cite{CaramelRepo}.
+The robot's project is open source and is available on GitHub \cite{CaramelRepo}.
 
 \section*{Acknowledgment}
 
