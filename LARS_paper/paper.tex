@@ -315,7 +315,7 @@ For all the tests, the robot's gait settings consisted of a height of 5 centimet
 
 Table \ref{tab:vel_stab} summarizes the collected results. The robot did not reach a velocity of 0.05 m/s in any test. This result is due to steady state errors in the final position of each leg during the swing phase: the legs could not reach the desired (x, y) position required during the gait period, to maintain the desired velocity. The fact that the final position of one foot is a function of its motors' final orientation indicates that the motors did not reach their desired orientation. And since no significant errors were noted during the previous experiment (a more ideal situation), they were perhaps caused by a lack of power from the motors, which were not able to support the robot's weight appropriately while walking.
 
-\begin{table}[b]
+\begin{table}[!h]
   \centering
   \caption{Velocity and stability results.}
   \scalebox{1.3}{
@@ -362,7 +362,7 @@ Finally, in the third experiment, the robot was placed in the same uneven terrai
 
 Table \ref{tab:ang_vel_stab} summarizes the collected results. The robot did not reach the angular velocity setpoint of 0.25 rad/s but maintained a steady 0.19 rad/s in both tests with a very low standard deviation, suggesting no significant differences. The body rotation analysis was also performed as before. The Shapiro-Wilk test presented a p-value greater than 0.05, which led to the application of the ANOVA test. The ANOVA test between the roll oscillation distributions with and without the stabilization controller resulted in a p-value of approximately 0.5, supporting the thesis that the controller did not affect the yaw motion significantly. The ANOVA test for the pitch oscillation, on the other hand, shows that the pitch oscillation was slightly bigger with the stabilization controller, which explains a much lower p-value, around 0.07. This result, though different from the previous two, still indicates no significant changes in the stabilization controller while the robot performs a yaw movement.
 
-\begin{table}[tb]
+\begin{table}[!h]
   \centering
   \caption{Angular velocity and stability results.}
   \scalebox{1.3}{
