@@ -12,7 +12,16 @@
 \usepackage{subfiles}
 \usepackage{siunitx}
 \usepackage{gensymb}
-
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=false,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+    
 \graphicspath{{\subfix{../images/}}}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -393,15 +402,15 @@ Table \ref{tab:ang_vel_stab} summarizes the collected results. The robot did not
 
 \section{Conclusion} \label{conclusion}
 
-This paper addressed the design, prototyping and testing of a quadruped robot. Two experiments were held to assess the robot's walking performance. The results showed that the robot did not reach the desired velocity in any of the tests. This was due to errors during the gait's swing phase, which indicates that the motors were unable to support the robot's weight while walking. These errors were not compensated, because the gait's trajectory tracking is open-loop (only the individual joint's controllers are closed-loop). In addition to that, it was possible to conclude that the implemented stabilization controller was able to lower the robot's body oscillations in pitch and roll while walking in a straight line in both flat and uneven terrains, but did not affect the yaw motion of the quadruped in uneven terrain.
+This paper addressed the design, prototyping and testing of a quadruped robot. Three experiments were held to assess the robot's walking performance. The results showed that the robot did not reach the desired velocity in any of the tests. This was due to errors during the gait's swing phase, which indicates that the motors were unable to support the robot's weight while walking. These errors were not compensated, because the gait's trajectory tracking is open-loop (only the individual joint's controllers are closed-loop). In addition to that, it was possible to conclude that the implemented stabilization controller was able to lower the robot's body oscillations in pitch and roll while walking in a straight line on both flat and uneven terrains, but did not affect the yaw motion of the quadruped on uneven terrain.
 
 Reviewing the robot's actuators is recommended for future work. Perhaps a model with more torque is required for more precise control performance.
 
-The robot's project is open source and is available on GitHub \cite{CaramelRepo}.
+The robot's project is open source and is available on GitHub \cite{CaramelRepo}. A demonstration video is also available in \url{https://youtu.be/d0BPT8uhiSc}.
 
 \section*{Acknowledgment}
 
-The authors' acknowledgments. %TODO
+We would like to express our sincere gratitude to our advisors MSc. Marco Reis and MSc. Paulo Andrade, and to the Centro Universitário SENAI CIMATEC for their valuable support and contributions to this project. We also extend our thanks to all those who have provided assistance and support throughout this research endeavor. %TODO
 
 % \section*{References}
 
